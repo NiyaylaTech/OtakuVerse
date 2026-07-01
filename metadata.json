@@ -1,0 +1,6 @@
+{
+  "name": "OtakuVerse",
+  "description": "A clean, modern community website for anime, manga, and manhwa discussions and debates.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
