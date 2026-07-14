@@ -6,17 +6,21 @@
  */
 
 :root {
-  /* Vibrant, high-contrast comic-book & anime palette */
-  --primary: #8B5CF6;       /* Energetic Anime Purple */
-  --secondary: #FF2E93;     /* Tokyo Pop Pink */
-  --accent: #00F0FF;        /* Cyberpunk Neon Cyan */
-  --warning: #FFD200;       /* Super Saiyan Yellow */
-  --background: #FFFDF0;    /* Warm Cream Manga Paper Page */
-  --surface: #FFFFFF;       /* Pure White Comic Panel */
-  --text: #000000;          /* Deep Pitch Black Ink */
-  --text-muted: #374151;    /* Charcoal Ink for high-readability body text */
-  --border: #000000;        /* Thick Ink Border Outlines */
-  --success: #10B981;       /* Energy green */
+  /* Vibrant, high-contrast comic-book & anime palette - DARK MODE */
+  --primary: #185923;       /* Rich Green */
+  --secondary: #8D5A97;     /* Purple */
+  --accent: #79B791;        /* Light Green */
+  --warning: #EF476F;       /* Warm Coral-Pink (Formerly Gold) */
+  --background: #020202;    /* Pure Black as requested */
+  --surface: #121613;       /* Deep matte charcoal forest panel */
+  --text: #FFFFFF;          /* Pure White Comic Text & Outlines */
+  --text-muted: #B3CBB9;    /* Readable Light Sage Gray for body text */
+  --border: #FFFFFF;        /* High-contrast crisp white outlines */
+  --success: #185923;       /* Energy green */
+  --dot-color: rgba(255, 255, 255, 0.05); /* Soft white halftone dots */
+  
+  --gradient-1: #020202;    /* Dark mode gradient stripes */
+  --gradient-2: #121613;
   
   /* Layout Constants */
   --max-width: 1200px;
@@ -58,8 +62,8 @@ body {
   display: flex;
   flex-direction: column;
   background-image: 
-    radial-gradient(rgba(0, 0, 0, 0.05) 1.5px, transparent 1.5px),
-    radial-gradient(rgba(0, 0, 0, 0.05) 1.5px, transparent 1.5px);
+    radial-gradient(var(--dot-color) 1.5px, transparent 1.5px),
+    radial-gradient(var(--dot-color) 1.5px, transparent 1.5px);
   background-size: 24px 24px;
   background-position: 0 0, 12px 12px; /* Halftone-like comic dot grid background! */
 }
@@ -260,10 +264,11 @@ select:focus-visible {
   padding: 6rem 0;
   background: repeating-linear-gradient(
     45deg,
-    #FFFDF0,
-    #FFFDF0 15px,
-    #FCE7F3 15px,
-    #FCE7F3 30px
+    var(--gradient-1),
+    var(--gradient-1) 15px,
+    var(--gradient-2),
+    var(--gradient-2) 15px,
+    var(--gradient-2) 30px
   ); /* Colorful diagonal stripes for playful anime look */
   border-bottom: var(--outline-thick);
   position: relative;
@@ -272,7 +277,7 @@ select:focus-visible {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 1.05fr 0.95fr;
   gap: 4rem;
   align-items: center;
 }
@@ -428,6 +433,69 @@ select:focus-visible {
 .hero-image:hover {
   transform: scale(1.03) rotate(-1deg);
   box-shadow: 16px 16px 0px var(--text);
+}
+
+.hero-video-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 580px;
+  border-radius: var(--radius-lg);
+  border: var(--outline-thick);
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition-normal);
+  overflow: hidden;
+  background-color: var(--surface);
+}
+
+.hero-video-container:hover {
+  transform: scale(1.03) rotate(-1deg);
+  box-shadow: 16px 16px 0px var(--text);
+}
+
+/* Media Player Controls */
+.video-controls {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  background-color: #111111;
+  padding: 0.75rem;
+  border-top: var(--outline-thin);
+}
+
+.control-btn {
+  font-family: var(--font-family);
+  border: var(--outline-thin);
+  border-radius: var(--radius-sm);
+  font-weight: 900;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: var(--transition-normal);
+  user-select: none;
+}
+
+.control-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px var(--text) !important;
+}
+
+.control-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--text) !important;
+}
+
+.control-btn.active {
+  transform: none;
+  box-shadow: none !important;
+  border-color: rgba(255, 255, 255, 0.4);
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 /* General Section Styles */

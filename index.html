@@ -10,12 +10,12 @@
 <body>
 
   <!-- Skiplink for Keyboard Accessibility -->
-  <a href="#home" class="sr-only" style="background-color: var(--primary); color: #FFF; padding: 1rem; position: absolute; top: 0; left: 0; z-index: 10000; text-decoration: none; border-radius: 0 0 var(--radius-sm) 0;">Skip to main content</a>
+  <a href="#home-main" class="sr-only" style="background-color: var(--primary); color: #FFF; padding: 1rem; position: absolute; top: 0; left: 0; z-index: 10000; text-decoration: none; border-radius: 0 0 var(--radius-sm) 0;">Skip to main content</a>
 
   <!-- Header Navigation -->
   <header class="header-nav">
     <div class="nav-container">
-      <a href="#home" class="logo" id="headerLogo" aria-label="OtakuVerse Home">
+      <a href="index.html" class="logo" id="headerLogo" aria-label="OtakuVerse Home">
         <span>OtakuVerse</span> 🌸
       </a>
 
@@ -29,16 +29,16 @@
 
       <!-- Navigation Links -->
       <ul class="nav-menu" id="navMenu">
-        <li><a href="#home" class="nav-link active">Home</a></li>
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#programs" class="nav-link">Programs</a></li>
-        <li><a href="#work" class="nav-link">Student Work</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="programs.html" class="nav-link">Programs</a></li>
+        <li><a href="discussions.html" class="nav-link">Discussions</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
       </ul>
     </div>
   </header>
 
-  <main>
+  <main id="home-main">
     <!-- Hero Section -->
     <section id="home" class="hero-section">
       <div class="container hero-grid">
@@ -49,266 +49,97 @@
             Step into OtakuVerse—a dedicated space for anime fans, manga readers, and manhwa enthusiasts to review series, participate in weekly debate brackets, and discover original creations.
           </p>
           <div class="hero-actions">
-            <a href="#programs" class="btn btn-primary" id="btnExplore">Explore Discussions</a>
-            <a href="#contact" class="btn btn-secondary" id="btnJoin">Join the Community</a>
+            <a href="programs.html" class="btn btn-primary" id="btnExplore">Explore Discussions</a>
+            <a href="contact.html" class="btn btn-secondary" id="btnJoin">Join the Community</a>
           </div>
         </div>
-        <div class="hero-image-wrapper">
-          <img src="https://placehold.co/600x400?text=OtakuVerse+Discussion+Hub" alt="A stylized abstract representation of anime fans discussing and cheering together around a screen" class="hero-image" id="heroImg">
-        </div>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>About OtakuVerse</h2>
-          <p>Connecting anime, manga, and manhwa enthusiasts from all around the world in meaningful conversations.</p>
-        </div>
-        <div class="about-grid">
-          <div class="about-image-wrapper">
-            <img src="https://placehold.co/600x400?text=Our+Global+Anime+Community" alt="A mock illustrative layout showcasing people exchanging books, manga pages, and holding digital readers in harmony" class="about-image" id="aboutImg">
-          </div>
-          <div class="about-content">
-            <div class="about-block" id="aboutMission">
-              <h3>🌸 Our Mission</h3>
-              <p>
-                Our mission is to foster a safe, welcoming, and high-quality discussion space where otakus can transition from passive watchers to active reviewers. We prioritize analytical storytelling critiques over generic internet flame-wars.
-              </p>
+        <div class="hero-image-wrapper" style="margin-bottom: 4rem;">
+          <div class="hero-video-container" id="heroVideoContainer">
+            <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%; padding-bottom: 0; overflow: hidden; will-change: transform;">
+              <iframe id="heroVideoIframe" loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;"
+                src="https://www.canva.com/design/DAHPNzT1ys4/kX5HV8YzDawyWiG59aNfiQ/watch?embed&amp;autoplay=1" allowfullscreen="allowfullscreen" allow="fullscreen; autoplay">
+              </iframe>
             </div>
-            <div class="about-block" id="aboutVision">
-              <h3>🌟 Our Vision</h3>
-              <p>
-                We envision a structured community environment where storytelling, lore, translation nuances, and animation aesthetics are analyzed and celebrated with the care of true literary criticism.
-              </p>
-            </div>
-            <div class="about-block" id="aboutWhyUs">
-              <h3>🛡️ Why Choose OtakuVerse?</h3>
-              <p>
-                Unlike massive, unmoderated social platforms, OtakuVerse combines structured weekly community book clubs, character debate systems, and peer-reviewed essay workshops led by experienced editors.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Programs or Services Section -->
-    <section id="programs" class="section programs-section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Our Discussion Programs</h2>
-          <p>Join organized weekly circles led by seasoned hosts designed to level up your analytical skills and reading enjoyment.</p>
-        </div>
-        <div class="programs-grid">
-          <!-- Card 1 -->
-          <article class="program-card" id="programCard1">
-            <div class="program-image-box">
-              <span class="program-badge">Weekly Club</span>
-              <img src="https://placehold.co/600x400?text=Manga+and+Manhwa+Clubs" alt="An open graphic panel representing a manga novel alongside a tablet with vibrant panels" class="program-img">
-            </div>
-            <div class="program-body">
-              <h3 class="program-title">Manga & Manhwa Book Clubs</h3>
-              <p class="program-desc">
-                Engage in daily coordinated chapter reading schedules, share your theories on panel-flow, and join live comment events every Friday evening.
-              </p>
-              <button class="btn-learn" data-id="1" aria-haspopup="dialog" aria-controls="programModal">
-                Learn More <span>&rarr;</span>
+            <!-- Interactive Play/Pause/Replay Controls -->
+            <div class="video-controls">
+              <button class="control-btn" id="btnPlayVideo" style="background-color: var(--accent); color: var(--text); box-shadow: 2px 2px 0px var(--text);" title="Play Video with Autoplay">
+                ▶️ Play
+              </button>
+              <button class="control-btn" id="btnPauseVideo" style="background-color: var(--secondary); color: #FFFFFF; box-shadow: 2px 2px 0px var(--text);" title="Pause Video">
+                ⏸️ Pause
+              </button>
+              <button class="control-btn" id="btnReplayVideo" style="background-color: var(--warning); color: var(--text); box-shadow: 2px 2px 0px var(--text);" title="Replay Video from Beginning">
+                🔁 Replay
               </button>
             </div>
-          </article>
-
-          <!-- Card 2 -->
-          <article class="program-card" id="programCard2">
-            <div class="program-image-box">
-              <span class="program-badge">Debate Circle</span>
-              <img src="https://placehold.co/600x400?text=Character+Debates" alt="Vibrant dynamic illustration representing sword clashing symbols and shields representing debate elements" class="program-img">
-            </div>
-            <div class="program-body">
-              <h3 class="program-title">Character Analysis & Debates</h3>
-              <p class="program-desc">
-                Participate in structured character arc critiques, power-scaling reviews, and friendly "Who Would Win" tactical debates using logical lore support.
-              </p>
-              <button class="btn-learn" data-id="2" aria-haspopup="dialog" aria-controls="programModal">
-                Learn More <span>&rarr;</span>
-              </button>
-            </div>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="program-card" id="programCard3">
-            <div class="program-image-box">
-              <span class="program-badge">Mentorship</span>
-              <img src="https://placehold.co/600x400?text=Reviewer+Mentorship" alt="An editor reviewing analytical text with writing utensils and digital tablets displaying check marks" class="program-img">
-            </div>
-            <div class="program-body">
-              <h3 class="program-title">Reviewer Mentorship Program</h3>
-              <p class="program-desc">
-                Learn the principles of pacing analysis, visual cinematography breakdowns, and narrative structures. Get your analytical reviews featured!
-              </p>
-              <button class="btn-learn" data-id="3" aria-haspopup="dialog" aria-controls="programModal">
-                Learn More <span>&rarr;</span>
-              </button>
-            </div>
-          </article>
+          </div>
+          <div style="position: absolute; bottom: -35px; right: 0; z-index: 10;">
+            <a href="https://www.canva.com/design/DAHPNzT1ys4/kX5HV8YzDawyWiG59aNfiQ/watch?utm_content=DAHPNzT1ys4&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener" style="font-weight: 800; color: var(--text); text-transform: uppercase; background-color: var(--warning); padding: 0.25rem 0.75rem; border: var(--outline-thin); border-radius: var(--radius-sm); text-decoration: none; box-shadow: 2px 2px 0px var(--text); font-size: 0.85rem; display: inline-block;">Join us in a world of discussion 🌸</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Student Work / Testimonials Section -->
-    <section id="work" class="section">
+    <!-- Welcome Highlight Bento grid of current ongoing discussions/news on homepage -->
+    <section class="section" style="background-color: var(--surface);">
       <div class="container">
         <div class="section-header">
-          <h2>Student Work & Reviews</h2>
-          <p>Take a look at essays, projects, and testimonials created by our passionate community members.</p>
+          <h2>Weekly Highlights & Features</h2>
+          <p>Get a glance at the current community events occurring this week at OtakuVerse!</p>
         </div>
-        <div class="work-grid">
-          <!-- Card 1 -->
-          <article class="work-card" id="workCard1">
-            <div class="work-user-info">
-              <div class="avatar-wrapper">
-                <img src="https://placehold.co/600x400?text=Kenji+S" alt="Profile photo of member Kenji S" class="avatar-img">
-              </div>
-              <div class="user-meta">
-                <h4>Kenji S.</h4>
-                <p>Manga Analytical Essayist</p>
-              </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+          <!-- Bento Card 1: Today's Debate -->
+          <div class="about-block" style="border-color: var(--primary); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span class="program-badge" style="background-color: var(--secondary); color: #FFF; margin-bottom: 1rem; display: inline-block;">Active Debate</span>
+              <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Sung Jinwoo vs. Saitama</h3>
+              <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">
+                Our debate moderators have opened the power-scaling floor! Contrast Jinwoo's celestial shadows against Saitama's ultimate physical limits. Remember to back arguments with official chapters!
+              </p>
             </div>
-            <div class="rating-stars" aria-label="5 out of 5 stars rating">⭐⭐⭐⭐⭐</div>
-            <blockquote class="work-text">
-              "The Reviewer Mentorship Program completely changed how I read manhwa! I published a 2,000-word breakdown on 'Solo Leveling' panel pacing, and the feedback from community leaders was outstandingly constructive and helpful."
-            </blockquote>
-          </article>
-
-          <!-- Card 2 -->
-          <article class="work-card" id="workCard2">
-            <div class="work-user-info">
-              <div class="avatar-wrapper">
-                <img src="https://placehold.co/600x400?text=Aria+M" alt="Profile photo of member Aria M" class="avatar-img">
-              </div>
-              <div class="user-meta">
-                <h4>Aria M.</h4>
-                <p>Studio Ghibli Workshop Host</p>
-              </div>
-            </div>
-            <div class="rating-stars" aria-label="5 out of 5 stars rating">⭐⭐⭐⭐⭐</div>
-            <blockquote class="work-text">
-              "I organized a visual-cinematography critique event of Princess Mononoke here. The depth of discussion and high levels of respect displayed by OtakuVerse members are incomparable to standard unmoderated online boards."
-            </blockquote>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="work-card" id="workCard3">
-            <div class="work-user-info">
-              <div class="avatar-wrapper">
-                <img src="https://placehold.co/600x400?text=Haruto+K" alt="Profile photo of member Haruto K" class="avatar-img">
-              </div>
-              <div class="user-meta">
-                <h4>Haruto K.</h4>
-                <p>Scanlation Translation Reviewer</p>
-              </div>
-            </div>
-            <div class="rating-stars" aria-label="5 out of 5 stars rating">⭐⭐⭐⭐⭐</div>
-            <blockquote class="work-text">
-              "Reviewing cultural context localizations and sharing scanlation accuracy insights has been incredibly rewarding. This community values literary depth, and I've found like-minded readers who love the original material."
-            </blockquote>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section contact-section">
-      <div class="container contact-grid">
-        <div class="contact-info">
-          <div class="section-header" style="text-align: left; margin-bottom: 1.5rem;">
-            <h2>Get In Touch</h2>
-            <p class="contact-info-desc">Have questions about our reading programs, mentorship structures, or want to apply to become an editor? Fill out our form!</p>
-          </div>
-          
-          <div class="contact-card">
-            <div class="contact-item">
-              <div class="contact-icon" aria-hidden="true">✉</div>
-              <div class="contact-text">
-                <h4>Email Community Team</h4>
-                <p>support@otakuverse.example.com</p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon" aria-hidden="true">🌐</div>
-              <div class="contact-text">
-                <h4>Community Discord Server</h4>
-                <p>discord.gg/otakuverse-circle</p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon" aria-hidden="true">📍</div>
-              <div class="contact-text">
-                <h4>Digital Headquarters</h4>
-                <p>Hosted Globally on GitHub Pages</p>
-              </div>
+            <div style="margin-top: 1.5rem;">
+              <a href="programs.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem; display: inline-block; text-decoration: none; width: auto;">Join Debate</a>
             </div>
           </div>
-        </div>
 
-        <div>
-          <!-- HTML Contact Form -->
-          <form id="contactForm" action="#" method="post" class="contact-form">
-            <div class="form-group">
-              <label id="lbl-name" for="contactName">Name</label>
-              <input type="text" id="contactName" name="name" class="form-control" placeholder="Your name" required aria-required="true">
+          <!-- Bento Card 2: Current Manga Pick -->
+          <div class="about-block" style="border-color: var(--secondary); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span class="program-badge" style="background-color: var(--primary); color: #FFF; margin-bottom: 1rem; display: inline-block;">Monthly Pick</span>
+              <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Frieren: Beyond Journey's End</h3>
+              <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">
+                We are currently reviewing chapters 90-110 of Frieren. Join the conversation focusing on Kanehito Yamada's pacing of melancholic fantasy time transitions and panels.
+              </p>
             </div>
+            <div style="margin-top: 1.5rem;">
+              <a href="programs.html" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.5rem 1rem; display: inline-block; text-decoration: none; width: auto; color: #FFF;">Read Along</a>
+            </div>
+          </div>
 
-            <div class="form-group">
-              <label id="lbl-email" for="contactEmail">Email Address</label>
-              <input type="email" id="contactEmail" name="email" class="form-control" placeholder="your.email@example.com" required aria-required="true">
+          <!-- Bento Card 3: Featured Essay -->
+          <div class="about-block" style="border-color: var(--warning); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span class="program-badge" style="background-color: var(--warning); color: var(--text); margin-bottom: 1rem; display: inline-block;">Featured Work</span>
+              <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">The Anatomy of a Perfect Panel</h3>
+              <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">
+                Kenji S. deconstructs the vertical flow mechanics of Webtoon panels, explaining how scroll speed translates directly into cinematic tension.
+              </p>
             </div>
-
-            <div class="form-group">
-              <label id="lbl-subject" for="contactSubject">Subject</label>
-              <input type="text" id="contactSubject" name="subject" class="form-control" placeholder="What are you interested in?" required aria-required="true">
+            <div style="margin-top: 1.5rem;">
+              <a href="discussions.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem; display: inline-block; text-decoration: none; width: auto;">Join Discussion</a>
             </div>
-
-            <div class="form-group">
-              <label id="lbl-message" for="contactMessage">Message</label>
-              <textarea id="contactMessage" name="message" class="form-control" placeholder="Tell us about yourself or ask your questions..." required aria-required="true"></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-submit" id="submitFormBtn">Send Message</button>
-            
-            <!-- Accessible Success Notification Toast -->
-            <div id="successToast" class="toast-success" role="status" aria-live="polite">
-              <span style="font-size: 1.25rem;" aria-hidden="true">✓</span>
-              <div>
-                <strong style="display: block; margin-bottom: 0.15rem;">Message Sent Successfully!</strong>
-                <span>Thank you for reaching out. An OtakuVerse community editor will get back to you soon.</span>
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Interactive Program Detail Modal (Accessible Dialog Pattern) -->
-  <div id="programModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-content">
-      <button class="modal-close" id="modalClose" aria-label="Close details modal">&times;</button>
-      <div class="modal-header">
-        <h3 id="modalTitle">Program Details</h3>
-      </div>
-      <div class="modal-body" id="modalBody">
-        <!-- Filled dynamically by JavaScript -->
-      </div>
-    </div>
-  </div>
-
   <!-- Footer Section -->
   <footer class="footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <a href="#home" class="footer-logo" aria-label="OtakuVerse Footer Logo">
+        <a href="index.html" class="footer-logo" aria-label="OtakuVerse Footer Logo">
           OtakuVerse <span>🌸</span>
         </a>
         <p class="footer-desc">
@@ -319,11 +150,11 @@
       <div class="footer-col" id="footerColLinks">
         <h4>Navigation</h4>
         <ul class="footer-links">
-          <li><a href="#home" class="footer-link">Home</a></li>
-          <li><a href="#about" class="footer-link">About</a></li>
-          <li><a href="#programs" class="footer-link">Programs</a></li>
-          <li><a href="#work" class="footer-link">Student Work</a></li>
-          <li><a href="#contact" class="footer-link">Contact</a></li>
+          <li><a href="index.html" class="footer-link">Home</a></li>
+          <li><a href="about.html" class="footer-link">About</a></li>
+          <li><a href="programs.html" class="footer-link">Programs</a></li>
+          <li><a href="discussions.html" class="footer-link">Discussions</a></li>
+          <li><a href="contact.html" class="footer-link">Contact</a></li>
         </ul>
       </div>
 

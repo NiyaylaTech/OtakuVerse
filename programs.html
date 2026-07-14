@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="OtakuVerse Programs - Explore our Manga Book Clubs, Character Debates, and Reviewer Mentorship Programs.">
+  <title>Our Programs | OtakuVerse Community</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Skiplink for Keyboard Accessibility -->
+  <a href="#programs-main" class="sr-only" style="background-color: var(--primary); color: #FFF; padding: 1rem; position: absolute; top: 0; left: 0; z-index: 10000; text-decoration: none; border-radius: 0 0 var(--radius-sm) 0;">Skip to main content</a>
+
+  <!-- Header Navigation -->
+  <header class="header-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="headerLogo" aria-label="OtakuVerse Home">
+        <span>OtakuVerse</span> 🌸
+      </a>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="menu-toggle" aria-expanded="false" aria-controls="navMenu" id="mobileMenuBtn">
+        <span class="sr-only">Toggle navigation menu</span>
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="programs.html" class="nav-link active">Programs</a></li>
+        <li><a href="discussions.html" class="nav-link">Discussions</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="programs-main">
+    <!-- Hero Header section specifically for Programs page -->
+    <section class="hero-section" style="padding: 4rem 0 3rem; background: repeating-linear-gradient(45deg, var(--gradient-1), var(--gradient-1) 15px, var(--gradient-2), var(--gradient-2) 15px, var(--gradient-2) 30px); border-bottom: var(--outline-thick);">
+      <div class="container" style="text-align: center;">
+        <span class="hero-tag" style="margin: 0 auto 1.5rem;">Join the Clubs</span>
+        <h1 class="hero-headline" style="font-size: 3rem; text-transform: uppercase;">Discussion & <span>Mentorships</span></h1>
+        <p class="hero-subtext" style="max-width: 700px; margin: 1.5rem auto 0; font-weight: 700;">
+          Level up your analytical literacy, join weekly community book clubs, power-scaling brackets, and character arcs critiques.
+        </p>
+      </div>
+    </section>
+
+    <!-- Programs or Services Section -->
+    <section id="programs" class="section programs-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Discussion Programs</h2>
+          <p>Join organized weekly circles led by seasoned hosts designed to level up your analytical skills and reading enjoyment.</p>
+        </div>
+        <div class="programs-grid">
+          <!-- Card 1 -->
+          <article class="program-card" id="programCard1">
+            <div class="program-image-box">
+              <span class="program-badge">Weekly Club</span>
+              <img src="https://placehold.co/600x400?text=Manga+and+Manhwa+Clubs" alt="An open graphic panel representing a manga novel alongside a tablet with vibrant panels" class="program-img">
+            </div>
+            <div class="program-body">
+              <h3 class="program-title">Manga & Manhwa Book Clubs</h3>
+              <p class="program-desc">
+                Engage in daily coordinated chapter reading schedules, share your theories on panel-flow, and join live comment events every Friday evening.
+              </p>
+              <button class="btn-learn" data-id="1" aria-haspopup="dialog" aria-controls="programModal">
+                Learn More <span>&rarr;</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="program-card" id="programCard2">
+            <div class="program-image-box">
+              <span class="program-badge">Debate Circle</span>
+              <img src="https://placehold.co/600x400?text=Character+Debates" alt="Vibrant dynamic illustration representing sword clashing symbols and shields representing debate elements" class="program-img">
+            </div>
+            <div class="program-body">
+              <h3 class="program-title">Character Analysis & Debates</h3>
+              <p class="program-desc">
+                Participate in structured character arc critiques, power-scaling reviews, and friendly "Who Would Win" tactical debates using logical lore support.
+              </p>
+              <button class="btn-learn" data-id="2" aria-haspopup="dialog" aria-controls="programModal">
+                Learn More <span>&rarr;</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="program-card" id="programCard3">
+            <div class="program-image-box">
+              <span class="program-badge">Mentorship</span>
+              <img src="https://placehold.co/600x400?text=Reviewer+Mentorship" alt="An editor reviewing analytical text with writing utensils and digital tablets displaying check marks" class="program-img">
+            </div>
+            <div class="program-body">
+              <h3 class="program-title">Reviewer Mentorship Program</h3>
+              <p class="program-desc">
+                Learn the principles of pacing analysis, visual cinematography breakdowns, and narrative structures. Get your analytical reviews featured!
+              </p>
+              <button class="btn-learn" data-id="3" aria-haspopup="dialog" aria-controls="programModal">
+                Learn More <span>&rarr;</span>
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive Program Detail Modal (Accessible Dialog Pattern) -->
+  <div id="programModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="Close details modal">&times;</button>
+      <div class="modal-header">
+        <h3 id="modalTitle">Program Details</h3>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Filled dynamically by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo" aria-label="OtakuVerse Footer Logo">
+          OtakuVerse <span>🌸</span>
+        </a>
+        <p class="footer-desc">
+          A dedicated community hub designed for meaningful debates, analytical critiques, and book clubs covering anime, manga, and manhwa.
+        </p>
+      </div>
+
+      <div class="footer-col" id="footerColLinks">
+        <h4>Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="index.html" class="footer-link">Home</a></li>
+          <li><a href="about.html" class="footer-link">About</a></li>
+          <li><a href="programs.html" class="footer-link">Programs</a></li>
+          <li><a href="discussions.html" class="footer-link">Discussions</a></li>
+          <li><a href="contact.html" class="footer-link">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col" id="footerColSocials">
+        <h4>Follow Our Community</h4>
+        <p class="footer-desc" style="margin-bottom: 1rem;">Stay updated with weekly debate brackets and analytical publication summaries on social media!</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="Follow us on Twitter">TW</a>
+          <a href="#" class="social-icon" aria-label="Join our Discord community">DC</a>
+          <a href="#" class="social-icon" aria-label="Check out our Instagram updates">IG</a>
+          <a href="#" class="social-icon" aria-label="Watch our YouTube video reviews">YT</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2026 OtakuVerse. All rights reserved. Created with dedication for global anime readers & viewers.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
