@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="OtakuVerse - The premier discussion and debate hub for anime, manga, and manhwa enthusiasts.">
-  <title>OtakuVerse | Anime, Manga & Manhwa Discussion Community</title>
+  <meta name="description" content="OtakuVerse Anime Lists - Organize, rate, and share your personal anime collections and custom playlists.">
+  <title>Anime Lists & Collections | OtakuVerse</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Skiplink for Keyboard Accessibility -->
-  <a href="#home-main" class="sr-only" style="background-color: var(--primary); color: #FFF; padding: 1rem; position: absolute; top: 0; left: 0; z-index: 10000; text-decoration: none; border-radius: 0 0 var(--radius-sm) 0;">Skip to main content</a>
+  <!-- Skiplink for Accessibility -->
+  <a href="#lists-main" class="sr-only">Skip to main content</a>
 
   <!-- Header Navigation -->
   <header class="header-nav">
@@ -26,11 +26,11 @@
       <!-- Navigation Links -->
       <nav class="nav-menu-wrapper" id="navMenuWrapper">
         <ul class="nav-menu" id="navMenu">
-          <li><a href="index.html" class="nav-link active">🏠 Home</a></li>
+          <li><a href="index.html" class="nav-link">🏠 Home</a></li>
           <li><a href="programs.html" class="nav-link">🎌 Community Hub</a></li>
           <li><a href="reviews.html" class="nav-link">⭐ Reviews</a></li>
           <li><a href="discussions.html" class="nav-link">💬 Discussions</a></li>
-          <li><a href="lists.html" class="nav-link">📚 Anime Lists</a></li>
+          <li><a href="lists.html" class="nav-link active">📚 Anime Lists</a></li>
           <li><a href="rankings.html" class="nav-link">🏆 Rankings</a></li>
           <li><a href="profile.html" class="nav-link">👤 Profile</a></li>
         </ul>
@@ -260,151 +260,200 @@
     </div>
   </div>
 
-  <main id="home-main">
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-            <span class="hero-tag">知恵 • WISDOM HUB</span>
-            <span class="hero-tag" style="background-color: var(--primary); color: #FFF;">夢 • DREAM CIRCLE</span>
+  <!-- Main Content -->
+  <main id="lists-main" class="container" style="padding-top: 2.5rem; padding-bottom: 4rem;">
+    <!-- Page Header -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+      <div>
+        <span class="program-badge" style="background: var(--accent); color: #000; margin-bottom: 0.5rem; display: inline-block;">📚 ANIME PASSPORT</span>
+        <h1 style="font-family: var(--font-serif); font-size: 2.5rem; color: var(--text); line-height: 1.1;">Personal Anime Collections & Libraries</h1>
+        <p style="color: var(--text-muted); font-size: 1.05rem; margin-top: 0.5rem;">Organize your anime journey, build custom themed playlists, and follow community collections.</p>
+      </div>
+      
+      <div style="display: flex; gap: 0.75rem;">
+        <button class="btn btn-secondary" id="btnExportList">📥 Export List (JSON/MAL)</button>
+        <button class="btn btn-secondary" id="btnImportList">📤 Import List</button>
+        <button class="btn btn-primary" id="btnCreateCustomList">➕ Create Custom List</button>
+      </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div style="display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border);">
+      <button class="collection-tab-btn active" data-category="watching">📺 Currently Watching (12)</button>
+      <button class="collection-tab-btn" data-category="completed">✅ Completed (142)</button>
+      <button class="collection-tab-btn" data-category="plan">⏳ Plan to Watch (38)</button>
+      <button class="collection-tab-btn" data-category="onhold">⏸️ On Hold (4)</button>
+      <button class="collection-tab-btn" data-category="dropped">🛑 Dropped (2)</button>
+      <button class="collection-tab-btn" data-category="favorites">⭐ Favorites (15)</button>
+      <button class="collection-tab-btn" data-category="custom">🎨 Custom Playlists (8)</button>
+    </div>
+
+    <!-- Featured Custom Collections Grid -->
+    <section style="margin-bottom: 3rem;">
+      <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--text); margin-bottom: 1rem;">🔥 Popular Community Custom Collections</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+        
+        <div style="background: var(--surface-card); border: 1px solid var(--border-bright); border-radius: var(--radius-md); padding: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+            <span style="font-size: 1.5rem;">💕</span>
+            <span style="background: rgba(197, 160, 89, 0.2); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 800;">12,450 Followers</span>
           </div>
-          <h1 class="hero-headline">The Ultimate Anime, Manga & Manhwa <span style="color: var(--primary-bright);">Debate Circle</span></h1>
-          <p class="hero-subtext">
-            Step into OtakuVerse—a dedicated space for anime fans, manga readers, and manhwa enthusiasts to review series, participate in weekly debate brackets, and discover original creations.
-          </p>
-          <div class="hero-actions">
-            <a href="programs.html" class="btn btn-primary" id="btnExplore">Explore Discussions</a>
-            <a href="contact.html" class="btn btn-secondary" id="btnJoin">Join the Community</a>
+          <h4 style="font-size: 1.15rem; color: var(--text); margin-bottom: 0.4rem;">Best Romance (No Fan Service)</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Pure emotional storytelling, deep character bonds, and heartwarming romance masterpieces.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <small style="color: var(--accent);">By Kenji_Scholar</small>
+            <button class="btn btn-secondary btn-follow-coll" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;">+ Follow</button>
           </div>
         </div>
-        <div class="hero-image-wrapper" style="margin-bottom: 4rem;">
-          <div class="hero-video-container" id="heroVideoContainer">
-            <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%; padding-bottom: 0; overflow: hidden; will-change: transform; border-radius: 12px 12px 0 0;">
-              <iframe id="heroVideoIframe" loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;"
-                src="https://www.canva.com/design/DAHPNzT1ys4/kX5HV8YzDawyWiG59aNfiQ/watch?embed&amp;autoplay=1" allowfullscreen="allowfullscreen" allow="fullscreen; autoplay">
-              </iframe>
-            </div>
-            <!-- Interactive Play/Pause/Replay Controls -->
-            <div class="video-controls">
-              <button class="control-btn" id="btnPlayVideo" style="background-color: var(--primary); color: #FFF; box-shadow: 2px 2px 0px var(--border-bright);" title="Play Video with Autoplay">
-                ▶️ Play
-              </button>
-              <button class="control-btn" id="btnPauseVideo" style="background-color: var(--surface-card); color: var(--text-muted); box-shadow: 2px 2px 0px var(--border);" title="Pause Video">
-                ⏸️ Pause
-              </button>
-              <button class="control-btn" id="btnReplayVideo" style="background-color: var(--secondary); color: #FFF; box-shadow: 2px 2px 0px var(--border-bright);" title="Replay Video from Beginning">
-                🔁 Replay
-              </button>
-            </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border-bright); border-radius: var(--radius-md); padding: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+            <span style="font-size: 1.5rem;">🏆</span>
+            <span style="background: rgba(197, 160, 89, 0.2); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 800;">18,900 Followers</span>
           </div>
-          <div style="position: absolute; bottom: -35px; right: 0; z-index: 10;">
-            <a href="https://www.canva.com/design/DAHPNzT1ys4/kX5HV8YzDawyWiG59aNfiQ/watch?utm_content=DAHPNzT1ys4&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener" style="font-weight: 800; color: #FFF; text-transform: uppercase; background-color: var(--primary); padding: 0.35rem 0.85rem; border: 1px solid var(--border-bright); border-radius: var(--radius-sm); text-decoration: none; box-shadow: 0 0 10px rgba(0,0,0,0.8); font-size: 0.85rem; display: inline-block;">ANIME • REVIEWS • COMMUNITY 悟</a>
+          <h4 style="font-size: 1.15rem; color: var(--text); margin-bottom: 0.4rem;">Top Cinema Movies of All Time</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">From Studio Ghibli classics to Kyoto Animation theatrical wonders.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <small style="color: var(--accent);">By Anime_Cinema_Hub</small>
+            <button class="btn btn-secondary btn-follow-coll" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;">+ Follow</button>
           </div>
         </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border-bright); border-radius: var(--radius-md); padding: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+            <span style="font-size: 1.5rem;">😈</span>
+            <span style="background: rgba(197, 160, 89, 0.2); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 800;">15,200 Followers</span>
+          </div>
+          <h4 style="font-size: 1.15rem; color: var(--text); margin-bottom: 0.4rem;">Greatest Complex Villains</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Antagonists with compelling philosophies, tragic backstories, and legendary dialogue.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <small style="color: var(--accent);">By Ren_Scholar</small>
+            <button class="btn btn-secondary btn-follow-coll" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;">+ Follow</button>
+          </div>
+        </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border-bright); border-radius: var(--radius-md); padding: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+            <span style="font-size: 1.5rem;">🌸</span>
+            <span style="background: rgba(197, 160, 89, 0.2); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 800;">22,100 Followers</span>
+          </div>
+          <h4 style="font-size: 1.15rem; color: var(--text); margin-bottom: 0.4rem;">Ultimate Comfort Anime</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Cozy, peaceful anime to watch after a long day or during rainy weekends.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <small style="color: var(--accent);">By CozyOtaku</small>
+            <button class="btn btn-secondary btn-follow-coll" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;">+ Follow</button>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- Welcome Highlight Bento grid of current ongoing discussions/news on homepage -->
-    <section class="section" style="background-color: var(--surface);">
-      <div class="container">
-        <div class="section-header">
-          <h2>Weekly Highlights & Features</h2>
-          <p>Get a glance at the current community events occurring this week at OtakuVerse!</p>
-        </div>
+    <!-- Anime Items Grid -->
+    <section>
+      <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--text); margin-bottom: 1rem;">📺 Your Active Library Items</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem;">
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-          <!-- Bento Card 1: Today's Debate -->
-          <div class="about-block" style="border-color: var(--primary); display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column;">
+          <img src="https://picsum.photos/seed/frieren_poster/300/400" alt="Frieren" style="width: 100%; height: 260px; object-fit: cover;" referrerPolicy="no-referrer">
+          <div style="padding: 1rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
             <div>
-              <span class="program-badge" style="background-color: var(--secondary); color: #FFF; margin-bottom: 1rem; display: inline-block;">Active Debate</span>
-              <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Sung Jinwoo vs. Saitama</h3>
-              <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">
-                Our debate moderators have opened the power-scaling floor! Contrast Jinwoo's celestial shadows against Saitama's ultimate physical limits. Remember to back arguments with official chapters!
-              </p>
+              <strong style="color: var(--text); font-size: 1rem; display: block; margin-bottom: 0.25rem;">Frieren: Beyond Journey's End</strong>
+              <small style="color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Progress: Ep 28 / 28</small>
             </div>
-            <div style="margin-top: 1.5rem;">
-              <a href="programs.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem; display: inline-block; text-decoration: none; width: auto;">Join Debate</a>
-            </div>
-          </div>
-
-          <!-- Bento Card 2: Current Manga Pick -->
-          <div class="about-block" style="border-color: var(--secondary); display: flex; flex-direction: column; justify-content: space-between;">
             <div>
-              <span class="program-badge" style="background-color: var(--primary); color: #FFF; margin-bottom: 1rem; display: inline-block;">Monthly Pick</span>
-              <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Frieren: Beyond Journey's End</h3>
-              <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">
-                We are currently reviewing chapters 90-110 of Frieren. Join the conversation focusing on Kanehito Yamada's pacing of melancholic fantasy time transitions and panels.
-              </p>
-            </div>
-            <div style="margin-top: 1.5rem;">
-              <a href="programs.html" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.5rem 1rem; display: inline-block; text-decoration: none; width: auto; color: #FFF;">Read Along</a>
-            </div>
-          </div>
-
-          <!-- Bento Card 3: Featured Essay -->
-          <div class="about-block" style="border-color: var(--warning); display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <span class="program-badge" style="background-color: var(--warning); color: var(--text); margin-bottom: 1rem; display: inline-block;">Featured Work</span>
-              <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">The Anatomy of a Perfect Panel</h3>
-              <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">
-                Kenji S. deconstructs the vertical flow mechanics of Webtoon panels, explaining how scroll speed translates directly into cinematic tension.
-              </p>
-            </div>
-            <div style="margin-top: 1.5rem;">
-              <a href="discussions.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem; display: inline-block; text-decoration: none; width: auto;">Join Discussion</a>
+              <div style="color: var(--accent); font-weight: 800; font-size: 0.88rem; margin-bottom: 0.5rem;">Your Rating: ★ 10 / 10</div>
+              <button class="btn btn-secondary" style="width: 100%; padding: 0.35rem; font-size: 0.78rem;">Edit Rating</button>
             </div>
           </div>
         </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column;">
+          <img src="https://picsum.photos/seed/solo_poster/300/400" alt="Solo Leveling" style="width: 100%; height: 260px; object-fit: cover;" referrerPolicy="no-referrer">
+          <div style="padding: 1rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <strong style="color: var(--text); font-size: 1rem; display: block; margin-bottom: 0.25rem;">Solo Leveling: Arise</strong>
+              <small style="color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Progress: Ep 12 / 12</small>
+            </div>
+            <div>
+              <div style="color: var(--accent); font-weight: 800; font-size: 0.88rem; margin-bottom: 0.5rem;">Your Rating: ★ 9.5 / 10</div>
+              <button class="btn btn-secondary" style="width: 100%; padding: 0.35rem; font-size: 0.78rem;">Edit Rating</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column;">
+          <img src="https://picsum.photos/seed/aot_poster/300/400" alt="Attack on Titan" style="width: 100%; height: 260px; object-fit: cover;" referrerPolicy="no-referrer">
+          <div style="padding: 1rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <strong style="color: var(--text); font-size: 1rem; display: block; margin-bottom: 0.25rem;">Attack on Titan</strong>
+              <small style="color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Progress: Ep 89 / 89</small>
+            </div>
+            <div>
+              <div style="color: var(--accent); font-weight: 800; font-size: 0.88rem; margin-bottom: 0.5rem;">Your Rating: ★ 10 / 10</div>
+              <button class="btn btn-secondary" style="width: 100%; padding: 0.35rem; font-size: 0.78rem;">Edit Rating</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column;">
+          <img src="https://picsum.photos/seed/deathnote_poster/300/400" alt="Death Note" style="width: 100%; height: 260px; object-fit: cover;" referrerPolicy="no-referrer">
+          <div style="padding: 1rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <strong style="color: var(--text); font-size: 1rem; display: block; margin-bottom: 0.25rem;">Death Note</strong>
+              <small style="color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Progress: Ep 37 / 37</small>
+            </div>
+            <div>
+              <div style="color: var(--accent); font-weight: 800; font-size: 0.88rem; margin-bottom: 0.5rem;">Your Rating: ★ 9.6 / 10</div>
+              <button class="btn btn-secondary" style="width: 100%; padding: 0.35rem; font-size: 0.78rem;">Edit Rating</button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   </main>
 
-  <!-- Footer Section -->
+  <!-- Footer -->
   <footer class="footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <a href="index.html" class="logo" aria-label="OtakuVerse Footer Logo" style="display: inline-flex; width: fit-content; margin-bottom: 1rem;">
+        <a href="index.html" class="logo" style="display: inline-flex; width: fit-content; margin-bottom: 1rem;">
           <img src="logo.jpg" alt="OtakuVerse Logo" class="brand-logo-img">
           <div class="brand-text-wrapper">
             <span class="brand-title"><span class="brand-otaku">OTAKU</span><span class="brand-verse">VERSE</span></span>
-            <span class="brand-sub">知恵 • ANIME REVIEWS COMMUNITY</span>
+            <span class="brand-sub">知恵 • ANIME COMMUNITY</span>
           </div>
         </a>
-        <p class="footer-desc">
-          A dedicated community hub designed for meaningful debates, analytical critiques, and book clubs covering anime, manga, and manhwa.
-        </p>
+        <p class="footer-desc">The premier community ecosystem for anime reviews, discussions, and lists.</p>
       </div>
 
-      <div class="footer-col" id="footerColLinks">
+      <div class="footer-col">
         <h4>Navigation</h4>
         <ul class="footer-links">
           <li><a href="index.html" class="footer-link">Home</a></li>
-          <li><a href="reviews.html" class="footer-link">Reviews</a></li>
-          <li><a href="discovery.html" class="footer-link">Discovery</a></li>
           <li><a href="programs.html" class="footer-link">Community Hub</a></li>
+          <li><a href="reviews.html" class="footer-link">Reviews</a></li>
           <li><a href="discussions.html" class="footer-link">Discussions</a></li>
-          <li><a href="about.html" class="footer-link">About</a></li>
-          <li><a href="contact.html" class="footer-link">Contact</a></li>
-          <li><a href="account.html" class="footer-link">Join</a></li>
+          <li><a href="lists.html" class="footer-link">Anime Lists</a></li>
+          <li><a href="rankings.html" class="footer-link">Rankings</a></li>
+          <li><a href="profile.html" class="footer-link">Profile</a></li>
         </ul>
       </div>
 
-      <div class="footer-col" id="footerColSocials">
-        <h4>Follow Our Community</h4>
-        <p class="footer-desc" style="margin-bottom: 1rem;">Stay updated with weekly debate brackets and analytical publication summaries on social media!</p>
+      <div class="footer-col">
+        <h4>Community</h4>
         <div class="footer-socials">
-          <a href="#" class="social-icon" aria-label="Follow us on Twitter">TW</a>
-          <a href="#" class="social-icon" aria-label="Join our Discord community">DC</a>
-          <a href="#" class="social-icon" aria-label="Check out our Instagram updates">IG</a>
-          <a href="#" class="social-icon" aria-label="Watch our YouTube video reviews">YT</a>
+          <a href="#" class="social-icon">TW</a>
+          <a href="#" class="social-icon">DC</a>
+          <a href="#" class="social-icon">IG</a>
+          <a href="#" class="social-icon">YT</a>
         </div>
       </div>
     </div>
     
     <div class="footer-bottom">
       <div class="container">
-        <p>© 2026 OtakuVerse. All rights reserved. Created with dedication for global anime readers & viewers.</p>
+        <p>© 2026 OtakuVerse. All rights reserved.</p>
       </div>
     </div>
   </footer>

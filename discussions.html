@@ -448,27 +448,249 @@
   <header class="header-nav">
     <div class="nav-container">
       <a href="index.html" class="logo" id="headerLogo" aria-label="OtakuVerse Home">
-        <span>OtakuVerse</span> 🌸
+        <img src="logo.jpg" alt="OtakuVerse Crane Emblem Logo" class="brand-logo-img">
+        <div class="brand-text-wrapper">
+          <span class="brand-title"><span class="brand-otaku">OTAKU</span><span class="brand-verse">VERSE</span></span>
+          <span class="brand-sub">知恵 • ANIME COMMUNITY</span>
+        </div>
       </a>
 
-      <!-- Mobile Hamburger Button -->
-      <button class="menu-toggle" aria-expanded="false" aria-controls="navMenu" id="mobileMenuBtn">
-        <span class="sr-only">Toggle navigation menu</span>
-        <span class="burger-bar"></span>
-        <span class="burger-bar"></span>
-        <span class="burger-bar"></span>
-      </button>
-
       <!-- Navigation Links -->
-      <ul class="nav-menu" id="navMenu">
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="programs.html" class="nav-link">Programs</a></li>
-        <li><a href="discussions.html" class="nav-link active">Discussions</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
-      </ul>
+      <nav class="nav-menu-wrapper" id="navMenuWrapper">
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="index.html" class="nav-link">🏠 Home</a></li>
+          <li><a href="programs.html" class="nav-link">🎌 Community Hub</a></li>
+          <li><a href="reviews.html" class="nav-link">⭐ Reviews</a></li>
+          <li><a href="discussions.html" class="nav-link active">💬 Discussions</a></li>
+          <li><a href="lists.html" class="nav-link">📚 Anime Lists</a></li>
+          <li><a href="rankings.html" class="nav-link">🏆 Rankings</a></li>
+          <li><a href="profile.html" class="nav-link">👤 Profile</a></li>
+        </ul>
+      </nav>
+
+      <!-- Far Right Controls -->
+      <div class="nav-actions-right">
+        <!-- Search Trigger Button -->
+        <button class="nav-action-btn search-trigger-btn" id="navSearchTrigger" aria-label="Search Anime, Reviews & Community" title="Search (Cmd+K)">
+          <span class="action-icon">🔍</span>
+          <span class="search-btn-label">Search...</span>
+          <kbd class="search-shortcut">⌘K</kbd>
+        </button>
+
+        <!-- Notifications Bell -->
+        <div class="nav-dropdown-container">
+          <button class="nav-action-btn notif-btn" id="navNotifBtn" aria-label="Notifications" title="Notifications">
+            <span class="action-icon">🔔</span>
+            <span class="notif-badge" id="notifBadgeCount">3</span>
+          </button>
+          <!-- Notifications Dropdown -->
+          <div class="nav-dropdown-menu notif-dropdown" id="notifDropdown">
+            <div class="dropdown-header">
+              <h4>🔔 Notifications</h4>
+              <button class="btn-text-action" id="btnMarkAllNotifsRead">Mark as read</button>
+            </div>
+            <div class="notif-list">
+              <a href="reviews.html" class="notif-item unread">
+                <span class="notif-avatar">👑</span>
+                <div class="notif-content">
+                  <p><strong>Aura_Fan_99</strong> liked your review of <em>Frieren: Beyond Journey's End</em>.</p>
+                  <span class="notif-time">10 minutes ago</span>
+                </div>
+              </a>
+              <a href="programs.html" class="notif-item unread">
+                <span class="notif-avatar">⚔️</span>
+                <div class="notif-content">
+                  <p>The <strong>Weekly Debate Bracket</strong> "Jinwoo vs. Saitama" is now LIVE!</p>
+                  <span class="notif-time">1 hour ago</span>
+                </div>
+              </a>
+              <a href="discussions.html" class="notif-item unread">
+                <span class="notif-avatar">💬</span>
+                <div class="notif-content">
+                  <p><strong>Manga_Reader_Sora</strong> replied to your Death Note plot theory thread.</p>
+                  <span class="notif-time">3 hours ago</span>
+                </div>
+              </a>
+            </div>
+            <div class="dropdown-footer">
+              <a href="profile.html#activity" class="dropdown-link-all">View All Activity Feed →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Create Dropdown Button -->
+        <div class="nav-dropdown-container">
+          <button class="btn btn-primary create-btn-nav" id="navCreateBtn" aria-label="Create Content">
+            <span class="btn-icon">➕</span>
+            <span class="create-btn-text">Create</span>
+            <span class="dropdown-caret">▾</span>
+          </button>
+          <!-- Create Menu Dropdown -->
+          <div class="nav-dropdown-menu create-dropdown" id="createDropdown">
+            <div class="dropdown-header">
+              <h4>➕ Create New</h4>
+            </div>
+            <div class="create-options-list">
+              <a href="reviews.html#write" class="create-item-link">
+                <span class="create-icon">✍️</span>
+                <div>
+                  <strong>Write a Review</strong>
+                  <small>Share score & category critiques</small>
+                </div>
+              </a>
+              <a href="discussions.html#new" class="create-item-link">
+                <span class="create-icon">💬</span>
+                <div>
+                  <strong>Start a Discussion</strong>
+                  <small>Episode chat, theories & debates</small>
+                </div>
+              </a>
+              <a href="lists.html#new" class="create-item-link">
+                <span class="create-icon">📚</span>
+                <div>
+                  <strong>Create an Anime List</strong>
+                  <small>Organize custom collections</small>
+                </div>
+              </a>
+              <a href="programs.html#clubs" class="create-item-link">
+                <span class="create-icon">🎌</span>
+                <div>
+                  <strong>Create a Club</strong>
+                  <small>Form a fan circle or watch group</small>
+                </div>
+              </a>
+              <a href="programs.html#polls" class="create-item-link">
+                <span class="create-icon">📊</span>
+                <div>
+                  <strong>Create a Poll</strong>
+                  <small>Vote on characters or episodes</small>
+                </div>
+              </a>
+              <a href="discussions.html#fanart" class="create-item-link">
+                <span class="create-icon">🎨</span>
+                <div>
+                  <strong>Share Fan Art</strong>
+                  <span class="badge-new">NEW</span>
+                </div>
+              </a>
+              <a href="discovery.html" class="create-item-link">
+                <span class="create-icon">💡</span>
+                <div>
+                  <strong>Submit Recommendation</strong>
+                  <small>Suggest hidden gems</small>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Auth State Switcher & Avatar Dropdown -->
+        <div class="nav-user-container" id="navUserContainer">
+          <div class="nav-auth-buttons" id="navAuthLoggedOut" style="display: none;">
+            <a href="account.html?mode=login" class="btn btn-secondary nav-login-btn">Login</a>
+            <a href="account.html?mode=signup" class="btn btn-primary nav-signup-btn">Create Account</a>
+          </div>
+
+          <div class="nav-dropdown-container" id="navAuthLoggedIn">
+            <button class="nav-user-avatar-btn" id="navAvatarBtn" aria-label="User Account Menu">
+              <img src="https://picsum.photos/seed/otaku_user_avatar/100/100" alt="User Avatar" class="nav-avatar-img">
+              <span class="nav-level-badge">Lv. 24</span>
+            </button>
+            
+            <div class="nav-dropdown-menu user-dropdown" id="userDropdown">
+              <div class="user-dropdown-profile">
+                <img src="https://picsum.photos/seed/otaku_user_avatar/100/100" alt="User Avatar" class="user-dropdown-img">
+                <div class="user-dropdown-meta">
+                  <strong class="user-dropdown-name">Kenji_Grand_Scholar</strong>
+                  <span class="user-dropdown-rank">👑 Rank #4 Top Critic</span>
+                  <span class="user-dropdown-xp">XP: 14,850 / 15,000</span>
+                </div>
+              </div>
+              
+              <div class="dropdown-divider"></div>
+
+              <div class="user-menu-links">
+                <a href="profile.html" class="user-menu-item">
+                  <span class="menu-icon">👤</span> My Profile
+                </a>
+                <a href="lists.html" class="user-menu-item">
+                  <span class="menu-icon">📚</span> Anime Library
+                </a>
+                <a href="reviews.html" class="user-menu-item">
+                  <span class="menu-icon">⭐</span> My Reviews
+                </a>
+                <a href="discussions.html" class="user-menu-item">
+                  <span class="menu-icon">💬</span> My Discussions
+                </a>
+                <a href="profile.html#achievements" class="user-menu-item">
+                  <span class="menu-icon">🏆</span> Achievements
+                </a>
+                <a href="account.html" class="user-menu-item">
+                  <span class="menu-icon">⚙️</span> Settings
+                </a>
+                <a href="javascript:void(0)" class="user-menu-item">
+                  <span class="menu-icon">🔔</span> Notifications
+                </a>
+                <button class="user-menu-item btn-theme-toggle">
+                  <span class="menu-icon">🌙</span> Dark Mode
+                </button>
+                <a href="contact.html" class="user-menu-item">
+                  <span class="menu-icon">❓</span> Help Center
+                </a>
+              </div>
+
+              <div class="dropdown-divider"></div>
+
+              <div class="auth-demo-switcher">
+                <span class="demo-switch-label">Preview Auth State:</span>
+                <button class="btn-demo-toggle" id="btnToggleAuthState">
+                  Switch to Logged Out 🔄
+                </button>
+              </div>
+
+              <div class="dropdown-divider"></div>
+
+              <button class="user-menu-item user-logout-item" id="btnLogoutNav">
+                <span class="menu-icon">🚪</span> Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button class="menu-toggle" aria-expanded="false" aria-controls="navMenuWrapper" id="mobileMenuBtn">
+          <span class="sr-only">Toggle navigation menu</span>
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+        </button>
+      </div>
     </div>
   </header>
+
+  <!-- Search Modal -->
+  <div class="search-modal-overlay" id="searchModalOverlay">
+    <div class="search-modal-card">
+      <div class="search-modal-header">
+        <div class="search-input-wrapper">
+          <span class="search-modal-icon">🔍</span>
+          <input type="text" id="globalSearchInput" placeholder="Search anime, reviews, characters, or try natural prompt..." autocomplete="off">
+          <button class="search-modal-clear" id="btnClearSearch">✕</button>
+        </div>
+        <button class="search-modal-close" id="btnCloseSearchModal">Esc</button>
+      </div>
+
+      <div class="search-prompts-bar">
+        <span class="prompts-label">Try Natural Prompts:</span>
+        <button class="search-prompt-chip" data-query="I want an anime like Death Note">"Anime like Death Note"</button>
+        <button class="search-prompt-chip" data-query="Romance with no fan service">"Romance with no fan service"</button>
+        <button class="search-prompt-chip" data-query="Dark fantasy">"Dark fantasy"</button>
+        <button class="search-prompt-chip" data-query="Anime under 12 episodes">"Anime under 12 episodes"</button>
+        <button class="search-prompt-chip" data-query="Best anime for beginners">"Best anime for beginners"</button>
+      </div>
+
+      <div class="search-results-container" id="searchResultsContainer"></div>
+    </div>
+  </div>
 
   <main id="discussions-main">
     <!-- Hero Header section specifically for Discussions page -->
@@ -732,8 +954,12 @@
   <footer class="footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <a href="index.html" class="footer-logo" aria-label="OtakuVerse Footer Logo">
-          OtakuVerse <span>🌸</span>
+        <a href="index.html" class="logo" aria-label="OtakuVerse Footer Logo" style="display: inline-flex; width: fit-content; margin-bottom: 1rem;">
+          <img src="logo.jpg" alt="OtakuVerse Logo" class="brand-logo-img">
+          <div class="brand-text-wrapper">
+            <span class="brand-title"><span class="brand-otaku">OTAKU</span><span class="brand-verse">VERSE</span></span>
+            <span class="brand-sub">知恵 • ANIME REVIEWS COMMUNITY</span>
+          </div>
         </a>
         <p class="footer-desc">
           A dedicated community hub designed for meaningful debates, analytical critiques, and book clubs covering anime, manga, and manhwa.
@@ -744,10 +970,13 @@
         <h4>Navigation</h4>
         <ul class="footer-links">
           <li><a href="index.html" class="footer-link">Home</a></li>
-          <li><a href="about.html" class="footer-link">About</a></li>
-          <li><a href="programs.html" class="footer-link">Programs</a></li>
+          <li><a href="reviews.html" class="footer-link">Reviews</a></li>
+          <li><a href="discovery.html" class="footer-link">Discovery</a></li>
+          <li><a href="programs.html" class="footer-link">Community Hub</a></li>
           <li><a href="discussions.html" class="footer-link">Discussions</a></li>
+          <li><a href="about.html" class="footer-link">About</a></li>
           <li><a href="contact.html" class="footer-link">Contact</a></li>
+          <li><a href="account.html" class="footer-link">Join</a></li>
         </ul>
       </div>
 

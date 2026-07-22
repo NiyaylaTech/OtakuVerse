@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Join OtakuVerse - Build your anime profile, write reviews, track your anime library, earn badges, and join an exclusive global anime community.">
+  <title>Join the Community | OtakuVerse Anime Identity</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Skiplink for Keyboard Accessibility -->
+  <a href="#account-main" class="sr-only" style="background-color: var(--primary); color: #FFF; padding: 1rem; position: absolute; top: 0; left: 0; z-index: 10000; text-decoration: none; border-radius: 0 0 var(--radius-sm) 0;">Skip to main content</a>
+
+  <!-- Header Navigation -->
+  <header class="header-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="headerLogo" aria-label="OtakuVerse Home">
+        <img src="logo.jpg" alt="OtakuVerse Crane Emblem Logo" class="brand-logo-img">
+        <div class="brand-text-wrapper">
+          <span class="brand-title"><span class="brand-otaku">OTAKU</span><span class="brand-verse">VERSE</span></span>
+          <span class="brand-sub">知恵 • ANIME COMMUNITY</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="nav-menu-wrapper" id="navMenuWrapper">
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="index.html" class="nav-link">🏠 Home</a></li>
+          <li><a href="programs.html" class="nav-link">🎌 Community Hub</a></li>
+          <li><a href="reviews.html" class="nav-link">⭐ Reviews</a></li>
+          <li><a href="discussions.html" class="nav-link">💬 Discussions</a></li>
+          <li><a href="lists.html" class="nav-link">📚 Anime Lists</a></li>
+          <li><a href="rankings.html" class="nav-link">🏆 Rankings</a></li>
+          <li><a href="profile.html" class="nav-link">👤 Profile</a></li>
+        </ul>
+      </nav>
+
+      <!-- Far Right Controls -->
+      <div class="nav-actions-right">
+        <!-- Search Trigger Button -->
+        <button class="nav-action-btn search-trigger-btn" id="navSearchTrigger" aria-label="Search Anime, Reviews & Community" title="Search (Cmd+K)">
+          <span class="action-icon">🔍</span>
+          <span class="search-btn-label">Search...</span>
+          <kbd class="search-shortcut">⌘K</kbd>
+        </button>
+
+        <!-- Notifications Bell -->
+        <div class="nav-dropdown-container">
+          <button class="nav-action-btn notif-btn" id="navNotifBtn" aria-label="Notifications" title="Notifications">
+            <span class="action-icon">🔔</span>
+            <span class="notif-badge" id="notifBadgeCount">3</span>
+          </button>
+          <!-- Notifications Dropdown -->
+          <div class="nav-dropdown-menu notif-dropdown" id="notifDropdown">
+            <div class="dropdown-header">
+              <h4>🔔 Notifications</h4>
+              <button class="btn-text-action" id="btnMarkAllNotifsRead">Mark as read</button>
+            </div>
+            <div class="notif-list">
+              <a href="reviews.html" class="notif-item unread">
+                <span class="notif-avatar">👑</span>
+                <div class="notif-content">
+                  <p><strong>Aura_Fan_99</strong> liked your review of <em>Frieren: Beyond Journey's End</em>.</p>
+                  <span class="notif-time">10 minutes ago</span>
+                </div>
+              </a>
+              <a href="programs.html" class="notif-item unread">
+                <span class="notif-avatar">⚔️</span>
+                <div class="notif-content">
+                  <p>The <strong>Weekly Debate Bracket</strong> "Jinwoo vs. Saitama" is now LIVE!</p>
+                  <span class="notif-time">1 hour ago</span>
+                </div>
+              </a>
+              <a href="discussions.html" class="notif-item unread">
+                <span class="notif-avatar">💬</span>
+                <div class="notif-content">
+                  <p><strong>Manga_Reader_Sora</strong> replied to your Death Note plot theory thread.</p>
+                  <span class="notif-time">3 hours ago</span>
+                </div>
+              </a>
+            </div>
+            <div class="dropdown-footer">
+              <a href="profile.html#activity" class="dropdown-link-all">View All Activity Feed →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Create Dropdown Button -->
+        <div class="nav-dropdown-container">
+          <button class="btn btn-primary create-btn-nav" id="navCreateBtn" aria-label="Create Content">
+            <span class="btn-icon">➕</span>
+            <span class="create-btn-text">Create</span>
+            <span class="dropdown-caret">▾</span>
+          </button>
+          <!-- Create Menu Dropdown -->
+          <div class="nav-dropdown-menu create-dropdown" id="createDropdown">
+            <div class="dropdown-header">
+              <h4>➕ Create New</h4>
+            </div>
+            <div class="create-options-list">
+              <a href="reviews.html#write" class="create-item-link">
+                <span class="create-icon">✍️</span>
+                <div>
+                  <strong>Write a Review</strong>
+                  <small>Share score & category critiques</small>
+                </div>
+              </a>
+              <a href="discussions.html#new" class="create-item-link">
+                <span class="create-icon">💬</span>
+                <div>
+                  <strong>Start a Discussion</strong>
+                  <small>Episode chat, theories & debates</small>
+                </div>
+              </a>
+              <a href="lists.html#new" class="create-item-link">
+                <span class="create-icon">📚</span>
+                <div>
+                  <strong>Create an Anime List</strong>
+                  <small>Organize custom collections</small>
+                </div>
+              </a>
+              <a href="programs.html#clubs" class="create-item-link">
+                <span class="create-icon">🎌</span>
+                <div>
+                  <strong>Create a Club</strong>
+                  <small>Form a fan circle or watch group</small>
+                </div>
+              </a>
+              <a href="programs.html#polls" class="create-item-link">
+                <span class="create-icon">📊</span>
+                <div>
+                  <strong>Create a Poll</strong>
+                  <small>Vote on characters or episodes</small>
+                </div>
+              </a>
+              <a href="discussions.html#fanart" class="create-item-link">
+                <span class="create-icon">🎨</span>
+                <div>
+                  <strong>Share Fan Art</strong>
+                  <span class="badge-new">NEW</span>
+                </div>
+              </a>
+              <a href="discovery.html" class="create-item-link">
+                <span class="create-icon">💡</span>
+                <div>
+                  <strong>Submit Recommendation</strong>
+                  <small>Suggest hidden gems</small>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Auth State Switcher & Avatar Dropdown -->
+        <div class="nav-user-container" id="navUserContainer">
+          <div class="nav-auth-buttons" id="navAuthLoggedOut" style="display: none;">
+            <a href="account.html?mode=login" class="btn btn-secondary nav-login-btn">Login</a>
+            <a href="account.html?mode=signup" class="btn btn-primary nav-signup-btn">Create Account</a>
+          </div>
+
+          <div class="nav-dropdown-container" id="navAuthLoggedIn">
+            <button class="nav-user-avatar-btn" id="navAvatarBtn" aria-label="User Account Menu">
+              <img src="https://picsum.photos/seed/otaku_user_avatar/100/100" alt="User Avatar" class="nav-avatar-img">
+              <span class="nav-level-badge">Lv. 24</span>
+            </button>
+            
+            <div class="nav-dropdown-menu user-dropdown" id="userDropdown">
+              <div class="user-dropdown-profile">
+                <img src="https://picsum.photos/seed/otaku_user_avatar/100/100" alt="User Avatar" class="user-dropdown-img">
+                <div class="user-dropdown-meta">
+                  <strong class="user-dropdown-name">Kenji_Grand_Scholar</strong>
+                  <span class="user-dropdown-rank">👑 Rank #4 Top Critic</span>
+                  <span class="user-dropdown-xp">XP: 14,850 / 15,000</span>
+                </div>
+              </div>
+              
+              <div class="dropdown-divider"></div>
+
+              <div class="user-menu-links">
+                <a href="profile.html" class="user-menu-item">
+                  <span class="menu-icon">👤</span> My Profile
+                </a>
+                <a href="lists.html" class="user-menu-item">
+                  <span class="menu-icon">📚</span> Anime Library
+                </a>
+                <a href="reviews.html" class="user-menu-item">
+                  <span class="menu-icon">⭐</span> My Reviews
+                </a>
+                <a href="discussions.html" class="user-menu-item">
+                  <span class="menu-icon">💬</span> My Discussions
+                </a>
+                <a href="profile.html#achievements" class="user-menu-item">
+                  <span class="menu-icon">🏆</span> Achievements
+                </a>
+                <a href="account.html" class="user-menu-item">
+                  <span class="menu-icon">⚙️</span> Settings
+                </a>
+                <a href="javascript:void(0)" class="user-menu-item">
+                  <span class="menu-icon">🔔</span> Notifications
+                </a>
+                <button class="user-menu-item btn-theme-toggle">
+                  <span class="menu-icon">🌙</span> Dark Mode
+                </button>
+                <a href="contact.html" class="user-menu-item">
+                  <span class="menu-icon">❓</span> Help Center
+                </a>
+              </div>
+
+              <div class="dropdown-divider"></div>
+
+              <div class="auth-demo-switcher">
+                <span class="demo-switch-label">Preview Auth State:</span>
+                <button class="btn-demo-toggle" id="btnToggleAuthState">
+                  Switch to Logged Out 🔄
+                </button>
+              </div>
+
+              <div class="dropdown-divider"></div>
+
+              <button class="user-menu-item user-logout-item" id="btnLogoutNav">
+                <span class="menu-icon">🚪</span> Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button class="menu-toggle" aria-expanded="false" aria-controls="navMenuWrapper" id="mobileMenuBtn">
+          <span class="sr-only">Toggle navigation menu</span>
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search Modal -->
+  <div class="search-modal-overlay" id="searchModalOverlay">
+    <div class="search-modal-card">
+      <div class="search-modal-header">
+        <div class="search-input-wrapper">
+          <span class="search-modal-icon">🔍</span>
+          <input type="text" id="globalSearchInput" placeholder="Search anime, reviews, characters, or try natural prompt..." autocomplete="off">
+          <button class="search-modal-clear" id="btnClearSearch">✕</button>
+        </div>
+        <button class="search-modal-close" id="btnCloseSearchModal">Esc</button>
+      </div>
+
+      <div class="search-prompts-bar">
+        <span class="prompts-label">Try Natural Prompts:</span>
+        <button class="search-prompt-chip" data-query="I want an anime like Death Note">"Anime like Death Note"</button>
+        <button class="search-prompt-chip" data-query="Romance with no fan service">"Romance with no fan service"</button>
+        <button class="search-prompt-chip" data-query="Dark fantasy">"Dark fantasy"</button>
+        <button class="search-prompt-chip" data-query="Anime under 12 episodes">"Anime under 12 episodes"</button>
+        <button class="search-prompt-chip" data-query="Best anime for beginners">"Best anime for beginners"</button>
+      </div>
+
+      <div class="search-results-container" id="searchResultsContainer"></div>
+    </div>
+  </div>
+
+  <main id="account-main">
+    <!-- Hero Section -->
+    <section class="hero-section" style="padding: 5rem 0 4rem; background: radial-gradient(circle at 50% 20%, rgba(37, 102, 62, 0.3), rgba(6, 8, 7, 0.98) 75%); border-bottom: var(--outline-thick);">
+      <div class="container" style="text-align: center;">
+        <span class="hero-tag" style="margin: 0 auto 1.25rem;">創立 • EXCLUSIVE ANIME MEMBERSHIP</span>
+        <h1 class="hero-headline" style="font-size: 3.6rem; max-width: 920px; margin: 0 auto; line-height: 1.15;">
+          Join the <span>OtakuVerse</span> Community
+        </h1>
+        <p class="hero-subtext" style="max-width: 820px; margin: 1.5rem auto 2.25rem; font-weight: 500; line-height: 1.7; font-size: 1.18rem; color: var(--text-muted);">
+          Become part of a growing anime community where your opinions matter. Build your anime profile, write reviews, join discussions, earn achievements, and connect with fans who share your passion.
+        </p>
+
+        <div style="display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3.5rem;">
+          <button class="btn btn-primary" id="btnHeroSignup" style="padding: 0.95rem 2.25rem; font-size: 1.05rem;">
+            Create Free Account →
+          </button>
+          <a href="#account-preview" class="btn btn-secondary" style="padding: 0.95rem 2rem; font-size: 1.05rem;">
+            Explore as Guest
+          </a>
+        </div>
+
+        <!-- Small Statistic Section Bar -->
+        <div style="background-color: var(--surface-card); border: 1px solid var(--border-bright); border-radius: var(--radius-lg); padding: 1.25rem 2rem; max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.5);">
+          <div style="display: flex; align-items: center; gap: 0.65rem; font-weight: 800; color: var(--text); font-size: 0.98rem;">
+            <span style="font-size: 1.25rem;">⭐</span> Thousands of Reviews
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.65rem; font-weight: 800; color: var(--text); font-size: 0.98rem;">
+            <span style="font-size: 1.25rem;">💬</span> Active Community Discussions
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.65rem; font-weight: 800; color: var(--text); font-size: 0.98rem;">
+            <span style="font-size: 1.25rem;">🏆</span> Community Challenges
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.65rem; font-weight: 800; color: var(--text); font-size: 0.98rem;">
+            <span style="font-size: 1.25rem;">🎌</span> Anime Clubs
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.65rem; font-weight: 800; color: var(--accent); font-size: 0.98rem;">
+            <span style="font-size: 1.25rem;">❤️</span> Growing Every Day
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Create an Account? Section (8 Interactive Cards) -->
+    <section id="why-join" class="section" style="background-color: var(--surface);">
+      <div class="container">
+        <div class="section-header" style="text-align: center; margin-bottom: 3.5rem;">
+          <h2 style="font-family: var(--font-serif); font-size: 2.5rem;">Why Create an Account?</h2>
+          <p style="color: var(--text-muted); max-width: 680px; margin: 0.6rem auto 0; font-size: 1.05rem;">
+            Unlock exclusive community features, level up your profile, and share your anime passion with global readers and viewers.
+          </p>
+        </div>
+
+        <div class="features-benefit-grid">
+          
+          <!-- Card 1: Save Your Anime Library -->
+          <article class="feature-benefit-card" id="cardSaveLibrary">
+            <div class="feature-icon-badge">🔖</div>
+            <h3 class="feature-title">Save Your Anime Library</h3>
+            <p class="feature-desc">
+              Keep track of every anime you've watched. Organize your collection into Watching, Completed, Plan to Watch, On Hold, Dropped, and Favorites.
+            </p>
+          </article>
+
+          <!-- Card 2: Write Reviews -->
+          <article class="feature-benefit-card" id="cardWriteReviews">
+            <div class="feature-icon-badge">📓</div>
+            <h3 class="feature-title">Write Reviews</h3>
+            <p class="feature-desc">
+              Share your thoughts with the community by writing detailed reviews. Help others discover incredible anime while building your reputation as a reviewer.
+            </p>
+          </article>
+
+          <!-- Card 3: Follow Reviewers -->
+          <article class="feature-benefit-card" id="cardFollowReviewers">
+            <div class="feature-icon-badge">👥</div>
+            <h3 class="feature-title">Follow Reviewers</h3>
+            <p class="feature-desc">
+              Follow your favorite reviewers and never miss their newest recommendations, episode critiques, or analytical opinions.
+            </p>
+          </article>
+
+          <!-- Card 4: Join Anime Clubs -->
+          <article class="feature-benefit-card" id="cardJoinClubs">
+            <div class="feature-icon-badge">🎌</div>
+            <h3 class="feature-title">Join Anime Clubs</h3>
+            <p class="feature-desc">
+              Join clubs dedicated to your favorite anime, manga, genres, studios, and characters to chat with like-minded members.
+            </p>
+          </article>
+
+          <!-- Card 5: Earn Achievements -->
+          <article class="feature-benefit-card" id="cardEarnAchievements">
+            <div class="feature-icon-badge">🏆</div>
+            <h3 class="feature-title">Earn Achievements</h3>
+            <p class="feature-desc">
+              Unlock badges by reviewing anime, participating in discussions, completing weekly challenges, and helping other members.
+            </p>
+          </article>
+
+          <!-- Card 6: Vote in Community Polls -->
+          <article class="feature-benefit-card" id="cardVotePolls">
+            <div class="feature-icon-badge">🗳️</div>
+            <h3 class="feature-title">Vote in Community Polls</h3>
+            <p class="feature-desc">
+              Help decide Anime of the Week, Best Opening, Favorite Characters, and many other community rankings.
+            </p>
+          </article>
+
+          <!-- Card 7: Climb the Rankings -->
+          <article class="feature-benefit-card" id="cardClimbRankings">
+            <div class="feature-icon-badge">📊</div>
+            <h3 class="feature-title">Climb the Rankings</h3>
+            <p class="feature-desc">
+              Earn reputation points and climb the community leaderboards by creating quality content and helping other members.
+            </p>
+          </article>
+
+          <!-- Card 8: Build Your Anime Identity -->
+          <article class="feature-benefit-card" id="cardBuildIdentity">
+            <div class="feature-icon-badge">👤</div>
+            <h3 class="feature-title">Build Your Anime Identity</h3>
+            <p class="feature-desc">
+              Customize your profile, showcase your achievements, display your favorite anime, and let others discover your unique anime journey.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Account Preview Dashboard Section -->
+    <section id="account-preview" class="section" style="background-color: var(--background);">
+      <div class="container">
+        <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+          <span class="hero-tag" style="margin: 0 auto 0.75rem;">MEMBER DASHBOARD PREVIEW</span>
+          <h2 style="font-family: var(--font-serif); font-size: 2.5rem;">My Otaku Profile</h2>
+          <p style="color: var(--text-muted); max-width: 680px; margin: 0.5rem auto 0; font-size: 1.05rem;">
+            Experience the rich, custom profile, tracking analytics, and reputation system unlocked after joining OtakuVerse.
+          </p>
+        </div>
+
+        <!-- Main Member Profile Card -->
+        <div class="profile-dashboard-card" id="userProfileDashboard">
+          <div class="profile-header-top">
+            <div class="profile-avatar-wrapper">
+              <div class="profile-avatar-large" id="profileAvatarText">KJ</div>
+              <div class="profile-avatar-frame"></div>
+            </div>
+
+            <div class="profile-meta-info">
+              <div class="profile-username" id="profileUsername">
+                <span id="displayUsernameText">Kenji_Master_Reviewer</span>
+                <span class="profile-level-badge" id="displayLevelText">Level 24 • Grand Lore Scholar</span>
+              </div>
+              <div class="profile-sub-meta">
+                <span>🏅 Rank: <strong style="color: var(--accent);">#14 Global</strong></span>
+                <span>📅 Joined: <strong style="color: var(--text);">July 2024</strong></span>
+                <span>👥 Followers: <strong style="color: var(--primary-bright);" id="displayFollowers">1,840</strong></span>
+                <span>👤 Following: <strong style="color: var(--text);">312</strong></span>
+                <span>⭐ Reputation: <strong style="color: var(--accent);" id="displayReputation">24,580 XP</strong></span>
+              </div>
+            </div>
+
+            <button class="btn btn-secondary" id="btnEditProfilePreview" style="align-self: flex-start; padding: 0.6rem 1.25rem; font-size: 0.88rem;">
+              ⚙️ Customize Profile
+            </button>
+          </div>
+
+          <!-- XP Progress Bar -->
+          <div class="xp-progress-container">
+            <div class="xp-progress-labels">
+              <span style="color: var(--text);">Progression to Level 25 (Elder Scholar)</span>
+              <span style="color: var(--accent);" id="xpTextLabel">18,400 / 25,000 XP (73%)</span>
+            </div>
+            <div class="xp-bar-bg">
+              <div class="xp-bar-fill" id="xpBarFill" style="width: 73%;"></div>
+            </div>
+          </div>
+
+          <!-- Statistics Grid -->
+          <div class="profile-stats-grid">
+            <div class="stat-box-card">
+              <div class="stat-box-num">184</div>
+              <div class="stat-box-label">Anime Watched</div>
+            </div>
+            <div class="stat-box-card">
+              <div class="stat-box-num">38</div>
+              <div class="stat-box-label">Reviews Written</div>
+            </div>
+            <div class="stat-box-card">
+              <div class="stat-box-num">512</div>
+              <div class="stat-box-label">Comments Posted</div>
+            </div>
+            <div class="stat-box-card">
+              <div class="stat-box-num">24</div>
+              <div class="stat-box-label">Discussions Created</div>
+            </div>
+            <div class="stat-box-card">
+              <div class="stat-box-num">2,140</div>
+              <div class="stat-box-label">Likes Received</div>
+            </div>
+            <div class="stat-box-card">
+              <div class="stat-box-num">380</div>
+              <div class="stat-box-label">Helpful Votes</div>
+            </div>
+            <div class="stat-box-card">
+              <div class="stat-box-num">18/24</div>
+              <div class="stat-box-label">Achievements</div>
+            </div>
+            <div class="stat-box-card">
+              <div class="stat-box-num" style="font-size: 1.1rem; color: #4EFA8B;">Dark Fantasy</div>
+              <div class="stat-box-label">Favorite Genre</div>
+            </div>
+          </div>
+
+          <!-- Extra Detailed Quick Attributes Bar -->
+          <div style="margin-top: 1.5rem; background-color: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">FAVORITE STUDIO</div>
+              <div style="font-weight: 800; color: var(--text); font-size: 0.95rem;">Studio Madhouse & MAPPA</div>
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">FAVORITE CHARACTER</div>
+              <div style="font-weight: 800; color: var(--accent); font-size: 0.95rem;">Frieren (Beyond Journey's End)</div>
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">FAVORITE ANIME</div>
+              <div style="font-weight: 800; color: var(--primary-bright); font-size: 0.95rem;">Frieren: Beyond Journey's End</div>
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">FAVORITE OPENING</div>
+              <div style="font-weight: 800; color: var(--text); font-size: 0.95rem;">"KICK BACK" - Kenshi Yonezu</div>
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">FAVORITE ENDING</div>
+              <div style="font-weight: 800; color: var(--text); font-size: 0.95rem;">"Anytime Anywhere" - milet</div>
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">CURRENT WATCHING</div>
+              <div style="font-weight: 800; color: #FF5555; font-size: 0.95rem;">Solo Leveling S2, Re:Zero S3</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Anime Collection Categories Section -->
+        <div style="margin-top: 3.5rem;">
+          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+            <span>📚</span> Anime Collection Tracking
+          </h3>
+
+          <div class="collection-status-bar" id="collectionBar">
+            <div class="collection-chip active" data-cat="watching">
+              <span>▶️ Watching</span>
+              <span class="collection-chip-count">8</span>
+            </div>
+            <div class="collection-chip" data-cat="completed">
+              <span>✅ Completed</span>
+              <span class="collection-chip-count">142</span>
+            </div>
+            <div class="collection-chip" data-cat="plan">
+              <span>📌 Plan to Watch</span>
+              <span class="collection-chip-count">65</span>
+            </div>
+            <div class="collection-chip" data-cat="onhold">
+              <span>⏸️ On Hold</span>
+              <span class="collection-chip-count">12</span>
+            </div>
+            <div class="collection-chip" data-cat="dropped">
+              <span>❌ Dropped</span>
+              <span class="collection-chip-count">4</span>
+            </div>
+            <div class="collection-chip" data-cat="favorites">
+              <span>❤️ Favorites</span>
+              <span class="collection-chip-count">10</span>
+            </div>
+          </div>
+
+          <!-- Category Active Content Box -->
+          <div id="collectionCategoryContent" style="background-color: var(--surface-card); border: 1px solid var(--border-bright); border-radius: var(--radius-lg); padding: 1.5rem;">
+            <!-- Rendered dynamically by JS -->
+          </div>
+        </div>
+
+        <!-- Achievements Badges Showcase -->
+        <div style="margin-top: 3.5rem;">
+          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+            <span>🏅</span> Collectible Achievements
+          </h3>
+
+          <div class="badges-grid">
+            <div class="badge-card">
+              <div class="badge-icon-wrap">🌸</div>
+              <h4 class="badge-title">First Review</h4>
+              <span class="badge-status-tag unlocked">✓ Unlocked</span>
+            </div>
+            <div class="badge-card">
+              <div class="badge-icon-wrap">🏆</div>
+              <h4 class="badge-title">Top Reviewer</h4>
+              <span class="badge-status-tag unlocked">✓ Unlocked</span>
+            </div>
+            <div class="badge-card">
+              <div class="badge-icon-wrap">🔥</div>
+              <h4 class="badge-title">Discussion Starter</h4>
+              <span class="badge-status-tag unlocked">✓ Unlocked</span>
+            </div>
+            <div class="badge-card">
+              <div class="badge-icon-wrap">🎌</div>
+              <h4 class="badge-title">Anime Explorer</h4>
+              <span class="badge-status-tag unlocked">✓ Unlocked</span>
+            </div>
+            <div class="badge-card">
+              <div class="badge-icon-wrap">❤️</div>
+              <h4 class="badge-title">Community Favorite</h4>
+              <span class="badge-status-tag unlocked">✓ Unlocked</span>
+            </div>
+            <div class="badge-card">
+              <div class="badge-icon-wrap">👑</div>
+              <h4 class="badge-title">Elite Reviewer</h4>
+              <span class="badge-status-tag unlocked">✓ Unlocked</span>
+            </div>
+            <div class="badge-card">
+              <div class="badge-icon-wrap">⭐</div>
+              <h4 class="badge-title">100 Anime Watched</h4>
+              <span class="badge-status-tag unlocked">✓ Unlocked</span>
+            </div>
+            <div class="badge-card">
+              <div class="badge-icon-wrap">📚</div>
+              <h4 class="badge-title">Manga Enthusiast</h4>
+              <span class="badge-status-tag unlocked">✓ Unlocked</span>
+            </div>
+            <div class="badge-card">
+              <div class="badge-icon-wrap">💬</div>
+              <h4 class="badge-title">Helpful Member</h4>
+              <span class="badge-status-tag unlocked">✓ Unlocked</span>
+            </div>
+            <div class="badge-card">
+              <div class="badge-icon-wrap">🎉</div>
+              <h4 class="badge-title">Founding Member</h4>
+              <span class="badge-status-tag unlocked">✓ Unlocked</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Favorite Characters Showcase -->
+        <div style="margin-top: 3.5rem;">
+          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+            <span>🎭</span> Favorite Characters
+          </h3>
+
+          <div class="character-cards-grid">
+            
+            <div class="character-card">
+              <div class="character-img-wrap">
+                <img src="https://picsum.photos/seed/frieren_char/400/400" alt="Frieren" referrerPolicy="no-referrer">
+              </div>
+              <div class="character-name">Frieren</div>
+              <div class="character-anime">Frieren: Beyond Journey's End</div>
+              <div class="character-quote">"After all, human lives are so short. I want to know them better."</div>
+            </div>
+
+            <div class="character-card">
+              <div class="character-img-wrap">
+                <img src="https://picsum.photos/seed/levi_char/400/400" alt="Levi Ackerman" referrerPolicy="no-referrer">
+              </div>
+              <div class="character-name">Levi Ackerman</div>
+              <div class="character-anime">Attack on Titan</div>
+              <div class="character-quote">"The only thing we're allowed to do is to believe that we won't regret the choice we made."</div>
+            </div>
+
+            <div class="character-card">
+              <div class="character-img-wrap">
+                <img src="https://picsum.photos/seed/gojo_char/400/400" alt="Gojo Satoru" referrerPolicy="no-referrer">
+              </div>
+              <div class="character-name">Gojo Satoru</div>
+              <div class="character-anime">Jujutsu Kaisen</div>
+              <div class="character-quote">"Don't worry, I'm the strongest."</div>
+            </div>
+
+            <div class="character-card">
+              <div class="character-img-wrap">
+                <img src="https://picsum.photos/seed/jinwoo_char/400/400" alt="Sung Jinwoo" referrerPolicy="no-referrer">
+              </div>
+              <div class="character-name">Sung Jinwoo</div>
+              <div class="character-anime">Solo Leveling</div>
+              <div class="character-quote">"Arise."</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Top 10 Favorite Pinned Anime Posters -->
+        <div style="margin-top: 3.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.8rem; display: flex; align-items: center; gap: 0.75rem; margin: 0;">
+              <span>📌</span> Top 10 Pinned Favorite Anime
+            </h3>
+            <span style="font-size: 0.85rem; color: var(--accent); font-weight: 700;">Pinned to Profile</span>
+          </div>
+
+          <div class="posters-pinned-grid">
+            
+            <div class="poster-pin-card">
+              <span class="poster-pin-num">1</span>
+              <img src="https://picsum.photos/seed/frieren_poster/300/400" alt="Frieren Poster" class="poster-pin-img" referrerPolicy="no-referrer">
+              <div class="poster-pin-info">
+                <div class="poster-pin-title">Frieren</div>
+                <div class="poster-pin-genre">Fantasy • ★ 9.8</div>
+              </div>
+            </div>
+
+            <div class="poster-pin-card">
+              <span class="poster-pin-num">2</span>
+              <img src="https://picsum.photos/seed/fmab_poster/300/400" alt="FMAB Poster" class="poster-pin-img" referrerPolicy="no-referrer">
+              <div class="poster-pin-info">
+                <div class="poster-pin-title">FMAB</div>
+                <div class="poster-pin-genre">Shonen • ★ 9.5</div>
+              </div>
+            </div>
+
+            <div class="poster-pin-card">
+              <span class="poster-pin-num">3</span>
+              <img src="https://picsum.photos/seed/steins_poster/300/400" alt="Steins Gate Poster" class="poster-pin-img" referrerPolicy="no-referrer">
+              <div class="poster-pin-info">
+                <div class="poster-pin-title">Steins;Gate</div>
+                <div class="poster-pin-genre">Sci-Fi • ★ 9.4</div>
+              </div>
+            </div>
+
+            <div class="poster-pin-card">
+              <span class="poster-pin-num">4</span>
+              <img src="https://picsum.photos/seed/hxh_poster/300/400" alt="Hunter x Hunter Poster" class="poster-pin-img" referrerPolicy="no-referrer">
+              <div class="poster-pin-info">
+                <div class="poster-pin-title">Hunter x Hunter</div>
+                <div class="poster-pin-genre">Action • ★ 9.3</div>
+              </div>
+            </div>
+
+            <div class="poster-pin-card">
+              <span class="poster-pin-num">5</span>
+              <img src="https://picsum.photos/seed/aot_poster/300/400" alt="Attack on Titan Poster" class="poster-pin-img" referrerPolicy="no-referrer">
+              <div class="poster-pin-info">
+                <div class="poster-pin-title">Attack on Titan</div>
+                <div class="poster-pin-genre">Dark Fantasy • ★ 9.2</div>
+              </div>
+            </div>
+
+            <div class="poster-pin-card">
+              <span class="poster-pin-num">6</span>
+              <img src="https://picsum.photos/seed/solo_poster/300/400" alt="Solo Leveling Poster" class="poster-pin-img" referrerPolicy="no-referrer">
+              <div class="poster-pin-info">
+                <div class="poster-pin-title">Solo Leveling</div>
+                <div class="poster-pin-genre">Action • ★ 9.1</div>
+              </div>
+            </div>
+
+            <div class="poster-pin-card">
+              <span class="poster-pin-num">7</span>
+              <img src="https://picsum.photos/seed/jkk_poster/300/400" alt="Jujutsu Kaisen Poster" class="poster-pin-img" referrerPolicy="no-referrer">
+              <div class="poster-pin-info">
+                <div class="poster-pin-title">Jujutsu Kaisen</div>
+                <div class="poster-pin-genre">Supernatural • ★ 9.0</div>
+              </div>
+            </div>
+
+            <div class="poster-pin-card">
+              <span class="poster-pin-num">8</span>
+              <img src="https://picsum.photos/seed/csm_poster/300/400" alt="Chainsaw Man Poster" class="poster-pin-img" referrerPolicy="no-referrer">
+              <div class="poster-pin-info">
+                <div class="poster-pin-title">Chainsaw Man</div>
+                <div class="poster-pin-genre">Action • ★ 8.9</div>
+              </div>
+            </div>
+
+            <div class="poster-pin-card">
+              <span class="poster-pin-num">9</span>
+              <img src="https://picsum.photos/seed/vinland_poster/300/400" alt="Vinland Saga Poster" class="poster-pin-img" referrerPolicy="no-referrer">
+              <div class="poster-pin-info">
+                <div class="poster-pin-title">Vinland Saga</div>
+                <div class="poster-pin-genre">Seinen • ★ 9.2</div>
+              </div>
+            </div>
+
+            <div class="poster-pin-card">
+              <span class="poster-pin-num">10</span>
+              <img src="https://picsum.photos/seed/cyberpunk_poster/300/400" alt="Cyberpunk Poster" class="poster-pin-img" referrerPolicy="no-referrer">
+              <div class="poster-pin-info">
+                <div class="poster-pin-title">Edgerunners</div>
+                <div class="poster-pin-genre">Sci-Fi • ★ 8.9</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Favorite Openings & Endings -->
+        <div style="margin-top: 3.5rem;">
+          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+            <span>🎵</span> Favorite Openings & Endings
+          </h3>
+
+          <div style="background-color: var(--surface-card); border: 1px solid var(--border-bright); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem;">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; background-color: rgba(0,0,0,0.4); padding: 0.85rem 1.25rem; border-radius: var(--radius-sm); border-left: 3px solid var(--primary-bright);">
+              <div>
+                <div style="font-weight: 800; color: #FFF; font-size: 1rem;">"KICK BACK" — Kenshi Yonezu</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted);">Chainsaw Man Opening 1</div>
+              </div>
+              <div style="color: var(--accent); font-weight: 800; font-family: var(--font-serif);">★ 10/10</div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; background-color: rgba(0,0,0,0.4); padding: 0.85rem 1.25rem; border-radius: var(--radius-sm); border-left: 3px solid var(--accent);">
+              <div>
+                <div style="font-weight: 800; color: #FFF; font-size: 1rem;">"Haru" — Yoasobi</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted);">Frieren: Beyond Journey's End Opening 2</div>
+              </div>
+              <div style="color: var(--accent); font-weight: 800; font-family: var(--font-serif);">★ 10/10</div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; background-color: rgba(0,0,0,0.4); padding: 0.85rem 1.25rem; border-radius: var(--radius-sm); border-left: 3px solid var(--primary-bright);">
+              <div>
+                <div style="font-weight: 800; color: #FFF; font-size: 1rem;">"SPECIALZ" — King Gnu</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted);">Jujutsu Kaisen Season 2 Opening 2</div>
+              </div>
+              <div style="color: var(--accent); font-weight: 800; font-family: var(--font-serif);">★ 9.8/10</div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; background-color: rgba(0,0,0,0.4); padding: 0.85rem 1.25rem; border-radius: var(--radius-sm); border-left: 3px solid var(--accent);">
+              <div>
+                <div style="font-weight: 800; color: #FFF; font-size: 1rem;">"LEveL" — SawanoHiroyuki[nZk]:TOMORROW X TOGETHER</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted);">Solo Leveling Season 1 Opening</div>
+              </div>
+              <div style="color: var(--accent); font-weight: 800; font-family: var(--font-serif);">★ 9.5/10</div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; background-color: rgba(0,0,0,0.4); padding: 0.85rem 1.25rem; border-radius: var(--radius-sm); border-left: 3px solid var(--primary-bright);">
+              <div>
+                <div style="font-weight: 800; color: #FFF; font-size: 1rem;">"The Rumbling" — SiM</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted);">Attack on Titan Final Season Opening</div>
+              </div>
+              <div style="color: var(--accent); font-weight: 800; font-family: var(--font-serif);">★ 9.7/10</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Favorite Animation Studios -->
+        <div style="margin-top: 3.5rem;">
+          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+            <span>🏢</span> Favorite Animation Studios
+          </h3>
+
+          <div class="studios-grid">
+            <div class="studio-card">
+              <div class="studio-name">MAPPA</div>
+              <div class="studio-works">Jujutsu Kaisen • Chainsaw Man • Attack on Titan</div>
+            </div>
+            <div class="studio-card">
+              <div class="studio-name">Ufotable</div>
+              <div class="studio-works">Demon Slayer • Fate/Zero • Kara no Kyoukai</div>
+            </div>
+            <div class="studio-card">
+              <div class="studio-name">Kyoto Animation</div>
+              <div class="studio-works">Violet Evergarden • A Silent Voice • Clannad</div>
+            </div>
+            <div class="studio-card">
+              <div class="studio-name">Bones</div>
+              <div class="studio-works">Fullmetal Alchemist • My Hero Academia • Mob Psycho</div>
+            </div>
+            <div class="studio-card">
+              <div class="studio-name">Madhouse</div>
+              <div class="studio-works">Frieren • Death Note • Hunter x Hunter</div>
+            </div>
+            <div class="studio-card">
+              <div class="studio-name">WIT Studio</div>
+              <div class="studio-works">Attack on Titan S1-3 • Vinland Saga • Spy x Family</div>
+            </div>
+            <div class="studio-card">
+              <div class="studio-name">Trigger</div>
+              <div class="studio-works">Cyberpunk: Edgerunners • Kill la Kill • Delicious in Dungeon</div>
+            </div>
+            <div class="studio-card">
+              <div class="studio-name">CloverWorks</div>
+              <div class="studio-works">Bocchi the Rock! • The Promised Neverland • My Dress-Up Darling</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Latest Reviews Section -->
+        <div style="margin-top: 3.5rem;">
+          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+            <span>✍️</span> Latest Published Reviews
+          </h3>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+            
+            <article class="hub-card" style="padding: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <span class="hub-card-badge gold" style="margin-bottom: 0;">★ 10/10 MASTERPIECE</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Published July 18, 2026</span>
+              </div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--text); margin-bottom: 0.5rem;">
+                Frieren: How Quiet Pacing Redefines High Fantasy
+              </h4>
+              <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 1.25rem;">
+                Madhouse's adaptation of Yamada Kanehito's manga treats time as a tangible character. The quiet stillness between major battles conveys centuries of elven memory with profound subtlety...
+              </p>
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--primary-bright); font-weight: 700;">
+                <span>❤️ 342 Likes • 💬 48 Comments</span>
+                <a href="discussions.html" class="btn btn-secondary" style="padding: 0.4rem 0.85rem; font-size: 0.8rem;">Read Review →</a>
+              </div>
+            </article>
+
+            <article class="hub-card" style="padding: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <span class="hub-card-badge" style="margin-bottom: 0;">★ 9.5/10 EXCELLENT</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Published July 10, 2026</span>
+              </div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--text); margin-bottom: 0.5rem;">
+                Solo Leveling Season 2: Webtoon Pacing Fidelity
+              </h4>
+              <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 1.25rem;">
+                A-1 Pictures captures the high-contrast shadow monarch aura with breathtaking compositing. The power scaling progression remains intensely satisfying without sacrificing story weight...
+              </p>
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--primary-bright); font-weight: 700;">
+                <span>❤️ 218 Likes • 💬 32 Comments</span>
+                <a href="discussions.html" class="btn btn-secondary" style="padding: 0.4rem 0.85rem; font-size: 0.8rem;">Read Review →</a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- Latest Comments Section -->
+        <div style="margin-top: 3.5rem;">
+          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+            <span>💬</span> Recent Community Comments
+          </h3>
+
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            
+            <div style="background-color: var(--surface-card); border: 1px solid var(--border); padding: 1.25rem; border-radius: var(--radius-md);">
+              <div style="font-size: 0.85rem; color: var(--accent); font-weight: 800; margin-bottom: 0.35rem;">
+                Discussion: Sung Jinwoo vs Saitama Power Scaling Debate
+              </div>
+              <p style="color: var(--text); font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem;">
+                "While Saitama's gag logic transcends traditional energy output, Jinwoo's infinite domain expansion with millions of immortal shadows creates an intriguing conceptual dilemma..."
+              </p>
+              <div style="font-size: 0.78rem; color: var(--text-muted); display: flex; gap: 1rem;">
+                <span>👍 42 Likes</span>
+                <span>↩️ 12 Replies</span>
+                <span>🕒 3 hours ago</span>
+              </div>
+            </div>
+
+            <div style="background-color: var(--surface-card); border: 1px solid var(--border); padding: 1.25rem; border-radius: var(--radius-md);">
+              <div style="font-size: 0.85rem; color: var(--accent); font-weight: 800; margin-bottom: 0.35rem;">
+                Discussion: Re:Zero Season 3 Episode 8 Reactions
+              </div>
+              <p style="color: var(--text); font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem;">
+                "Subaru's mental fortitude in this arc is peak psychological writing. Tappei Nagatsuki never fails to deliver brutal consequences with emotional redemption."
+              </p>
+              <div style="font-size: 0.78rem; color: var(--text-muted); display: flex; gap: 1rem;">
+                <span>👍 28 Likes</span>
+                <span>↩️ 5 Replies</span>
+                <span>🕒 Yesterday</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Social Activity Feed Section -->
+        <div style="margin-top: 3.5rem;">
+          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+            <span>📡</span> Live Social Activity Stream
+          </h3>
+
+          <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+            <div class="activity-item-card">
+              <div class="activity-avatar">KJ</div>
+              <div class="activity-content">
+                <div class="activity-meta"><span class="activity-user-name">Kenji_Master_Reviewer</span></div>
+                <div class="activity-text">Published a new 10/10 critique on <strong>Frieren: Beyond Journey's End</strong></div>
+                <div class="activity-time">🕒 2 hours ago</div>
+              </div>
+            </div>
+
+            <div class="activity-item-card">
+              <div class="activity-avatar">KJ</div>
+              <div class="activity-content">
+                <div class="activity-meta"><span class="activity-user-name">Kenji_Master_Reviewer</span></div>
+                <div class="activity-text">Started watching <strong>Solo Leveling (Season 2)</strong></div>
+                <div class="activity-time">🕒 5 hours ago</div>
+              </div>
+            </div>
+
+            <div class="activity-item-card">
+              <div class="activity-avatar">KJ</div>
+              <div class="activity-content">
+                <div class="activity-meta"><span class="activity-user-name">Kenji_Master_Reviewer</span></div>
+                <div class="activity-text">Earned the collectible achievement <strong>"Top Reviewer"</strong> 🏆</div>
+                <div class="activity-time">🕒 1 day ago</div>
+              </div>
+            </div>
+
+            <div class="activity-item-card">
+              <div class="activity-avatar">KJ</div>
+              <div class="activity-content">
+                <div class="activity-meta"><span class="activity-user-name">Kenji_Master_Reviewer</span></div>
+                <div class="activity-text">Joined the official <strong>Romance & Slice of Life Club</strong> 🌸</div>
+                <div class="activity-time">🕒 2 days ago</div>
+              </div>
+            </div>
+
+            <div class="activity-item-card">
+              <div class="activity-avatar">KJ</div>
+              <div class="activity-content">
+                <div class="activity-meta"><span class="activity-user-name">Kenji_Master_Reviewer</span></div>
+                <div class="activity-text">Marked <strong>Attack on Titan</strong> as Completed (100%)</div>
+                <div class="activity-time">🕒 3 days ago</div>
+              </div>
+            </div>
+
+            <div class="activity-item-card">
+              <div class="activity-avatar">KJ</div>
+              <div class="activity-content">
+                <div class="activity-meta"><span class="activity-user-name">Kenji_Master_Reviewer</span></div>
+                <div class="activity-text">Voted in the weekly poll: <strong>"Anime of the Season"</strong> 🗳️</div>
+                <div class="activity-time">🕒 4 days ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RPG-Inspired Reputation & Level System Section -->
+        <div style="margin-top: 4rem;" id="rpg-progression">
+          <div class="rpg-progression-card">
+            <span class="hero-tag" style="margin-bottom: 0.5rem;">RPG REPUTATION & EXPERIENCE SYSTEM</span>
+            <h3 style="font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 0.75rem;">Level Up Your Anime Identity</h3>
+            <p style="color: var(--text-muted); max-width: 800px; line-height: 1.6; margin-bottom: 1.5rem;">
+              Every critique you write, discussion you spark, and poll you participate in grants Experience Points (XP). Leveling up unlocks custom animated profile borders, exclusive lore badges, and cosmetic community perks!
+            </p>
+
+            <div class="xp-sources-grid">
+              <div class="xp-source-item">
+                <span class="xp-source-title">✍️ Writing Detailed Reviews</span>
+                <span class="xp-source-val">+150 XP</span>
+              </div>
+              <div class="xp-source-item">
+                <span class="xp-source-title">❤️ Receiving Member Likes</span>
+                <span class="xp-source-val">+10 XP / Like</span>
+              </div>
+              <div class="xp-source-item">
+                <span class="xp-source-title">💬 Creating Discussion Threads</span>
+                <span class="xp-source-val">+50 XP</span>
+              </div>
+              <div class="xp-source-item">
+                <span class="xp-source-title">🤝 Helpful Comment Votes</span>
+                <span class="xp-source-val">+20 XP</span>
+              </div>
+              <div class="xp-source-item">
+                <span class="xp-source-title">👑 Completing Weekly Challenges</span>
+                <span class="xp-source-val">+300 XP</span>
+              </div>
+              <div class="xp-source-item">
+                <span class="xp-source-title">🗳️ Voting in Community Polls</span>
+                <span class="xp-source-val">+25 XP</span>
+              </div>
+              <div class="xp-source-item">
+                <span class="xp-source-title">🎌 Joining Anime Clubs</span>
+                <span class="xp-source-val">+30 XP</span>
+              </div>
+              <div class="xp-source-item">
+                <span class="xp-source-title">📚 Logging Watched Anime</span>
+                <span class="xp-source-val">+15 XP</span>
+              </div>
+              <div class="xp-source-item">
+                <span class="xp-source-title">👤 Completing Profile Info</span>
+                <span class="xp-source-val">+100 XP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section id="cta-join" class="section" style="background: radial-gradient(circle at 50% 50%, rgba(37, 102, 62, 0.35), rgba(6, 8, 7, 0.98) 80%); border-top: var(--outline-thick); border-bottom: var(--outline-thick);">
+      <div class="container" style="text-align: center; max-width: 850px;">
+        <span class="hero-tag" style="margin: 0 auto 1rem;">創立 • BECOME AN OTAKUVERSE MEMBER</span>
+        <h2 style="font-family: var(--font-serif); font-size: 3rem; margin-bottom: 1.25rem;">
+          Your Anime Journey Starts Here
+        </h2>
+        <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.7; margin-bottom: 2.25rem; font-weight: 500;">
+          Whether you're a casual viewer or a lifelong anime fan, OtakuVerse gives you the tools to discover new series, share your opinions, connect with fellow fans, and build your own anime legacy.
+        </p>
+
+        <button class="btn btn-primary" id="btnCtaSignup" style="padding: 1.1rem 2.75rem; font-size: 1.15rem; box-shadow: 0 0 25px rgba(56, 155, 95, 0.6);">
+          Create My Free Account →
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive Registration / Profile Customization Modal -->
+  <div id="accountModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="accModalTitle">
+    <div class="modal-content" style="max-width: 600px;">
+      <button class="modal-close" id="accModalClose" aria-label="Close dialog">&times;</button>
+      <div class="modal-header">
+        <h3 id="accModalTitle">Join the OtakuVerse Community</h3>
+      </div>
+      <div class="modal-body" id="accModalBody">
+        <form id="signupForm" style="display: flex; flex-direction: column; gap: 1rem;">
+          <div>
+            <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem;">Desired Otaku Username</label>
+            <input type="text" id="signupUsername" placeholder="e.g. Kenji_Anime_Scholar" class="activity-input-field" required>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem;">Email Address</label>
+            <input type="email" id="signupEmail" placeholder="your.email@domain.com" class="activity-input-field" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div>
+              <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem;">Password</label>
+              <input type="password" placeholder="••••••••" class="activity-input-field" required>
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.35rem;">Primary Anime Interest</label>
+              <select id="signupGenre" class="activity-input-field">
+                <option value="Shonen & Action">Shonen & Action</option>
+                <option value="Dark Fantasy">Dark Fantasy</option>
+                <option value="Seinen & Psychological">Seinen & Psychological</option>
+                <option value="Romance & Slice of Life">Romance & Slice of Life</option>
+                <option value="Sci-Fi & Mecha">Sci-Fi & Mecha</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 0.85rem; font-size: 1rem;">
+            Complete Free Registration ✨
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo" aria-label="OtakuVerse Footer Logo" style="display: inline-flex; width: fit-content; margin-bottom: 1rem;">
+          <img src="logo.jpg" alt="OtakuVerse Logo" class="brand-logo-img">
+          <div class="brand-text-wrapper">
+            <span class="brand-title"><span class="brand-otaku">OTAKU</span><span class="brand-verse">VERSE</span></span>
+            <span class="brand-sub">知恵 • ANIME REVIEWS COMMUNITY</span>
+          </div>
+        </a>
+        <p class="footer-desc">
+          A dedicated community hub designed for meaningful debates, analytical critiques, and book clubs covering anime, manga, and manhwa.
+        </p>
+      </div>
+
+      <div class="footer-col" id="footerColLinks">
+        <h4>Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="index.html" class="footer-link">Home</a></li>
+          <li><a href="reviews.html" class="footer-link">Reviews</a></li>
+          <li><a href="discovery.html" class="footer-link">Discovery</a></li>
+          <li><a href="programs.html" class="footer-link">Community Hub</a></li>
+          <li><a href="discussions.html" class="footer-link">Discussions</a></li>
+          <li><a href="about.html" class="footer-link">About</a></li>
+          <li><a href="contact.html" class="footer-link">Contact</a></li>
+          <li><a href="account.html" class="footer-link">Join</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col" id="footerColSocials">
+        <h4>Follow Our Community</h4>
+        <p class="footer-desc" style="margin-bottom: 1rem;">Stay updated with weekly debate brackets and analytical publication summaries on social media!</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="Follow us on Twitter">TW</a>
+          <a href="#" class="social-icon" aria-label="Join our Discord community">DC</a>
+          <a href="#" class="social-icon" aria-label="Check out our Instagram updates">IG</a>
+          <a href="#" class="social-icon" aria-label="Watch our YouTube video reviews">YT</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2026 OtakuVerse. All rights reserved. Created with dedication for global anime readers & viewers.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

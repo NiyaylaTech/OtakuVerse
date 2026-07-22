@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="OtakuVerse - The premier discussion and debate hub for anime, manga, and manhwa enthusiasts.">
-  <title>OtakuVerse | Anime, Manga & Manhwa Discussion Community</title>
+  <meta name="description" content="OtakuVerse User Anime Passport & Profile - View achievements, stats, reviews, custom themes, and activity.">
+  <title>Kenji_Grand_Scholar's Anime Passport | OtakuVerse</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Skiplink for Keyboard Accessibility -->
-  <a href="#home-main" class="sr-only" style="background-color: var(--primary); color: #FFF; padding: 1rem; position: absolute; top: 0; left: 0; z-index: 10000; text-decoration: none; border-radius: 0 0 var(--radius-sm) 0;">Skip to main content</a>
+  <!-- Skiplink for Accessibility -->
+  <a href="#profile-main" class="sr-only">Skip to main content</a>
 
   <!-- Header Navigation -->
   <header class="header-nav">
@@ -26,13 +26,13 @@
       <!-- Navigation Links -->
       <nav class="nav-menu-wrapper" id="navMenuWrapper">
         <ul class="nav-menu" id="navMenu">
-          <li><a href="index.html" class="nav-link active">🏠 Home</a></li>
+          <li><a href="index.html" class="nav-link">🏠 Home</a></li>
           <li><a href="programs.html" class="nav-link">🎌 Community Hub</a></li>
           <li><a href="reviews.html" class="nav-link">⭐ Reviews</a></li>
           <li><a href="discussions.html" class="nav-link">💬 Discussions</a></li>
           <li><a href="lists.html" class="nav-link">📚 Anime Lists</a></li>
           <li><a href="rankings.html" class="nav-link">🏆 Rankings</a></li>
-          <li><a href="profile.html" class="nav-link">👤 Profile</a></li>
+          <li><a href="profile.html" class="nav-link active">👤 Profile</a></li>
         </ul>
       </nav>
 
@@ -260,151 +260,180 @@
     </div>
   </div>
 
-  <main id="home-main">
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-            <span class="hero-tag">知恵 • WISDOM HUB</span>
-            <span class="hero-tag" style="background-color: var(--primary); color: #FFF;">夢 • DREAM CIRCLE</span>
-          </div>
-          <h1 class="hero-headline">The Ultimate Anime, Manga & Manhwa <span style="color: var(--primary-bright);">Debate Circle</span></h1>
-          <p class="hero-subtext">
-            Step into OtakuVerse—a dedicated space for anime fans, manga readers, and manhwa enthusiasts to review series, participate in weekly debate brackets, and discover original creations.
-          </p>
-          <div class="hero-actions">
-            <a href="programs.html" class="btn btn-primary" id="btnExplore">Explore Discussions</a>
-            <a href="contact.html" class="btn btn-secondary" id="btnJoin">Join the Community</a>
-          </div>
-        </div>
-        <div class="hero-image-wrapper" style="margin-bottom: 4rem;">
-          <div class="hero-video-container" id="heroVideoContainer">
-            <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%; padding-bottom: 0; overflow: hidden; will-change: transform; border-radius: 12px 12px 0 0;">
-              <iframe id="heroVideoIframe" loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;"
-                src="https://www.canva.com/design/DAHPNzT1ys4/kX5HV8YzDawyWiG59aNfiQ/watch?embed&amp;autoplay=1" allowfullscreen="allowfullscreen" allow="fullscreen; autoplay">
-              </iframe>
-            </div>
-            <!-- Interactive Play/Pause/Replay Controls -->
-            <div class="video-controls">
-              <button class="control-btn" id="btnPlayVideo" style="background-color: var(--primary); color: #FFF; box-shadow: 2px 2px 0px var(--border-bright);" title="Play Video with Autoplay">
-                ▶️ Play
-              </button>
-              <button class="control-btn" id="btnPauseVideo" style="background-color: var(--surface-card); color: var(--text-muted); box-shadow: 2px 2px 0px var(--border);" title="Pause Video">
-                ⏸️ Pause
-              </button>
-              <button class="control-btn" id="btnReplayVideo" style="background-color: var(--secondary); color: #FFF; box-shadow: 2px 2px 0px var(--border-bright);" title="Replay Video from Beginning">
-                🔁 Replay
-              </button>
-            </div>
-          </div>
-          <div style="position: absolute; bottom: -35px; right: 0; z-index: 10;">
-            <a href="https://www.canva.com/design/DAHPNzT1ys4/kX5HV8YzDawyWiG59aNfiQ/watch?utm_content=DAHPNzT1ys4&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener" style="font-weight: 800; color: #FFF; text-transform: uppercase; background-color: var(--primary); padding: 0.35rem 0.85rem; border: 1px solid var(--border-bright); border-radius: var(--radius-sm); text-decoration: none; box-shadow: 0 0 10px rgba(0,0,0,0.8); font-size: 0.85rem; display: inline-block;">ANIME • REVIEWS • COMMUNITY 悟</a>
-          </div>
-        </div>
-      </div>
+  <!-- Main Content -->
+  <main id="profile-main">
+    
+    <!-- Profile Banner Hero -->
+    <section style="position: relative; height: 320px; overflow: hidden; border-bottom: 2px solid var(--border-bright);">
+      <img src="https://picsum.photos/seed/frieren_banner/1600/500" alt="Profile Banner" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65);" referrerPolicy="no-referrer">
+      <div style="position: absolute; inset: 0; background: linear-gradient(0deg, rgba(6,8,7,1) 0%, rgba(6,8,7,0.3) 100%);"></div>
     </section>
 
-    <!-- Welcome Highlight Bento grid of current ongoing discussions/news on homepage -->
-    <section class="section" style="background-color: var(--surface);">
-      <div class="container">
-        <div class="section-header">
-          <h2>Weekly Highlights & Features</h2>
-          <p>Get a glance at the current community events occurring this week at OtakuVerse!</p>
-        </div>
+    <!-- Profile Identity Header -->
+    <div class="container" style="position: relative; margin-top: -100px; padding-bottom: 4rem; z-index: 10;">
+      <div style="display: flex; gap: 2rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 2rem;">
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-          <!-- Bento Card 1: Today's Debate -->
-          <div class="about-block" style="border-color: var(--primary); display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <span class="program-badge" style="background-color: var(--secondary); color: #FFF; margin-bottom: 1rem; display: inline-block;">Active Debate</span>
-              <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Sung Jinwoo vs. Saitama</h3>
-              <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">
-                Our debate moderators have opened the power-scaling floor! Contrast Jinwoo's celestial shadows against Saitama's ultimate physical limits. Remember to back arguments with official chapters!
-              </p>
+        <!-- Avatar Frame -->
+        <div style="position: relative;">
+          <img src="https://picsum.photos/seed/otaku_user_avatar/200/200" alt="Avatar" style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--accent); box-shadow: 0 10px 30px rgba(197,160,89,0.4); object-fit: cover;" referrerPolicy="no-referrer">
+          <span style="position: absolute; bottom: 5px; right: 5px; background: var(--accent); color: #000; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.82rem; border: 2px solid #000;">Lv. 24</span>
+        </div>
+
+        <!-- Identity Meta -->
+        <div style="flex: 1;">
+          <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.4rem;">
+            <h1 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--text);">Kenji_Grand_Scholar</h1>
+            <span style="background: linear-gradient(135deg, #389B5F, #C5A059); color: #FFF; font-weight: 800; font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 9999px;">👑 Rank #4 Top Critic</span>
+            <span style="background: rgba(197, 160, 89, 0.2); color: var(--accent); font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 9999px;">📜 Grand Lore Archivist</span>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 680px; margin-bottom: 0.75rem;">Deep fantasy lore analyst, soundtrack breakdown specialist, and Studio Ghibli enthusiast. Member since 2022.</p>
+
+          <!-- Follower Stats -->
+          <div style="display: flex; gap: 1.5rem; font-size: 0.9rem;">
+            <span style="color: var(--text);"><strong style="color: #4EFA8B;">1,420</strong> Followers</span>
+            <span style="color: var(--text);"><strong style="color: #4EFA8B;">380</strong> Following</span>
+            <span style="color: var(--text);"><strong style="color: #C5A059;">14,850</strong> XP</span>
+          </div>
+        </div>
+
+        <!-- Customization Buttons -->
+        <div style="display: flex; gap: 0.75rem;">
+          <button class="btn btn-secondary" id="btnCustomizeProfile">🎨 Customize Frame & Theme</button>
+          <a href="account.html" class="btn btn-primary">⚙️ Edit Profile</a>
+        </div>
+      </div>
+
+      <!-- XP Level Progress Bar -->
+      <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 2.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.88rem;">
+          <span style="color: var(--accent); font-weight: 800;">XP Progress to Level 25 (Otaku Deity)</span>
+          <span style="color: var(--text-muted);">14,850 / 15,000 XP (99%)</span>
+        </div>
+        <div style="background: rgba(20, 28, 23, 0.9); height: 12px; border-radius: 9999px; overflow: hidden; border: 1px solid var(--border);">
+          <div style="width: 99%; height: 100%; background: linear-gradient(90deg, #389B5F 0%, #4EFA8B 50%, #C5A059 100%);"></div>
+        </div>
+      </div>
+
+      <!-- Statistics Bar Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem; margin-bottom: 3rem;">
+        <div style="background: var(--surface-card); border: 1px solid var(--border-bright); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+          <span style="font-size: 1.8rem; display: block; margin-bottom: 0.25rem;">📺</span>
+          <strong style="font-size: 1.5rem; color: var(--text); display: block;">154</strong>
+          <small style="color: var(--text-muted);">Anime Watched</small>
+        </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border-bright); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+          <span style="font-size: 1.8rem; display: block; margin-bottom: 0.25rem;">🎬</span>
+          <strong style="font-size: 1.5rem; color: var(--text); display: block;">3,420</strong>
+          <small style="color: var(--text-muted);">Total Episodes</small>
+        </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border-bright); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+          <span style="font-size: 1.8rem; display: block; margin-bottom: 0.25rem;">⏳</span>
+          <strong style="font-size: 1.5rem; color: var(--text); display: block;">57.2</strong>
+          <small style="color: var(--text-muted);">Days Spent Watching</small>
+        </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border-bright); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+          <span style="font-size: 1.8rem; display: block; margin-bottom: 0.25rem;">⭐</span>
+          <strong style="font-size: 1.5rem; color: #4EFA8B; display: block;">9.2 / 10</strong>
+          <small style="color: var(--text-muted);">Mean Community Score</small>
+        </div>
+      </div>
+
+      <!-- Recent Activity & Favorite Quotes -->
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+        
+        <!-- Left Column: Activity & Reviews -->
+        <div>
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--text); margin-bottom: 1rem;">✍️ Recent Critiques & Reviews</h3>
+          
+          <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <strong style="color: var(--text); font-size: 1.1rem;">Frieren: Beyond Journey's End</strong>
+              <span style="color: #4EFA8B; font-weight: 800; font-size: 1rem;">★ 9.8 / 10</span>
             </div>
-            <div style="margin-top: 1.5rem;">
-              <a href="programs.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem; display: inline-block; text-decoration: none; width: auto;">Join Debate</a>
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.75rem;">"A timeless masterclass in atmospheric melancholy and elven perspective on mortal human connections..."</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--accent);">
+              <span>1,240 Helpful Votes • 88 Comments</span>
+              <a href="reviews.html" style="color: var(--primary-bright); text-decoration: none;">Read Full Critique →</a>
             </div>
           </div>
 
-          <!-- Bento Card 2: Current Manga Pick -->
-          <div class="about-block" style="border-color: var(--secondary); display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <span class="program-badge" style="background-color: var(--primary); color: #FFF; margin-bottom: 1rem; display: inline-block;">Monthly Pick</span>
-              <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Frieren: Beyond Journey's End</h3>
-              <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">
-                We are currently reviewing chapters 90-110 of Frieren. Join the conversation focusing on Kanehito Yamada's pacing of melancholic fantasy time transitions and panels.
-              </p>
+          <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <strong style="color: var(--text); font-size: 1.1rem;">Solo Leveling: Arise</strong>
+              <span style="color: #4EFA8B; font-weight: 800; font-size: 1rem;">★ 9.4 / 10</span>
             </div>
-            <div style="margin-top: 1.5rem;">
-              <a href="programs.html" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.5rem 1rem; display: inline-block; text-decoration: none; width: auto; color: #FFF;">Read Along</a>
-            </div>
-          </div>
-
-          <!-- Bento Card 3: Featured Essay -->
-          <div class="about-block" style="border-color: var(--warning); display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <span class="program-badge" style="background-color: var(--warning); color: var(--text); margin-bottom: 1rem; display: inline-block;">Featured Work</span>
-              <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">The Anatomy of a Perfect Panel</h3>
-              <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">
-                Kenji S. deconstructs the vertical flow mechanics of Webtoon panels, explaining how scroll speed translates directly into cinematic tension.
-              </p>
-            </div>
-            <div style="margin-top: 1.5rem;">
-              <a href="discussions.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem; display: inline-block; text-decoration: none; width: auto;">Join Discussion</a>
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.75rem;">"A kinetic masterpiece of power fantasy animation paired with Hiroyuki Sawano's thunderous basslines..."</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--accent);">
+              <span>890 Helpful Votes • 42 Comments</span>
+              <a href="reviews.html" style="color: var(--primary-bright); text-decoration: none;">Read Full Critique →</a>
             </div>
           </div>
         </div>
+
+        <!-- Right Column: Badges & Favorite Quote -->
+        <div>
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--text); margin-bottom: 1rem;">🏆 Earned Badges</h3>
+          <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem;">
+            <span style="background: rgba(37,102,62,0.3); border: 1px solid var(--primary-bright); color: #FFF; font-size: 0.82rem; padding: 0.4rem 0.8rem; border-radius: var(--radius-sm);" title="Master Critic">👑 Master Critic</span>
+            <span style="background: rgba(197,160,89,0.2); border: 1px solid var(--accent); color: var(--accent); font-size: 0.82rem; padding: 0.4rem 0.8rem; border-radius: var(--radius-sm);" title="100 Reviews Written">✍️ Century Reviewer</span>
+            <span style="background: rgba(78,250,139,0.15); border: 1px solid #4EFA8B; color: #4EFA8B; font-size: 0.82rem; padding: 0.4rem 0.8rem; border-radius: var(--radius-sm);" title="Weekly Debate Champion">⚔️ Debate Champion</span>
+          </div>
+
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--text); margin-bottom: 1rem;">💬 Favorite Quote</h3>
+          <div style="background: var(--surface-card); border: 1px solid var(--accent); border-radius: var(--radius-md); padding: 1.25rem;">
+            <p style="font-style: italic; color: var(--text); font-size: 0.92rem; line-height: 1.5; margin-bottom: 0.5rem;">"The magic you worked so hard to learn will never betray you."</p>
+            <small style="color: var(--accent); font-weight: 800;">— Flamme (Frieren: Beyond Journey's End)</small>
+          </div>
+        </div>
+
       </div>
-    </section>
+    </div>
   </main>
 
-  <!-- Footer Section -->
+  <!-- Footer -->
   <footer class="footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <a href="index.html" class="logo" aria-label="OtakuVerse Footer Logo" style="display: inline-flex; width: fit-content; margin-bottom: 1rem;">
+        <a href="index.html" class="logo" style="display: inline-flex; width: fit-content; margin-bottom: 1rem;">
           <img src="logo.jpg" alt="OtakuVerse Logo" class="brand-logo-img">
           <div class="brand-text-wrapper">
             <span class="brand-title"><span class="brand-otaku">OTAKU</span><span class="brand-verse">VERSE</span></span>
-            <span class="brand-sub">知恵 • ANIME REVIEWS COMMUNITY</span>
+            <span class="brand-sub">知恵 • ANIME COMMUNITY</span>
           </div>
         </a>
-        <p class="footer-desc">
-          A dedicated community hub designed for meaningful debates, analytical critiques, and book clubs covering anime, manga, and manhwa.
-        </p>
+        <p class="footer-desc">The premier community ecosystem for anime reviews, discussions, and lists.</p>
       </div>
 
-      <div class="footer-col" id="footerColLinks">
+      <div class="footer-col">
         <h4>Navigation</h4>
         <ul class="footer-links">
           <li><a href="index.html" class="footer-link">Home</a></li>
-          <li><a href="reviews.html" class="footer-link">Reviews</a></li>
-          <li><a href="discovery.html" class="footer-link">Discovery</a></li>
           <li><a href="programs.html" class="footer-link">Community Hub</a></li>
+          <li><a href="reviews.html" class="footer-link">Reviews</a></li>
           <li><a href="discussions.html" class="footer-link">Discussions</a></li>
-          <li><a href="about.html" class="footer-link">About</a></li>
-          <li><a href="contact.html" class="footer-link">Contact</a></li>
-          <li><a href="account.html" class="footer-link">Join</a></li>
+          <li><a href="lists.html" class="footer-link">Anime Lists</a></li>
+          <li><a href="rankings.html" class="footer-link">Rankings</a></li>
+          <li><a href="profile.html" class="footer-link">Profile</a></li>
         </ul>
       </div>
 
-      <div class="footer-col" id="footerColSocials">
-        <h4>Follow Our Community</h4>
-        <p class="footer-desc" style="margin-bottom: 1rem;">Stay updated with weekly debate brackets and analytical publication summaries on social media!</p>
+      <div class="footer-col">
+        <h4>Community</h4>
         <div class="footer-socials">
-          <a href="#" class="social-icon" aria-label="Follow us on Twitter">TW</a>
-          <a href="#" class="social-icon" aria-label="Join our Discord community">DC</a>
-          <a href="#" class="social-icon" aria-label="Check out our Instagram updates">IG</a>
-          <a href="#" class="social-icon" aria-label="Watch our YouTube video reviews">YT</a>
+          <a href="#" class="social-icon">TW</a>
+          <a href="#" class="social-icon">DC</a>
+          <a href="#" class="social-icon">IG</a>
+          <a href="#" class="social-icon">YT</a>
         </div>
       </div>
     </div>
     
     <div class="footer-bottom">
       <div class="container">
-        <p>© 2026 OtakuVerse. All rights reserved. Created with dedication for global anime readers & viewers.</p>
+        <p>© 2026 OtakuVerse. All rights reserved.</p>
       </div>
     </div>
   </footer>

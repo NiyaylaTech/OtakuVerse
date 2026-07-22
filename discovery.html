@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="OtakuVerse Anime Discovery System - Netflix meets Spotify recommendations for anime. Search by moods, themes, natural language prompts, episode counts, studios, and curated collections.">
+  <title>Anime Discovery System | OtakuVerse</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Skiplink for Keyboard Accessibility -->
+  <a href="#discovery-main" class="sr-only" style="background-color: var(--primary); color: #FFF; padding: 1rem; position: absolute; top: 0; left: 0; z-index: 10000; text-decoration: none; border-radius: 0 0 var(--radius-sm) 0;">Skip to main content</a>
+
+  <!-- Header Navigation -->
+  <header class="header-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="headerLogo" aria-label="OtakuVerse Home">
+        <img src="logo.jpg" alt="OtakuVerse Crane Emblem Logo" class="brand-logo-img">
+        <div class="brand-text-wrapper">
+          <span class="brand-title"><span class="brand-otaku">OTAKU</span><span class="brand-verse">VERSE</span></span>
+          <span class="brand-sub">知恵 • ANIME COMMUNITY</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="nav-menu-wrapper" id="navMenuWrapper">
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="index.html" class="nav-link">🏠 Home</a></li>
+          <li><a href="programs.html" class="nav-link">🎌 Community Hub</a></li>
+          <li><a href="reviews.html" class="nav-link">⭐ Reviews</a></li>
+          <li><a href="discussions.html" class="nav-link">💬 Discussions</a></li>
+          <li><a href="lists.html" class="nav-link">📚 Anime Lists</a></li>
+          <li><a href="rankings.html" class="nav-link">🏆 Rankings</a></li>
+          <li><a href="profile.html" class="nav-link">👤 Profile</a></li>
+        </ul>
+      </nav>
+
+      <!-- Far Right Controls -->
+      <div class="nav-actions-right">
+        <!-- Search Trigger Button -->
+        <button class="nav-action-btn search-trigger-btn" id="navSearchTrigger" aria-label="Search Anime, Reviews & Community" title="Search (Cmd+K)">
+          <span class="action-icon">🔍</span>
+          <span class="search-btn-label">Search...</span>
+          <kbd class="search-shortcut">⌘K</kbd>
+        </button>
+
+        <!-- Notifications Bell -->
+        <div class="nav-dropdown-container">
+          <button class="nav-action-btn notif-btn" id="navNotifBtn" aria-label="Notifications" title="Notifications">
+            <span class="action-icon">🔔</span>
+            <span class="notif-badge" id="notifBadgeCount">3</span>
+          </button>
+          <!-- Notifications Dropdown -->
+          <div class="nav-dropdown-menu notif-dropdown" id="notifDropdown">
+            <div class="dropdown-header">
+              <h4>🔔 Notifications</h4>
+              <button class="btn-text-action" id="btnMarkAllNotifsRead">Mark as read</button>
+            </div>
+            <div class="notif-list">
+              <a href="reviews.html" class="notif-item unread">
+                <span class="notif-avatar">👑</span>
+                <div class="notif-content">
+                  <p><strong>Aura_Fan_99</strong> liked your review of <em>Frieren: Beyond Journey's End</em>.</p>
+                  <span class="notif-time">10 minutes ago</span>
+                </div>
+              </a>
+              <a href="programs.html" class="notif-item unread">
+                <span class="notif-avatar">⚔️</span>
+                <div class="notif-content">
+                  <p>The <strong>Weekly Debate Bracket</strong> "Jinwoo vs. Saitama" is now LIVE!</p>
+                  <span class="notif-time">1 hour ago</span>
+                </div>
+              </a>
+              <a href="discussions.html" class="notif-item unread">
+                <span class="notif-avatar">💬</span>
+                <div class="notif-content">
+                  <p><strong>Manga_Reader_Sora</strong> replied to your Death Note plot theory thread.</p>
+                  <span class="notif-time">3 hours ago</span>
+                </div>
+              </a>
+            </div>
+            <div class="dropdown-footer">
+              <a href="profile.html#activity" class="dropdown-link-all">View All Activity Feed →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Create Dropdown Button -->
+        <div class="nav-dropdown-container">
+          <button class="btn btn-primary create-btn-nav" id="navCreateBtn" aria-label="Create Content">
+            <span class="btn-icon">➕</span>
+            <span class="create-btn-text">Create</span>
+            <span class="dropdown-caret">▾</span>
+          </button>
+          <!-- Create Menu Dropdown -->
+          <div class="nav-dropdown-menu create-dropdown" id="createDropdown">
+            <div class="dropdown-header">
+              <h4>➕ Create New</h4>
+            </div>
+            <div class="create-options-list">
+              <a href="reviews.html#write" class="create-item-link">
+                <span class="create-icon">✍️</span>
+                <div>
+                  <strong>Write a Review</strong>
+                  <small>Share score & category critiques</small>
+                </div>
+              </a>
+              <a href="discussions.html#new" class="create-item-link">
+                <span class="create-icon">💬</span>
+                <div>
+                  <strong>Start a Discussion</strong>
+                  <small>Episode chat, theories & debates</small>
+                </div>
+              </a>
+              <a href="lists.html#new" class="create-item-link">
+                <span class="create-icon">📚</span>
+                <div>
+                  <strong>Create an Anime List</strong>
+                  <small>Organize custom collections</small>
+                </div>
+              </a>
+              <a href="programs.html#clubs" class="create-item-link">
+                <span class="create-icon">🎌</span>
+                <div>
+                  <strong>Create a Club</strong>
+                  <small>Form a fan circle or watch group</small>
+                </div>
+              </a>
+              <a href="programs.html#polls" class="create-item-link">
+                <span class="create-icon">📊</span>
+                <div>
+                  <strong>Create a Poll</strong>
+                  <small>Vote on characters or episodes</small>
+                </div>
+              </a>
+              <a href="discussions.html#fanart" class="create-item-link">
+                <span class="create-icon">🎨</span>
+                <div>
+                  <strong>Share Fan Art</strong>
+                  <span class="badge-new">NEW</span>
+                </div>
+              </a>
+              <a href="discovery.html" class="create-item-link">
+                <span class="create-icon">💡</span>
+                <div>
+                  <strong>Submit Recommendation</strong>
+                  <small>Suggest hidden gems</small>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Auth State Switcher & Avatar Dropdown -->
+        <div class="nav-user-container" id="navUserContainer">
+          <div class="nav-auth-buttons" id="navAuthLoggedOut" style="display: none;">
+            <a href="account.html?mode=login" class="btn btn-secondary nav-login-btn">Login</a>
+            <a href="account.html?mode=signup" class="btn btn-primary nav-signup-btn">Create Account</a>
+          </div>
+
+          <div class="nav-dropdown-container" id="navAuthLoggedIn">
+            <button class="nav-user-avatar-btn" id="navAvatarBtn" aria-label="User Account Menu">
+              <img src="https://picsum.photos/seed/otaku_user_avatar/100/100" alt="User Avatar" class="nav-avatar-img">
+              <span class="nav-level-badge">Lv. 24</span>
+            </button>
+            
+            <div class="nav-dropdown-menu user-dropdown" id="userDropdown">
+              <div class="user-dropdown-profile">
+                <img src="https://picsum.photos/seed/otaku_user_avatar/100/100" alt="User Avatar" class="user-dropdown-img">
+                <div class="user-dropdown-meta">
+                  <strong class="user-dropdown-name">Kenji_Grand_Scholar</strong>
+                  <span class="user-dropdown-rank">👑 Rank #4 Top Critic</span>
+                  <span class="user-dropdown-xp">XP: 14,850 / 15,000</span>
+                </div>
+              </div>
+              
+              <div class="dropdown-divider"></div>
+
+              <div class="user-menu-links">
+                <a href="profile.html" class="user-menu-item">
+                  <span class="menu-icon">👤</span> My Profile
+                </a>
+                <a href="lists.html" class="user-menu-item">
+                  <span class="menu-icon">📚</span> Anime Library
+                </a>
+                <a href="reviews.html" class="user-menu-item">
+                  <span class="menu-icon">⭐</span> My Reviews
+                </a>
+                <a href="discussions.html" class="user-menu-item">
+                  <span class="menu-icon">💬</span> My Discussions
+                </a>
+                <a href="profile.html#achievements" class="user-menu-item">
+                  <span class="menu-icon">🏆</span> Achievements
+                </a>
+                <a href="account.html" class="user-menu-item">
+                  <span class="menu-icon">⚙️</span> Settings
+                </a>
+                <a href="javascript:void(0)" class="user-menu-item">
+                  <span class="menu-icon">🔔</span> Notifications
+                </a>
+                <button class="user-menu-item btn-theme-toggle">
+                  <span class="menu-icon">🌙</span> Dark Mode
+                </button>
+                <a href="contact.html" class="user-menu-item">
+                  <span class="menu-icon">❓</span> Help Center
+                </a>
+              </div>
+
+              <div class="dropdown-divider"></div>
+
+              <div class="auth-demo-switcher">
+                <span class="demo-switch-label">Preview Auth State:</span>
+                <button class="btn-demo-toggle" id="btnToggleAuthState">
+                  Switch to Logged Out 🔄
+                </button>
+              </div>
+
+              <div class="dropdown-divider"></div>
+
+              <button class="user-menu-item user-logout-item" id="btnLogoutNav">
+                <span class="menu-icon">🚪</span> Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button class="menu-toggle" aria-expanded="false" aria-controls="navMenuWrapper" id="mobileMenuBtn">
+          <span class="sr-only">Toggle navigation menu</span>
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search Modal -->
+  <div class="search-modal-overlay" id="searchModalOverlay">
+    <div class="search-modal-card">
+      <div class="search-modal-header">
+        <div class="search-input-wrapper">
+          <span class="search-modal-icon">🔍</span>
+          <input type="text" id="globalSearchInput" placeholder="Search anime, reviews, characters, or try natural prompt..." autocomplete="off">
+          <button class="search-modal-clear" id="btnClearSearch">✕</button>
+        </div>
+        <button class="search-modal-close" id="btnCloseSearchModal">Esc</button>
+      </div>
+
+      <div class="search-prompts-bar">
+        <span class="prompts-label">Try Natural Prompts:</span>
+        <button class="search-prompt-chip" data-query="I want an anime like Death Note">"Anime like Death Note"</button>
+        <button class="search-prompt-chip" data-query="Romance with no fan service">"Romance with no fan service"</button>
+        <button class="search-prompt-chip" data-query="Dark fantasy">"Dark fantasy"</button>
+        <button class="search-prompt-chip" data-query="Anime under 12 episodes">"Anime under 12 episodes"</button>
+        <button class="search-prompt-chip" data-query="Best anime for beginners">"Best anime for beginners"</button>
+      </div>
+
+      <div class="search-results-container" id="searchResultsContainer"></div>
+    </div>
+  </div>
+
+  <main id="discovery-main">
+    <!-- Hero Search Section -->
+    <section class="discovery-hero-section">
+      <div class="container" style="text-align: center; max-width: 1000px; position: relative; z-index: 2;">
+        <span class="hero-tag" style="margin: 0 auto 1.25rem;">🔍 SMART ANIME RECOMMENDATION ENGINE</span>
+        <h1 class="hero-headline" style="font-size: 3.6rem; line-height: 1.15; margin-bottom: 1rem;">
+          Find Your Next <span>Favorite Anime</span>
+        </h1>
+        <p class="hero-subtext" style="font-size: 1.2rem; color: var(--text-muted); max-width: 780px; margin: 0 auto 2.5rem; line-height: 1.6;">
+          Not sure what to watch next? Tell us what you're looking for using moods, tropes, or natural questions and we'll match your next obsession.
+        </p>
+
+        <!-- Search Input Bar -->
+        <div class="search-hero-box">
+          <div style="display: flex; align-items: center; gap: 0.85rem; width: 100%;">
+            <span style="font-size: 1.5rem; color: var(--accent);">🔎</span>
+            <input type="text" id="discoverySearchInput" class="discovery-search-field" placeholder="What anime are you looking for today? (e.g. 'Dark fantasy like Death Note' or 'Emotional anime under 12 episodes')" aria-label="Search anime discovery engine">
+            <button class="btn btn-primary" id="btnRunDiscoverySearch" style="padding: 0.85rem 1.75rem; white-space: nowrap;">
+              Discover Now →
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt Examples Pills -->
+        <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; align-items: center;">
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700;">Try searching:</span>
+          <button class="prompt-chip-btn" data-prompt="I want something like Death Note">"I want something like Death Note"</button>
+          <button class="prompt-chip-btn" data-prompt="Romance with no fan service">"Romance with no fan service"</button>
+          <button class="prompt-chip-btn" data-prompt="Anime under 12 episodes">"Anime under 12 episodes"</button>
+          <button class="prompt-chip-btn" data-prompt="Something emotional">"Something emotional"</button>
+          <button class="prompt-chip-btn" data-prompt="Dark fantasy">"Dark fantasy"</button>
+          <button class="prompt-chip-btn" data-prompt="Strong female lead">"Strong female lead"</button>
+          <button class="prompt-chip-btn" data-prompt="Best beginner anime">"Best beginner anime"</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Smart Filters Section -->
+    <section class="section" style="background-color: var(--surface-card); border-bottom: 1px solid var(--border);">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h2 style="font-family: var(--font-serif); font-size: 2rem; margin: 0;">🎛️ Smart Filter Matrix</h2>
+            <p style="color: var(--text-muted); font-size: 0.92rem; margin-top: 0.2rem;">Combine genres, emotional moods, studios, and duration constraints to refine recommendations.</p>
+          </div>
+          <button class="btn btn-secondary" id="btnResetSmartFilters" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
+            🔄 Reset All Filters
+          </button>
+        </div>
+
+        <!-- Filter Sections -->
+        <div class="smart-filters-wrapper">
+          
+          <!-- Genres Row -->
+          <div class="filter-group-block">
+            <span class="filter-group-title">GENRES</span>
+            <div class="filter-chips-row" id="filterGenresRow">
+              <button class="filter-toggle-chip active" data-type="genre" data-val="all">All Genres</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Action">Action</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Adventure">Adventure</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Comedy">Comedy</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Drama">Drama</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Fantasy">Fantasy</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Horror">Horror</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Mystery">Mystery</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Romance">Romance</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Sci-Fi">Sci-Fi</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Slice of Life">Slice of Life</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Sports">Sports</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Thriller">Thriller</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Psychological">Psychological</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Isekai">Isekai</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Mecha">Mecha</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Music">Music</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Historical">Historical</button>
+              <button class="filter-toggle-chip" data-type="genre" data-val="Supernatural">Supernatural</button>
+            </div>
+          </div>
+
+          <!-- Moods Row -->
+          <div class="filter-group-block">
+            <span class="filter-group-title">MOOD & VIBE</span>
+            <div class="filter-chips-row" id="filterMoodsRow">
+              <button class="filter-toggle-chip active" data-type="mood" data-val="all">All Moods</button>
+              <button class="filter-toggle-chip" data-type="mood" data-val="Feel Good">Feel Good</button>
+              <button class="filter-toggle-chip" data-type="mood" data-val="Emotional">Emotional</button>
+              <button class="filter-toggle-chip" data-type="mood" data-val="Dark">Dark</button>
+              <button class="filter-toggle-chip" data-type="mood" data-val="Relaxing">Relaxing</button>
+              <button class="filter-toggle-chip" data-type="mood" data-val="Funny">Funny</button>
+              <button class="filter-toggle-chip" data-type="mood" data-val="Heartbreaking">Heartbreaking</button>
+              <button class="filter-toggle-chip" data-type="mood" data-val="Suspenseful">Suspenseful</button>
+              <button class="filter-toggle-chip" data-type="mood" data-val="Wholesome">Wholesome</button>
+              <button class="filter-toggle-chip" data-type="mood" data-val="Epic">Epic</button>
+              <button class="filter-toggle-chip" data-type="mood" data-val="Mind-Bending">Mind-Bending</button>
+              <button class="filter-toggle-chip" data-type="mood" data-val="Inspirational">Inspirational</button>
+            </div>
+          </div>
+
+          <!-- Secondary Filters Grid (Length, Rating, Studio, Decade, Streaming, Gems Toggle) -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 1rem;">
+            
+            <div>
+              <span class="filter-group-title">EPISODE LENGTH</span>
+              <select id="selectEpisodes" class="activity-input-field" style="padding: 0.45rem;">
+                <option value="all">Any Length</option>
+                <option value="movie">Movies Only</option>
+                <option value="1-12">1–12 Episodes (Single Cour)</option>
+                <option value="13-24">13–24 Episodes (2 Cours)</option>
+                <option value="25-50">25–50 Episodes</option>
+                <option value="50+">50+ Long-running</option>
+              </select>
+            </div>
+
+            <div>
+              <span class="filter-group-title">ANIMATION STUDIO</span>
+              <select id="selectStudio" class="activity-input-field" style="padding: 0.45rem;">
+                <option value="all">All Studios</option>
+                <option value="MAPPA">MAPPA</option>
+                <option value="Bones">Bones</option>
+                <option value="Kyoto Animation">Kyoto Animation</option>
+                <option value="Madhouse">Madhouse</option>
+                <option value="WIT Studio">WIT Studio</option>
+                <option value="Ufotable">Ufotable</option>
+                <option value="Trigger">Trigger</option>
+                <option value="CloverWorks">CloverWorks</option>
+              </select>
+            </div>
+
+            <div>
+              <span class="filter-group-title">STREAMING PLATFORM</span>
+              <select id="selectStreaming" class="activity-input-field" style="padding: 0.45rem;">
+                <option value="all">All Platforms</option>
+                <option value="Crunchyroll">Crunchyroll</option>
+                <option value="Netflix">Netflix</option>
+                <option value="Hulu">Hulu</option>
+                <option value="Disney+">Disney+</option>
+                <option value="Amazon Prime">Amazon Prime</option>
+                <option value="HiDive">HiDive</option>
+              </select>
+            </div>
+
+            <div>
+              <span class="filter-group-title">MINIMUM COMMUNITY RATING</span>
+              <select id="selectRating" class="activity-input-field" style="padding: 0.45rem;">
+                <option value="0">Any Rating</option>
+                <option value="10">★ 10 Only (Masterpiece)</option>
+                <option value="9">★ 9.0+ Excellent</option>
+                <option value="8">★ 8.0+ Great</option>
+                <option value="7">★ 7.0+ Good</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- Toggles Bar -->
+          <div style="display: flex; gap: 2rem; margin-top: 1.25rem; flex-wrap: wrap; align-items: center; background-color: rgba(0,0,0,0.4); padding: 0.85rem 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+            <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; color: var(--text); font-weight: 700; font-size: 0.9rem;">
+              <input type="checkbox" id="toggleHiddenGems" style="accent-color: var(--accent); width: 18px; height: 18px;">
+              💎 Show Underrated Hidden Gems
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; color: var(--text); font-weight: 700; font-size: 0.9rem;">
+              <input type="checkbox" id="toggleCommunityFavorites" style="accent-color: var(--primary-bright); width: 18px; height: 18px;">
+              ⭐ Show Highest-Rated Community Favorites Only
+            </label>
+
+            <span style="margin-left: auto; font-size: 0.85rem; color: var(--accent); font-weight: 800;" id="matchedCountLabel">
+              Showing 12 Matched Recommendations
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Curated Collection Carousel Tabs -->
+    <section class="section" style="padding-top: 2rem; background-color: var(--background);">
+      <div class="container">
+        
+        <div style="margin-bottom: 2rem;">
+          <h2 style="font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 0.5rem;">
+            ✨ Curated Discovery Collections
+          </h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Tap any theme collection below to instantly load hand-curated anime playlists.</p>
+
+          <div class="collection-tab-bar" id="curatedCollectionsBar">
+            <button class="collection-tab-btn active" data-coll="trending">🔥 Trending This Week</button>
+            <button class="collection-tab-btn" data-coll="gems">💎 Hidden Gems</button>
+            <button class="collection-tab-btn" data-coll="psychological">🎭 Best Psychological</button>
+            <button class="collection-tab-btn" data-coll="saddest">😭 Saddest Anime</button>
+            <button class="collection-tab-btn" data-coll="action">⚔️ Best Action Series</button>
+            <button class="collection-tab-btn" data-coll="comfort">💚 Comfort Anime</button>
+            <button class="collection-tab-btn" data-coll="soundtracks">🎵 Best Soundtracks</button>
+            <button class="collection-tab-btn" data-coll="romance">🌸 Romance Picks</button>
+            <button class="collection-tab-btn" data-coll="movies">🎬 Best Movies</button>
+            <button class="collection-tab-btn" data-coll="horror">👻 Horror Collection</button>
+            <button class="collection-tab-btn" data-coll="staff">👑 Staff Picks</button>
+            <button class="collection-tab-btn" data-coll="community">⭐ Community Favorites</button>
+          </div>
+        </div>
+
+        <!-- Recommendation Cards Grid -->
+        <div class="discovery-cards-grid" id="discoveryCardsContainer">
+          <!-- Rendered dynamically by JS -->
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Trailer Video Modal -->
+  <div id="trailerModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="trailerModalTitle">
+    <div class="modal-content" style="max-width: 800px; padding: 1.5rem;">
+      <button class="modal-close" id="trailerModalClose" aria-label="Close dialog">&times;</button>
+      <div class="modal-header" style="margin-bottom: 1rem;">
+        <h3 id="trailerModalTitle" style="font-family: var(--font-serif); font-size: 1.5rem;">
+          Anime Official Trailer
+        </h3>
+      </div>
+      <div class="modal-body">
+        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius-md); background-color: #000; border: 1px solid var(--border);">
+          <div id="trailerIframePlaceholder" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(37, 102, 62, 0.4), rgba(0,0,0,0.95)); color: #FFF; padding: 2rem; text-align: center;">
+            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🎬</div>
+            <h4 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 0.5rem;" id="modalTrailerAnimeTitle">Anime Trailer Preview</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 500px; margin-bottom: 1.5rem;">
+              HD Official PV Trailer & Animation Preview from Official Studio Release.
+            </p>
+            <a href="reviews.html" class="btn btn-primary" style="padding: 0.75rem 1.75rem;">Read Full Community Critique →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo" aria-label="OtakuVerse Footer Logo" style="display: inline-flex; width: fit-content; margin-bottom: 1rem;">
+          <img src="logo.jpg" alt="OtakuVerse Logo" class="brand-logo-img">
+          <div class="brand-text-wrapper">
+            <span class="brand-title"><span class="brand-otaku">OTAKU</span><span class="brand-verse">VERSE</span></span>
+            <span class="brand-sub">知恵 • ANIME REVIEWS COMMUNITY</span>
+          </div>
+        </a>
+        <p class="footer-desc">
+          A dedicated community hub designed for meaningful debates, analytical critiques, and book clubs covering anime, manga, and manhwa.
+        </p>
+      </div>
+
+      <div class="footer-col" id="footerColLinks">
+        <h4>Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="index.html" class="footer-link">Home</a></li>
+          <li><a href="reviews.html" class="footer-link">Reviews</a></li>
+          <li><a href="discovery.html" class="footer-link">Discovery</a></li>
+          <li><a href="programs.html" class="footer-link">Community Hub</a></li>
+          <li><a href="discussions.html" class="footer-link">Discussions</a></li>
+          <li><a href="about.html" class="footer-link">About</a></li>
+          <li><a href="contact.html" class="footer-link">Contact</a></li>
+          <li><a href="account.html" class="footer-link">Join</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col" id="footerColSocials">
+        <h4>Follow Our Community</h4>
+        <p class="footer-desc" style="margin-bottom: 1rem;">Stay updated with weekly debate brackets and analytical publication summaries on social media!</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="Follow us on Twitter">TW</a>
+          <a href="#" class="social-icon" aria-label="Join our Discord community">DC</a>
+          <a href="#" class="social-icon" aria-label="Check out our Instagram updates">IG</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 OtakuVerse Anime Reviews & Community. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
