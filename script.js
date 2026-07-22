@@ -125,21 +125,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchResultsContainer = document.getElementById('searchResultsContainer');
 
   const searchDatabase = [
-    { type: 'Anime', title: 'Frieren: Beyond Journey\'s End', desc: '★ 9.8 • Dark Fantasy, Melancholic Magic', img: 'https://picsum.photos/seed/frieren_poster/100/150', link: 'reviews.html?anime=frieren' },
-    { type: 'Anime', title: 'Solo Leveling: Arise', desc: '★ 9.4 • Power Fantasy, Shadow Monarch', img: 'https://picsum.photos/seed/solo_poster/100/150', link: 'reviews.html?anime=sololeveling' },
-    { type: 'Anime', title: 'Attack on Titan: Final Season', desc: '★ 9.9 • Dark Political Thriller, Titans', img: 'https://picsum.photos/seed/aot_poster/100/150', link: 'reviews.html?anime=aot' },
-    { type: 'Anime', title: 'Death Note', desc: '★ 9.6 • Psychological Cat & Mouse Mind Games', img: 'https://picsum.photos/seed/deathnote_poster/100/150', link: 'discovery.html' },
-    { type: 'Anime', title: 'Bocchi the Rock!', desc: '★ 9.3 • Social Anxiety Comedy & Music', img: 'https://picsum.photos/seed/bocchi_poster/100/150', link: 'discovery.html' },
-    { type: 'Anime', title: 'Violet Evergarden', desc: '★ 9.8 • Emotional Tearjerker, Kyoto Animation', img: 'https://picsum.photos/seed/violet_poster/100/150', link: 'discovery.html' },
-    { type: 'Character', title: 'Frieren the Slayer', desc: 'Immortal elven mage learning human empathy', img: 'https://picsum.photos/seed/frieren_char/100/100', link: 'reviews.html' },
-    { type: 'Character', title: 'Sung Jinwoo', desc: 'Shadow Monarch with absolute shadow army', img: 'https://picsum.photos/seed/jinwoo_char/100/100', link: 'reviews.html' },
-    { type: 'Character', title: 'Levi Ackerman', desc: 'Humanity\'s strongest soldier, Captain of Scout Regiment', img: 'https://picsum.photos/seed/levi_char/100/100', link: 'reviews.html' },
-    { type: 'Review', title: 'Frieren Masterpiece Critique by Kenji', desc: 'Rated 9.6/10 • Detailed analysis of time & loss', img: 'https://picsum.photos/seed/frieren_banner/100/100', link: 'reviews.html' },
-    { type: 'Review', title: 'Solo Leveling Kinetic Power Fantasy Review', desc: 'Rated 9.2/10 • Sawano soundtrack breakdown', img: 'https://picsum.photos/seed/solo_banner/100/100', link: 'reviews.html' },
+    { type: 'Anime', title: 'Frieren: Beyond Journey\'s End', desc: '★ 9.8 • Crunchyroll • Dark Fantasy, Melancholic Magic', img: '/src/assets/images/frieren_poster_1784681952965.jpg', link: 'reviews.html?anime=frieren' },
+    { type: 'Anime', title: 'Solo Leveling: Arise', desc: '★ 9.4 • Crunchyroll • Power Fantasy, Shadow Monarch', img: '/src/assets/images/solo_leveling_poster_1784681988229.jpg', link: 'reviews.html?anime=sololeveling' },
+    { type: 'Anime', title: 'Attack on Titan: Final Season', desc: '★ 9.9 • Crunchyroll • Dark Political Thriller', img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=100&auto=format&fit=crop&q=80', link: 'reviews.html?anime=aot' },
+    { type: 'Anime', title: 'Jujutsu Kaisen', desc: '★ 9.6 • Crunchyroll • High Octane Sorcery', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&auto=format&fit=crop&q=80', link: 'reviews.html?anime=jjk' },
+    { type: 'Anime', title: 'Demon Slayer: Kimetsu no Yaiba', desc: '★ 9.8 • Crunchyroll • ufotable Breathing Animation', img: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=100&auto=format&fit=crop&q=80', link: 'reviews.html?anime=demonslayer' },
+    { type: 'Manhwa', title: 'Under the Oak Tree', desc: '★ 9.9 • Manta Exclusive • Suji Kim & P Romance Fantasy', img: '/src/assets/images/oak_tree_poster_1784681977100.jpg', link: 'reviews.html?anime=undertheoaktree' },
+    { type: 'Manhwa', title: 'Finding Camellia', desc: '★ 9.6 • Manta Exclusive • Jinju Seo Gender-Bender Romance', img: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=100&auto=format&fit=crop&q=80', link: 'reviews.html?anime=findingcamellia' },
+    { type: 'Manhwa', title: 'I\'ve Become a True Villainess', desc: '★ 9.7 • Manta Exclusive • Seria Stern & Rouche Oath', img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=100&auto=format&fit=crop&q=80', link: 'reviews.html?anime=truevillainess' },
+    { type: 'Manhwa', title: 'Disobey the Duke if You Dare', desc: '★ 9.5 • Manta Exclusive • Supernatural Monster Romance', img: 'https://images.unsplash.com/photo-1514539079130-25950c84af65?w=100&auto=format&fit=crop&q=80', link: 'discovery.html' },
+    { type: 'Character', title: 'Maximilian Croix (Maxi)', desc: 'Under the Oak Tree • Stuttering noblewoman loved by Riftan Calypse', img: '/src/assets/images/oak_tree_poster_1784681977100.jpg', link: 'reviews.html?anime=undertheoaktree' },
+    { type: 'Character', title: 'Riftan Calypse', desc: 'Under the Oak Tree • Commander of Remdragon Knights', img: '/src/assets/images/oak_tree_poster_1784681977100.jpg', link: 'reviews.html?anime=undertheoaktree' },
+    { type: 'Character', title: 'Frieren the Slayer', desc: 'Immortal elven mage learning human empathy', img: '/src/assets/images/frieren_poster_1784681952965.jpg', link: 'reviews.html?anime=frieren' },
+    { type: 'Character', title: 'Sung Jinwoo', desc: 'Shadow Monarch with absolute shadow army', img: '/src/assets/images/solo_leveling_poster_1784681988229.jpg', link: 'reviews.html?anime=sololeveling' },
+    { type: 'Review', title: 'Under the Oak Tree Manta Masterpiece Review', desc: 'Rated 9.9/10 • Maxi & Riftan emotional romance critique', img: '/src/assets/images/oak_tree_poster_1784681977100.jpg', link: 'reviews.html?anime=undertheoaktree' },
+    { type: 'Review', title: 'Frieren Masterpiece Critique by Kenji', desc: 'Rated 9.6/10 • Detailed analysis of time & loss', img: '/src/assets/images/frieren_poster_1784681952965.jpg', link: 'reviews.html?anime=frieren' },
     { type: 'User', title: 'Kenji_Grand_Scholar', desc: '👑 Rank #4 Top Critic • 14,850 XP', img: 'https://picsum.photos/seed/otaku_user_avatar/100/100', link: 'profile.html' },
-    { type: 'User', title: 'Ren_Anime_Scholar', desc: '⭐ Level 19 Lore Master', img: 'https://picsum.photos/seed/user_ren/100/100', link: 'profile.html' },
-    { type: 'Discussion', title: 'Jinwoo vs. Saitama Power-Scaling Bracket', desc: '💬 142 Active Replies • Community Debate', img: 'https://picsum.photos/seed/solo_banner/100/100', link: 'discussions.html' },
-    { type: 'Club', title: 'Dark Fantasy & Horror Society', desc: '🎌 1,840 Members • Weekly Read-Alongs', img: 'https://picsum.photos/seed/aot_banner/100/100', link: 'programs.html' }
+    { type: 'Discussion', title: 'Riftan vs. Jinwoo Devotion & Loyalty Debate', desc: '💬 284 Active Replies • Manta vs Crunchyroll Community Debate', img: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=100&auto=format&fit=crop&q=80', link: 'discussions.html' }
   ];
 
   function openSearchModal() {
@@ -1498,8 +1500,8 @@ document.addEventListener('DOMContentLoaded', () => {
     frieren: {
       title: "Frieren: Beyond Journey's End",
       japTitle: "葬送のフリーレン • Sōsō no Frieren",
-      poster: "https://picsum.photos/seed/frieren_poster/400/600",
-      banner: "https://picsum.photos/seed/frieren_banner/1600/800",
+      poster: "/src/assets/images/frieren_poster_1784681952965.jpg",
+      banner: "/src/assets/images/frieren_banner_1784681965790.jpg",
       genres: ["Dark Fantasy", "Adventure", "Drama", "Slice of Life", "Magic"],
       studio: "Madhouse",
       releaseYear: "2023 – 2024",
@@ -1530,7 +1532,7 @@ document.addEventListener('DOMContentLoaded', () => {
       favMomentDesc: "A masterclass in quiet dominance where Frieren unleashes five hundred years of suppressed mana control.",
       favMomentSpoiler: "When Aura uses the Scales of Obedience believing her mana exceeds Frieren's, Frieren stops suppressing her aura. Frieren cold-headedly commands: 'Aura, kill yourself.' The chilling contrast between her gentle demeanor and her merciless title as 'Frieren the Slayer' is unforgettable!",
       favCharName: "Frieren the Slayer",
-      favCharImg: "https://picsum.photos/seed/frieren_char/200/200",
+      favCharImg: "/src/assets/images/frieren_poster_1784681952965.jpg",
       favCharReason: "Her journey is an elegant allegory for appreciating human relationships before time runs out. Her quirky obsession with useless magic spells adds warm comedy to her tragic depth.",
       quoteText: "\"The hero Himmel is dead, but his memory lives in every spell I cast and every human soul I seek to understand.\"",
       quoteAuthor: "— Frieren (Episode 12)",
@@ -1543,7 +1545,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sololeveling: {
       title: "Solo Leveling: Arise from the Shadows",
       japTitle: "俺だけレベルアップな件 • Ore dake Level Up na Ken",
-      poster: "https://picsum.photos/seed/solo_poster/400/600",
+      poster: "/src/assets/images/solo_leveling_poster_1784681988229.jpg",
       banner: "https://picsum.photos/seed/solo_banner/1600/800",
       genres: ["Action", "Supernatural", "System", "Dark Fantasy", "Manhwa"],
       studio: "A-1 Pictures",
@@ -1622,6 +1624,128 @@ document.addEventListener('DOMContentLoaded', () => {
         Animation: 9.7, Story: 10.0, Characters: 9.8, WorldBuilding: 10.0, Music: 10.0,
         VoiceActing: 9.9, FightScenes: 9.9, Comedy: 6.5, Romance: 7.2, Villains: 9.9,
         EmotionalImpact: 10.0, Pacing: 9.5, Ending: 9.3, OpeningThemes: 9.9, EndingThemes: 9.8
+      }
+    },
+    undertheoaktree: {
+      title: "Under the Oak Tree",
+      japTitle: "타고난 앙숙 • Under the Oak Tree (Manta Exclusive)",
+      poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+      banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1600&auto=format&fit=crop&q=80",
+      genres: ["Romance", "Fantasy", "Historical", "Drama", "Manhwa", "Webcomic"],
+      studio: "Manta Webcomics Exclusive",
+      releaseYear: "2021 – Present",
+      episodes: "115+ Chapters (Season 3 Ongoing)",
+      status: "Publishing on Manta.net",
+      streaming: "Manta Webcomics",
+      avgScore: "★ 9.9 / 10",
+      totalReviews: "28,400 Reviews",
+      favCount: "68,200 Users",
+      criticVerdict: "Manta's Crown Jewel of Emotional Romance",
+      verdictScore: 9.9,
+      recommendPct: "99% Recommend",
+      story: "Stuttering noblewoman Maximilian Croix is forced by her abusive father into an arranged political marriage with low-born knight Riftan Calypse. Immediately following their wedding night, Riftan sets off on a perilous three-year campaign to slay a legendary dragon. When he returns victorious as the continent's revered hero, he returns to claim Maxi—not as a burden, but as his beloved duchess. Together in the grand Anatol castle, Maxi overcomes childhood trauma and discovers her own innate magic power under the oak tree.",
+      pros: [
+        "🌸 Unmatched emotional growth and trauma healing narrative between Maxi & Riftan",
+        "🎨 Painterly webcomic panel artwork with lush castle architecture and glowing magic",
+        "🛡️ Deeply loyal Remdragon Knights characters who bring warmth and comedy to Anatol",
+        "📜 Manta's official English translation captures every nuanced poetic line perfectly"
+      ],
+      cons: [
+        "💔 Maxi's early self-doubt requires patience before her confident arc unfolds",
+        "⏳ High tension monster battle arcs leave romance readers craving quiet moments"
+      ],
+      favMomentTitle: "Riftan Sings the Oak Tree Lullaby & Reaffirms Maxi's Worth",
+      favMomentDesc: "The quiet night in Anatol castle where Riftan holds Maxi after her first mana spell attempt.",
+      favMomentSpoiler: "Riftan confesses that he fought through dragon flames for three years only to return to her side, calling her his true sun and reason for living!",
+      favCharName: "Maximilian Croix (Duchess of Anatol)",
+      favCharImg: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=200&auto=format&fit=crop&q=80",
+      favCharReason: "Her transformation from a fearful stuttering girl into a confident wizard defender of Anatol is one of the most empowering arcs in webcomic history.",
+      quoteText: "\"I don't care about royal titles or grand castles, Riftan... I only want to stand by your side under the oak tree.\"",
+      quoteAuthor: "— Maximilian Croix (Chapter 84)",
+      categoryScores: {
+        Animation: 9.8, Story: 9.9, Characters: 10.0, WorldBuilding: 9.8, Music: 9.5,
+        VoiceActing: 9.2, FightScenes: 9.4, Comedy: 8.5, Romance: 10.0, Villains: 9.0,
+        EmotionalImpact: 10.0, Pacing: 9.7, Ending: 9.8, OpeningThemes: 9.5, EndingThemes: 9.6
+      }
+    },
+    findingcamellia: {
+      title: "Finding Camellia",
+      japTitle: "카멜리아를 찾아서 • Finding Camellia (Manta Exclusive)",
+      poster: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&auto=format&fit=crop&q=80",
+      banner: "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=1600&auto=format&fit=crop&q=80",
+      genres: ["Romance", "Gender-Bender", "Drama", "Historical", "Manhwa"],
+      studio: "Manta Webcomics",
+      releaseYear: "2021 – Present",
+      episodes: "95+ Chapters",
+      status: "Publishing on Manta.net",
+      streaming: "Manta Webcomics",
+      avgScore: "★ 9.6 / 10",
+      totalReviews: "19,800 Reviews",
+      favCount: "41,500 Users",
+      criticVerdict: "High Society Identity Thriller & Passionate Romance",
+      verdictScore: 9.5,
+      recommendPct: "97% Recommend",
+      story: "Camellia was taken from her mother at age twelve and forced to live as 'Camellius Bale', the aristocratic son of a prominent Marquis. Bound by strict lies to conceal her gender, Camellia navigates elite academy life until Duke Claude del Ihar enters her life, slowly uncovering the truth behind her captivating presence.",
+      pros: [
+        "🎭 Intense high-society politics and identity drama",
+        "✨ Spellbinding art direction and elegant costume design",
+        "🔥 Electrifying chemistry between Claude and Camellia"
+      ],
+      cons: [
+        "⏳ Frustrating noble family antagonists who test reader patience"
+      ],
+      favMomentTitle: "Claude Unveils Camellia's Real Identity at the Grand Ball",
+      favMomentDesc: "The breathless confrontation where Claude vows to protect her true name from society's claws.",
+      favMomentSpoiler: "Claude holds her hand in front of the entire aristocracy, declaring that she will never have to hide as 'Camellius' again!",
+      favCharName: "Camellia / Camellius Bale",
+      favCharImg: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=200&auto=format&fit=crop&q=80",
+      favCharReason: "Her resilience in surviving strict aristocratic disguise while maintaining a compassionate heart.",
+      quoteText: "\"My name is not Camellius. My name is Camellia... and I will take back my life.\"",
+      quoteAuthor: "— Camellia (Chapter 62)",
+      categoryScores: {
+        Animation: 9.6, Story: 9.5, Characters: 9.7, WorldBuilding: 9.4, Music: 9.0,
+        VoiceActing: 9.0, FightScenes: 8.5, Comedy: 8.0, Romance: 9.9, Villains: 9.2,
+        EmotionalImpact: 9.6, Pacing: 9.4, Ending: 9.5, OpeningThemes: 9.2, EndingThemes: 9.3
+      }
+    },
+    truevillainess: {
+      title: "I've Become a True Villainess",
+      japTitle: "진짜 악녀가 되다 • I've Become a True Villainess (Manta Exclusive)",
+      poster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+      banner: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1600&auto=format&fit=crop&q=80",
+      genres: ["Isekai", "Romance", "Fantasy", "Villainess", "Manhwa"],
+      studio: "Manta Webcomics",
+      releaseYear: "2022 – Present",
+      episodes: "80+ Chapters",
+      status: "Publishing on Manta.net",
+      streaming: "Manta Webcomics",
+      avgScore: "★ 9.7 / 10",
+      totalReviews: "15,400 Reviews",
+      favCount: "34,200 Users",
+      criticVerdict: "Sublime Villainess Reincarnation & Sacred Romance",
+      verdictScore: 9.6,
+      recommendPct: "98% Recommend",
+      story: "Reincarnated as Seria Stern, the feared villainess doomed to die at the hands of the story's leads, Seria acts swiftly to rewrite her destiny. She forms a sacred contract with Grand Duke Rouche Berk, uncovering ancient holy magic while captivating the stern Grand Duke.",
+      pros: [
+        "👑 Smart, decisive female lead who takes control of her fate immediately",
+        "❄️ Grand Duke Rouche Berk's unconditional devotion and protective charm",
+        "🔮 Intricate divine holy magic lore and temple politics"
+      ],
+      cons: [
+        "📖 Familiar Isekai tropes elevated by superior artwork and execution"
+      ],
+      favMomentTitle: "Grand Duke Rouche Berk's Sacred Oath to Seria",
+      favMomentDesc: "Rouche kneels in the snowy temple courtyard to place his family insignia ring on Seria's finger.",
+      favMomentSpoiler: "Rouche declares: 'If the heavens brand you a villainess, then I will gladly burn the heavens down to keep you safe.'",
+      favCharName: "Seria Stern",
+      favCharImg: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200&auto=format&fit=crop&q=80",
+      favCharReason: "Her tactical brilliance in avoiding execution flags and her genuine kindness to temple guards.",
+      quoteText: "\"I refused to be the villainess in your story... so I created my own kingdom.\"",
+      quoteAuthor: "— Seria Stern (Chapter 45)",
+      categoryScores: {
+        Animation: 9.7, Story: 9.6, Characters: 9.8, WorldBuilding: 9.6, Music: 9.1,
+        VoiceActing: 9.0, FightScenes: 9.2, Comedy: 8.8, Romance: 9.9, Villains: 9.3,
+        EmotionalImpact: 9.7, Pacing: 9.5, Ending: 9.6, OpeningThemes: 9.3, EndingThemes: 9.4
       }
     }
   };
@@ -1966,7 +2090,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       id: "frieren",
       title: "Frieren: Beyond Journey's End",
-      poster: "https://picsum.photos/seed/frieren_poster/400/600",
+      poster: "/src/assets/images/frieren_poster_1784681952965.jpg",
       score: "★ 9.8",
       genres: ["Fantasy", "Adventure", "Drama", "Slice of Life"],
       moods: ["Emotional", "Relaxing", "Wholesome", "Epic"],
@@ -1983,7 +2107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       id: "sololeveling",
       title: "Solo Leveling: Arise",
-      poster: "https://picsum.photos/seed/solo_poster/400/600",
+      poster: "/src/assets/images/solo_leveling_poster_1784681988229.jpg",
       score: "★ 9.4",
       genres: ["Action", "Supernatural", "Fantasy"],
       moods: ["Epic", "Suspenseful", "Dark"],
@@ -2166,6 +2290,125 @@ document.addEventListener('DOMContentLoaded', () => {
       hiddenGem: true,
       matchReason: "Matches 'Chilling Sociopathic Villain' + Gripping European Mystery",
       collection: ["psychological", "gems", "horror"]
+    },
+    {
+      id: "undertheoaktree",
+      title: "Under the Oak Tree",
+      poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+      score: "★ 9.9",
+      genres: ["Romance", "Fantasy", "Drama", "Historical", "Manhwa"],
+      moods: ["Emotional", "Feel Good", "Wholesome", "Epic"],
+      episodes: "115+ Chapters",
+      epCategory: "50+",
+      studio: "Manta Webcomics",
+      decade: "2020s",
+      streaming: "Manta Webcomics",
+      ratingNum: 9.9,
+      hiddenGem: false,
+      matchReason: "Manta Exclusive Flagship Hit + Heartwarming Romance & Growth under the Oak Tree",
+      collection: ["manta", "romance", "trending", "community", "staff"]
+    },
+    {
+      id: "findingcamellia",
+      title: "Finding Camellia",
+      poster: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&auto=format&fit=crop&q=80",
+      score: "★ 9.6",
+      genres: ["Romance", "Gender-Bender", "Drama", "Historical", "Manhwa"],
+      moods: ["Suspenseful", "Romantic", "Emotional"],
+      episodes: "95+ Chapters",
+      epCategory: "50+",
+      studio: "Manta Webcomics",
+      decade: "2020s",
+      streaming: "Manta Webcomics",
+      ratingNum: 9.6,
+      hiddenGem: false,
+      matchReason: "Manta Top Gender-Bender Romance + High Society Secrets & Passionate Destiny",
+      collection: ["manta", "romance", "trending"]
+    },
+    {
+      id: "truevillainess",
+      title: "I've Become a True Villainess",
+      poster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+      score: "★ 9.7",
+      genres: ["Isekai", "Romance", "Fantasy", "Drama", "Manhwa"],
+      moods: ["Epic", "Romantic", "Feel Good"],
+      episodes: "80+ Chapters",
+      epCategory: "50+",
+      studio: "Manta Webcomics",
+      decade: "2020s",
+      streaming: "Manta Webcomics",
+      ratingNum: 9.7,
+      hiddenGem: false,
+      matchReason: "Manta Top Reincarnation Romance + Seria & Rouche Sacred Contract",
+      collection: ["manta", "romance", "staff"]
+    },
+    {
+      id: "disobeyduke",
+      title: "Disobey the Duke if You Dare",
+      poster: "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=600&auto=format&fit=crop&q=80",
+      score: "★ 9.5",
+      genres: ["Romance", "Supernatural", "Fantasy", "Manhwa"],
+      moods: ["Dark", "Romantic", "Suspenseful"],
+      episodes: "75+ Chapters",
+      epCategory: "50+",
+      studio: "Manta Webcomics",
+      decade: "2020s",
+      streaming: "Manta Webcomics",
+      ratingNum: 9.5,
+      hiddenGem: true,
+      matchReason: "Manta Exclusive Supernatural Romance + Monster Curse Loyalty",
+      collection: ["manta", "gems", "romance"]
+    },
+    {
+      id: "demonslayer",
+      title: "Demon Slayer: Kimetsu no Yaiba",
+      poster: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+      score: "★ 9.8",
+      genres: ["Action", "Supernatural", "Fantasy", "Historical"],
+      moods: ["Epic", "Emotional", "Dark"],
+      episodes: "55+ Episodes",
+      epCategory: "50+",
+      studio: "Ufotable",
+      decade: "2020s",
+      streaming: "Crunchyroll",
+      ratingNum: 9.8,
+      hiddenGem: false,
+      matchReason: "ufotable Peak Water Breathing Animation + Unwavering Sibling Bond",
+      collection: ["crunchyroll", "trending", "action", "community"]
+    },
+    {
+      id: "kaijuno8",
+      title: "Kaiju No. 8",
+      poster: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
+      score: "★ 9.5",
+      genres: ["Action", "Sci-Fi", "Comedy", "Supernatural"],
+      moods: ["Epic", "Funny", "Feel Good"],
+      episodes: "12 Episodes",
+      epCategory: "1-12",
+      studio: "Production I.G",
+      decade: "2020s",
+      streaming: "Crunchyroll",
+      ratingNum: 9.5,
+      hiddenGem: false,
+      matchReason: "Production I.G Explosive Monster Defense Force + Relatable Adult Lead",
+      collection: ["crunchyroll", "trending", "action"]
+    },
+    {
+      id: "windbreaker",
+      title: "Wind Breaker",
+      poster: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&auto=format&fit=crop&q=80",
+      score: "★ 9.4",
+      genres: ["Action", "Sports", "Drama", "Slice of Life"],
+      moods: ["Feel Good", "Epic", "Inspirational"],
+      episodes: "13 Episodes",
+      epCategory: "1-12",
+      studio: "CloverWorks",
+      decade: "2020s",
+      streaming: "Crunchyroll",
+      ratingNum: 9.4,
+      hiddenGem: false,
+      matchReason: "CloverWorks High School Heroes + High Voltage Fist Brawls & Brotherhood",
+      collection: ["crunchyroll", "trending", "action"]
     }
   ];
 
@@ -2436,6 +2679,40 @@ document.addEventListener('DOMContentLoaded', () => {
       toast.style.transform = 'translateY(100px)';
       toast.style.opacity = '0';
     }, 3200);
+  }
+
+  // Automatic Scroll Reveal Observer for Cards, Sections & Headers
+  const revealTargets = document.querySelectorAll(`
+    .card, .review-card, .discussion-card, .program-card, .ranking-card,
+    .club-card, .stat-card, .feature-card, .poll-card, .list-card,
+    .discovery-anime-card, .section-header, .hero-content, .profile-card,
+    .rankings-podium, .review-item-main, .discussion-thread-card
+  `);
+
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      threshold: 0.08,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealTargets.forEach(target => {
+      if (!target.classList.contains('reveal-on-scroll') && 
+          !target.classList.contains('reveal-slide-left') && 
+          !target.classList.contains('reveal-slide-right')) {
+        target.classList.add('reveal-on-scroll');
+      }
+      revealObserver.observe(target);
+    });
+  } else {
+    revealTargets.forEach(target => target.classList.add('is-visible'));
   }
 
   // Initial Load

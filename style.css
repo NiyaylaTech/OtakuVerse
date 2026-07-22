@@ -265,18 +265,42 @@ select:focus-visible {
   text-decoration: none;
   padding: 0.45rem 0.85rem;
   border-radius: 9999px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease,
+              color 0.25s ease,
+              box-shadow 0.25s ease;
   display: flex;
   align-items: center;
   gap: 0.35rem;
   white-space: nowrap;
   position: relative;
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(78, 250, 139, 0.2), rgba(56, 155, 95, 0.12));
+  border-radius: 9999px;
+  transform: translateY(100%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.nav-link:hover::before {
+  transform: translateY(0);
+}
+
+.nav-link > * {
+  position: relative;
+  z-index: 1;
 }
 
 .nav-link:hover {
   color: #4EFA8B;
-  background: rgba(78, 250, 139, 0.12);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .nav-link.active {
@@ -284,6 +308,9 @@ select:focus-visible {
   background: linear-gradient(135deg, #4EFA8B 0%, #389B5F 100%);
   font-weight: 800;
   box-shadow: 0 0 15px rgba(78, 250, 139, 0.4);
+}
+.nav-link.active::before {
+  display: none;
 }
 
 /* Far Right Controls */
@@ -447,22 +474,26 @@ select:focus-visible {
   background-color: rgba(14, 20, 16, 0.96);
   border: 1px solid var(--border-bright);
   border-radius: var(--radius-md);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 15px rgba(56, 155, 95, 0.2);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(56, 155, 95, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   min-width: 280px;
   z-index: 1100;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(10px) scale(0.98);
-  transition: all 0.25 cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(-12px) scale(0.96);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.25s ease;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .nav-dropdown-container.active .nav-dropdown-menu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
 /* Dropdown Header & Footer */
@@ -754,19 +785,25 @@ select:focus-visible {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(6, 8, 7, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(6, 8, 7, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   z-index: 10000;
-  display: none;
+  display: flex;
   align-items: flex-start;
   justify-content: center;
   padding-top: 4rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.3s ease;
+  pointer-events: none;
 }
 
 .search-modal-overlay.active {
-  display: flex;
-  animation: fadeIn 0.2s ease;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .search-modal-card {
@@ -780,6 +817,12 @@ select:focus-visible {
   display: flex;
   flex-direction: column;
   max-height: 80vh;
+  transform: translateY(-30px) scale(0.95);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.search-modal-overlay.active .search-modal-card {
+  transform: translateY(0) scale(1);
 }
 
 .search-modal-header {
@@ -968,16 +1011,30 @@ select:focus-visible {
     top: 4.5rem;
     left: 0;
     width: 100vw;
+    max-height: calc(100vh - 4.5rem);
+    overflow-y: auto;
     background: rgba(6, 8, 7, 0.98);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border-bottom: 2px solid var(--border-bright);
     padding: 1.5rem;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.9);
-    display: none;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.95);
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-25px) scale(0.98);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.35s ease;
+    pointer-events: none;
+    z-index: 1050;
   }
 
   .nav-menu-wrapper.open {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
   }
 
   .nav-menu {
@@ -987,6 +1044,7 @@ select:focus-visible {
     background: none;
     border: none;
     padding: 0;
+    gap: 0.5rem;
   }
 
   .nav-link {
@@ -994,7 +1052,27 @@ select:focus-visible {
     padding: 0.85rem 1.25rem;
     font-size: 1rem;
     border-radius: var(--radius-sm);
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.2s ease,
+                color 0.2s ease;
   }
+
+  .nav-menu-wrapper.open .nav-link {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .nav-menu-wrapper.open .nav-menu > li:nth-child(1) .nav-link { transition-delay: 0.05s; }
+  .nav-menu-wrapper.open .nav-menu > li:nth-child(2) .nav-link { transition-delay: 0.09s; }
+  .nav-menu-wrapper.open .nav-menu > li:nth-child(3) .nav-link { transition-delay: 0.13s; }
+  .nav-menu-wrapper.open .nav-menu > li:nth-child(4) .nav-link { transition-delay: 0.17s; }
+  .nav-menu-wrapper.open .nav-menu > li:nth-child(5) .nav-link { transition-delay: 0.21s; }
+  .nav-menu-wrapper.open .nav-menu > li:nth-child(6) .nav-link { transition-delay: 0.25s; }
+  .nav-menu-wrapper.open .nav-menu > li:nth-child(7) .nav-link { transition-delay: 0.29s; }
+  .nav-menu-wrapper.open .nav-menu > li:nth-child(8) .nav-link { transition-delay: 0.33s; }
 }
 
 
@@ -3702,6 +3780,100 @@ textarea.form-control {
   margin-bottom: 0.75rem;
   display: inline-block;
   border: 1px solid var(--accent);
+}
+
+/* ==========================================================================
+   GLOBAL TRANSITION & SCROLL REVEAL ANIMATION SYSTEM
+   ========================================================================== */
+
+/* Universal Card & Component Hover Slide Physics */
+.card,
+.review-card,
+.discussion-card,
+.program-card,
+.ranking-card,
+.club-card,
+.stat-card,
+.feature-card,
+.poll-card,
+.list-card,
+.discovery-anime-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              background-color 0.25s ease;
+  will-change: transform;
+}
+
+/* Scroll Reveal Classes */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-slide-left {
+  opacity: 0;
+  transform: translateX(-35px);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-slide-left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-slide-right {
+  opacity: 0;
+  transform: translateX(35px);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-slide-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-scale.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Smooth Button Transitions */
+.btn {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.25s ease,
+              color 0.25s ease,
+              border-color 0.25s ease;
+  will-change: transform;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 
