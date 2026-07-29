@@ -60,6 +60,34 @@ export interface AniListCharacters {
   edges?: AniListCharacterEdge[] | null;
 }
 
+export interface AnimeVoiceActor {
+  id: number;
+  name: string;
+  nativeName: string | null;
+  imageUrl: string | null;
+  language: string | null;
+  siteUrl: string | null;
+}
+
+export interface AnimeCharacter {
+  id: number;
+  name: string;
+  nativeName: string | null;
+  imageUrl: string | null;
+  role: "MAIN" | "SUPPORTING" | "BACKGROUND" | null;
+  description: string | null;
+  gender: string | null;
+  age: string | null;
+  favourites: number;
+  siteUrl: string | null;
+  voiceActors: AnimeVoiceActor[];
+}
+
+export interface AnimeCharactersResponse {
+  characters: AnimeCharacter[];
+  pageInfo: AniListPageInfo;
+}
+
 export interface AniListRecommendationNode {
   mediaRecommendation?: AniListMedia | null;
 }
@@ -234,6 +262,20 @@ export function getFallbackBanner(title?: string): string {
     <circle cx="600" cy="200" r="110" fill="#25663E" opacity="0.3"/>
     <text x="600" y="190" font-family="'Cinzel', serif" font-size="42" font-weight="extrabold" fill="#C5A059" text-anchor="middle">OTAKUVERSE ARCHIVE</text>
     <text x="600" y="235" font-family="sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF" text-anchor="middle">${safeTitle}</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
+
+/**
+ * Default neutral avatar placeholder for voice actors or staff
+ */
+export function getFallbackAvatar(name?: string): string {
+  const safeName = (name || 'Voice Actor').substring(0, 20);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
+    <rect width="150" height="150" fill="#141C17" rx="12"/>
+    <circle cx="75" cy="55" r="30" fill="#25663E"/>
+    <path d="M 25 130 C 25 95, 125 95, 125 130 Z" fill="#25663E"/>
+    <text x="75" y="142" font-family="sans-serif" font-size="10" font-weight="bold" fill="#A3C2AE" text-anchor="middle">${safeName}</text>
   </svg>`;
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
@@ -636,6 +678,123 @@ export async function searchAnime(
   return Object.assign(mediaList, { media: mediaList, pageInfo: res.Page.pageInfo });
 }
 
+export interface AdvancedSearchOptions {
+  search?: string;
+  genre?: string;
+  genreIn?: string[];
+  genreNotIn?: string[];
+  tagIn?: string[];
+  tagNotIn?: string[];
+  format?: string;
+  status?: string;
+  season?: string;
+  seasonYear?: number;
+  minimumScore?: number;
+  episodesLesser?: number;
+  episodesGreater?: number;
+  sort?: string[];
+  page?: number;
+  perPage?: number;
+}
+
+/**
+ * Advanced search query for AniList with support for genre filters, exclusions, scores, formats, and episode lengths.
+ */
+export async function searchAnimeAdvanced(
+  options: AdvancedSearchOptions = {},
+  signal?: AbortSignal
+): Promise<Anime[] & { media: Anime[]; pageInfo: AniListPageInfo }> {
+  const page = options.page || 1;
+  const perPage = options.perPage || 18;
+  const sortOption = options.sort && options.sort.length > 0
+    ? options.sort
+    : (options.search ? ['SEARCH_MATCH'] : ['POPULARITY_DESC']);
+
+  const query = `
+    query (
+      $page: Int,
+      $perPage: Int,
+      $search: String,
+      $genre: String,
+      $genreIn: [String],
+      $genreNotIn: [String],
+      $tagIn: [String],
+      $tagNotIn: [String],
+      $format: MediaFormat,
+      $status: MediaStatus,
+      $season: MediaSeason,
+      $seasonYear: Int,
+      $averageScoreGreater: Int,
+      $episodesLesser: Int,
+      $episodesGreater: Int,
+      $sort: [MediaSort]
+    ) {
+      Page(page: $page, perPage: $perPage) {
+        pageInfo {
+          total
+          currentPage
+          lastPage
+          hasNextPage
+          perPage
+        }
+        media(
+          type: ANIME,
+          search: $search,
+          genre: $genre,
+          genre_in: $genreIn,
+          genre_not_in: $genreNotIn,
+          tag_in: $tagIn,
+          tag_not_in: $tagNotIn,
+          format: $format,
+          status: $status,
+          season: $season,
+          seasonYear: $seasonYear,
+          averageScore_greater: $averageScoreGreater,
+          episodes_lesser: $episodesLesser,
+          episodes_greater: $episodesGreater,
+          sort: $sort,
+          isAdult: false
+        ) {
+          ${MEDIA_CARD_FRAGMENT}
+        }
+      }
+    }
+  `;
+
+  const variables: Record<string, any> = {
+    page,
+    perPage,
+    search: options.search?.trim() || undefined,
+    genre: options.genre && options.genre !== 'All' ? options.genre : undefined,
+    genreIn: options.genreIn && options.genreIn.length > 0 ? options.genreIn : undefined,
+    genreNotIn: options.genreNotIn && options.genreNotIn.length > 0 ? options.genreNotIn : undefined,
+    tagIn: options.tagIn && options.tagIn.length > 0 ? options.tagIn : undefined,
+    tagNotIn: options.tagNotIn && options.tagNotIn.length > 0 ? options.tagNotIn : undefined,
+    format: options.format && options.format !== 'All' ? options.format : undefined,
+    status: options.status && options.status !== 'All' ? options.status : undefined,
+    season: options.season && options.season !== 'All' ? options.season.toUpperCase() : undefined,
+    seasonYear: options.seasonYear || undefined,
+    averageScoreGreater: options.minimumScore ? options.minimumScore : undefined,
+    episodesLesser: options.episodesLesser || undefined,
+    episodesGreater: options.episodesGreater || undefined,
+    sort: sortOption,
+  };
+
+  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: Anime[] } }>(query, variables, signal);
+  const mediaList = res.Page.media || [];
+
+  mediaList.forEach((item) => {
+    if (!item.coverImage?.large && !item.coverImage?.extraLarge) {
+      item.coverImage = {
+        extraLarge: getFallbackCover(item.title?.english || item.title?.romaji),
+        large: getFallbackCover(item.title?.english || item.title?.romaji),
+      };
+    }
+  });
+
+  return Object.assign(mediaList, { media: mediaList, pageInfo: res.Page.pageInfo });
+}
+
 /**
  * 4. getAnimeById
  */
@@ -677,6 +836,22 @@ query MediaById($id: Int!) {
       nodes {
         id
         name
+      }
+    }
+    characters(perPage: 12, sort: [ROLE, RELEVANCE]) {
+      edges {
+        role
+        node {
+          id
+          name { full native }
+          image { large medium }
+        }
+        voiceActors(language: JAPANESE) {
+          id
+          name { full }
+          image { large }
+          languageV2
+        }
       }
     }
   }
@@ -742,6 +917,243 @@ query MediaById($id: Int!) {
   memoryCache.set(cacheKey, { timestamp: Date.now(), data: animeData });
 
   return animeData;
+}
+
+/**
+ * Retrieves paginated character and voice actor details for a specific anime
+ */
+export async function getAnimeCharacters(
+  anilistId: number | string,
+  page = 1,
+  perPage = 25,
+  signal?: AbortSignal
+): Promise<AnimeCharactersResponse> {
+  const numericId = Number(anilistId);
+  if (!anilistId || isNaN(numericId) || numericId <= 0) {
+    throw new Error(`Invalid AniList ID parameter: "${anilistId}". Must be a valid numeric integer.`);
+  }
+
+  const query = `
+query AnimeCharacters(
+  $id: Int!
+  $page: Int!
+  $perPage: Int!
+) {
+  Media(id: $id, type: ANIME) {
+    id
+    title {
+      english
+      romaji
+      native
+    }
+
+    characters(
+      page: $page
+      perPage: $perPage
+      sort: [ROLE, RELEVANCE, ID]
+    ) {
+      pageInfo {
+        total
+        currentPage
+        lastPage
+        hasNextPage
+        perPage
+      }
+
+      edges {
+        id
+        role
+        name
+
+        node {
+          id
+          name {
+            full
+            first
+            middle
+            last
+            native
+            alternative
+          }
+          image {
+            large
+            medium
+          }
+          description
+          gender
+          age
+          dateOfBirth {
+            year
+            month
+            day
+          }
+          favourites
+          siteUrl
+        }
+
+        voiceActors(language: JAPANESE, sort: [RELEVANCE, ID]) {
+          id
+          name {
+            full
+            first
+            middle
+            last
+            native
+          }
+          image {
+            large
+            medium
+          }
+          languageV2
+          primaryOccupations
+          siteUrl
+        }
+
+        allVoiceActors: voiceActors(sort: [RELEVANCE, ID]) {
+          id
+          name {
+            full
+            first
+            middle
+            last
+            native
+          }
+          image {
+            large
+            medium
+          }
+          languageV2
+          primaryOccupations
+          siteUrl
+        }
+      }
+    }
+  }
+}
+  `.trim();
+
+  const variables = {
+    id: numericId,
+    page: Math.max(1, Number(page) || 1),
+    perPage: Math.max(1, Number(perPage) || 25),
+  };
+
+  let response: Response;
+  try {
+    response = await fetch(ANILIST_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ query, variables }),
+      signal,
+    });
+  } catch (fetchErr: any) {
+    if (fetchErr.name === 'AbortError' || signal?.aborted) {
+      throw fetchErr;
+    }
+    console.error('AniList character query fetch error:', fetchErr);
+    throw new Error('Unable to connect to AniList servers. Please check your network connection.');
+  }
+
+  const contentType = response.headers.get('content-type') || '';
+  if (!response.ok) {
+    let errBody = '';
+    try { errBody = await response.text(); } catch {}
+    console.error('AniList character query HTTP error:', response.status, errBody);
+    throw new Error(`AniList returned HTTP status ${response.status}`);
+  }
+
+  if (!contentType.includes('application/json')) {
+    const rawText = await response.text();
+    console.error('AniList character query non-JSON content-type:', contentType, rawText.substring(0, 200));
+    throw new Error('AniList returned an invalid non-JSON response.');
+  }
+
+  const result: AniListApiResponse<{ Media?: { characters?: { pageInfo: AniListPageInfo; edges: any[] } } }> = await response.json();
+
+  if (result.errors && result.errors.length > 0) {
+    console.error("AniList character query errors:", result.errors);
+    throw new Error(`AniList GraphQL Error: ${result.errors.map(e => e.message).join(' | ')}`);
+  }
+
+  if (!result.data || !result.data.Media || !result.data.Media.characters) {
+    throw new Error('No character data found for this anime.');
+  }
+
+  // Mandatory debug logging as requested in instructions
+  console.log("Character AniList ID:", numericId);
+  console.log("Character query variables:", variables);
+  console.log(
+    "Character edges returned:",
+    result.data?.Media?.characters?.edges?.length
+  );
+  console.log(
+    "Character total:",
+    result.data?.Media?.characters?.pageInfo?.total
+  );
+  console.log(
+    "First character edge:",
+    result.data?.Media?.characters?.edges?.[0]
+  );
+
+  const edges = result.data.Media.characters.edges || [];
+  const pageInfo = result.data.Media.characters.pageInfo || {
+    total: edges.length,
+    currentPage: variables.page,
+    lastPage: 1,
+    hasNextPage: false,
+    perPage: variables.perPage,
+  };
+
+  const characters: AnimeCharacter[] = edges
+    .filter((edge) => edge && edge.node)
+    .map((edge) => {
+      const primaryVAs: any[] = Array.isArray(edge.voiceActors) ? edge.voiceActors : [];
+      const fallbackVAs: any[] = Array.isArray(edge.allVoiceActors) ? edge.allVoiceActors : [];
+
+      const vaMap = new Map<number, any>();
+      primaryVAs.forEach((va) => { if (va && va.id) vaMap.set(va.id, va); });
+      fallbackVAs.forEach((va) => { if (va && va.id && !vaMap.has(va.id)) vaMap.set(va.id, va); });
+
+      const combinedVAs = Array.from(vaMap.values());
+
+      // Japanese voice actors should be shown first
+      combinedVAs.sort((a, b) => {
+        const aIsJp = (a.languageV2 || '').toLowerCase() === 'japanese' ? -1 : 1;
+        const bIsJp = (b.languageV2 || '').toLowerCase() === 'japanese' ? -1 : 1;
+        return aIsJp - bIsJp;
+      });
+
+      const voiceActors: AnimeVoiceActor[] = combinedVAs.map((actor: any) => ({
+        id: actor.id,
+        name: actor.name?.full || actor.name?.native || 'Unknown Voice Actor',
+        nativeName: actor.name?.native || null,
+        imageUrl: actor.image?.large || actor.image?.medium || null,
+        language: actor.languageV2 || null,
+        siteUrl: actor.siteUrl || null,
+      }));
+
+      return {
+        id: edge.node.id,
+        name: edge.node.name?.full || edge.node.name?.native || 'Unknown Character',
+        nativeName: edge.node.name?.native || null,
+        imageUrl: edge.node.image?.large || edge.node.image?.medium || null,
+        role: (edge.role as "MAIN" | "SUPPORTING" | "BACKGROUND") || null,
+        description: edge.node.description || null,
+        gender: edge.node.gender || null,
+        age: edge.node.age || null,
+        favourites: edge.node.favourites || 0,
+        siteUrl: edge.node.siteUrl || null,
+        voiceActors,
+      };
+    });
+
+  return {
+    characters,
+    pageInfo,
+  };
 }
 
 /**

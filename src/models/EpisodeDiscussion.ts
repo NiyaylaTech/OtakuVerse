@@ -7,7 +7,10 @@ export interface IEpisodeDiscussion extends Document {
   episodeNumber: number;
   episodeInSeason: number;
   episodeTitle: string;
-  episodeTitleSource: 'jikan' | 'fallback';
+  episodeDescription: string;
+  episodeAirDate?: string | null;
+  episodeRuntime?: string | number | null;
+  episodeMetadataSource: 'jikan' | 'fallback';
   episodeMetadataVerified: boolean;
   createdBy: string;
   commentCount: number;
@@ -43,13 +46,27 @@ const EpisodeDiscussionSchema = new Schema<IEpisodeDiscussion>(
     episodeInSeason: {
       type: Number,
       required: true,
+      default: 1,
     },
     episodeTitle: {
       type: String,
       default: 'Title Unavailable',
       trim: true,
     },
-    episodeTitleSource: {
+    episodeDescription: {
+      type: String,
+      default: 'An episode description is not currently available.',
+      trim: true,
+    },
+    episodeAirDate: {
+      type: String,
+      default: null,
+    },
+    episodeRuntime: {
+      type: Schema.Types.Mixed,
+      default: null,
+    },
+    episodeMetadataSource: {
       type: String,
       enum: ['jikan', 'fallback'],
       default: 'fallback',
@@ -103,7 +120,7 @@ const EpisodeDiscussionSchema = new Schema<IEpisodeDiscussion>(
   }
 );
 
-// Create unique compound index to prevent duplicate discussions for the same anime season and episode
+// Unique index to guarantee one discussion per anime, season, and episode
 EpisodeDiscussionSchema.index(
   { anilistId: 1, seasonNumber: 1, episodeNumber: 1 },
   { unique: true }

@@ -7,6 +7,7 @@ import { useAuth } from './context/AuthContext';
 
 import { HomeView } from './views/HomeView';
 import { DiscoveryView } from './views/DiscoveryView';
+import { GenreDetailView } from './views/GenreDetailView';
 import { AnimeDetailView } from './views/AnimeDetailView';
 import { ReviewsView } from './views/ReviewsView';
 import { DiscussionsView } from './views/DiscussionsView';
@@ -66,8 +67,8 @@ export default function App() {
       );
     }
 
-    // Check if route matches /anime/:anilistId/season/:seasonNumber/episode/:episodeNumber/discussion
-    const epDiscussionMatch = currentPath.match(/^\/anime\/([^/]+)\/season\/([^/]+)\/episode\/([^/]+)\/discussion/);
+    // Check if route matches /anime/:anilistId/season/:seasonNumber/episode/:episodeNumber with optional /discussion
+    const epDiscussionMatch = currentPath.match(/^\/anime\/([^/]+)\/season\/([^/]+)\/episode\/([^/]+)(\/discussion)?$/);
     if (epDiscussionMatch) {
       const anilistId = Number(epDiscussionMatch[1]);
       const seasonNumber = Number(epDiscussionMatch[2]) || 1;
@@ -83,6 +84,19 @@ export default function App() {
       );
     }
 
+    // Check if route matches /discovery/genre/:genreSlug
+    const genreMatch = currentPath.match(/^\/discovery\/genre\/([^/]+)/);
+    if (genreMatch) {
+      const genreSlug = genreMatch[1];
+      return (
+        <GenreDetailView
+          genreSlug={genreSlug}
+          onSelectMedia={handleSelectMedia}
+          onNavigate={navigateTo}
+        />
+      );
+    }
+
     // Check if route matches /anime/:id or /manga/:id
     const animeMatch = currentPath.match(/^\/(anime|manga)\/([^/]+)/);
     if (animeMatch) {
@@ -90,6 +104,7 @@ export default function App() {
       return (
         <AnimeDetailView
           mediaId={mediaId}
+          currentPath={currentPath}
           onSelectMedia={handleSelectMedia}
           onNavigate={navigateTo}
         />
@@ -106,7 +121,7 @@ export default function App() {
       case '/sign-up':
         return <SignUpView onNavigate={navigateTo} redirectPath={redirectPath} />;
       case '/discovery':
-        return <DiscoveryView onSelectMedia={handleSelectMedia} />;
+        return <DiscoveryView onSelectMedia={handleSelectMedia} onNavigate={navigateTo} />;
       case '/rankings':
         return <RankingsView onSelectMedia={handleSelectMedia} />;
       case '/lists':
@@ -114,7 +129,7 @@ export default function App() {
       case '/reviews':
         return <ReviewsView onSelectMedia={handleSelectMedia} />;
       case '/discussions':
-        return <DiscussionsView onSelectMedia={handleSelectMedia} />;
+        return <DiscussionsView onSelectMedia={handleSelectMedia} onNavigate={navigateTo} />;
       case '/programs':
       case '/community':
         return <ProgramsView onNavigate={navigateTo} />;

@@ -72,9 +72,18 @@ app.use('/api/discussions', discussionsRouter);
 // Register Episode Discussion Routes
 app.use('/api', episodeDiscussionsRouter);
 
-// JSON 404 handler for all unmatched API / server routes
+// API 404 handler for all unmatched /api routes
+app.use('/api', (_req, res) => {
+  res.status(404).json({
+    success: false,
+    error: 'API route not found',
+  });
+});
+
+// JSON 404 handler for all unmatched server routes
 app.use((_req, res) => {
   res.status(404).json({
+    success: false,
     error: 'API route not found',
   });
 });

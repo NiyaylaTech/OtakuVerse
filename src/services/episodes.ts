@@ -1,4 +1,3 @@
-import { AnimeSeasonMapping } from '../models/AnimeSeasonMapping';
 import { EpisodeDiscussion } from '../models/EpisodeDiscussion';
 
 export interface AnimeEpisode {
@@ -6,9 +5,11 @@ export interface AnimeEpisode {
   seasonNumber: number;
   episodeInSeason: number;
   title: string | null;
+  description: string | null;
   titleJapanese: string | null;
   titleRomanji: string | null;
   airedAt: string | null;
+  runtime: string | number | null;
   isFiller: boolean;
   isRecap: boolean;
   source: 'jikan' | 'fallback';
@@ -17,7 +18,17 @@ export interface AnimeEpisode {
   lastActivityAt?: Date | string | null;
 }
 
-// In-memory server cache for Jikan episodes (24 hour TTL)
+export interface SeasonInfo {
+  seasonNumber: number;
+  title: string;
+  anilistId: number;
+  idMal: number | null;
+  episodesCount: number | null;
+  format: string | null;
+  isCurrent: boolean;
+}
+
+// Cache for Jikan episodes (24 hour TTL)
 const jikanEpisodeCache = new Map<number, { timestamp: number; episodes: AnimeEpisode[] }>();
 const JIKAN_CACHE_TTL = 24 * 60 * 60 * 1000;
 
@@ -25,12 +36,15 @@ const JIKAN_CACHE_TTL = 24 * 60 * 60 * 1000;
 const pendingJikanRequests = new Map<number, Promise<AnimeEpisode[]>>();
 
 /**
- * Fetch AniList idMal & total episode count directly via AniList GraphQL
+ * Fetch AniList Media Info and Relations for Season Mapping
  */
-async function fetchAniListMediaInfo(anilistId: number): Promise<{
+export async function fetchAniListMediaWithRelations(anilistId: number): Promise<{
   idMal: number | null;
   episodesCount: number | null;
   title: string;
+  description: string | null;
+  format: string | null;
+  seasons: SeasonInfo[];
 }> {
   const query = `
     query ($id: Int) {
@@ -38,10 +52,31 @@ async function fetchAniListMediaInfo(anilistId: number): Promise<{
         id
         idMal
         episodes
+        format
+        season
+        seasonYear
+        description
         title {
           english
           romaji
           userPreferred
+        }
+        relations {
+          edges {
+            relationType
+            node {
+              id
+              idMal
+              format
+              episodes
+              seasonYear
+              title {
+                english
+                romaji
+                userPreferred
+              }
+            }
+          }
         }
       }
     }
@@ -58,39 +93,122 @@ async function fetchAniListMediaInfo(anilistId: number): Promise<{
     });
 
     if (!res.ok) {
-      console.warn(`[AniList Info Fetch] Non-OK status ${res.status} for ID ${anilistId}`);
-      return { idMal: null, episodesCount: null, title: 'Anime Series' };
+      console.warn(`[AniList Fetch] Status ${res.status} for ID ${anilistId}`);
+      return {
+        idMal: null,
+        episodesCount: null,
+        title: 'Anime Series',
+        description: null,
+        format: null,
+        seasons: [{ seasonNumber: 1, title: 'Season 1', anilistId, idMal: null, episodesCount: 12, format: 'TV', isCurrent: true }],
+      };
     }
 
     const json = await res.json();
     const media = json?.data?.Media;
     if (!media) {
-      return { idMal: null, episodesCount: null, title: 'Anime Series' };
+      return {
+        idMal: null,
+        episodesCount: null,
+        title: 'Anime Series',
+        description: null,
+        format: null,
+        seasons: [{ seasonNumber: 1, title: 'Season 1', anilistId, idMal: null, episodesCount: 12, format: 'TV', isCurrent: true }],
+      };
     }
 
-    const title = media.title?.english || media.title?.romaji || media.title?.userPreferred || 'Anime Series';
+    const mainTitle = media.title?.english || media.title?.userPreferred || media.title?.romaji || 'Anime Series';
+    
+    // Map seasons
+    const seasonsList: SeasonInfo[] = [
+      {
+        seasonNumber: 1,
+        title: 'Season 1',
+        anilistId: media.id,
+        idMal: media.idMal || null,
+        episodesCount: media.episodes || null,
+        format: media.format || 'TV',
+        isCurrent: true,
+      },
+    ];
+
+    let nextSeasonNum = 2;
+    let hasOva = false;
+    let hasSpecial = false;
+
+    if (media.relations?.edges && Array.isArray(media.relations.edges)) {
+      for (const edge of media.relations.edges) {
+        const node = edge.node;
+        if (!node) continue;
+
+        if (edge.relationType === 'SEQUEL') {
+          const sTitle = node.title?.english || node.title?.userPreferred || `Season ${nextSeasonNum}`;
+          seasonsList.push({
+            seasonNumber: nextSeasonNum,
+            title: sTitle.includes('Season') || sTitle.includes('2nd') || sTitle.includes('3rd') ? sTitle : `Season ${nextSeasonNum}: ${sTitle}`,
+            anilistId: node.id,
+            idMal: node.idMal || null,
+            episodesCount: node.episodes || null,
+            format: node.format || 'TV',
+            isCurrent: node.id === anilistId,
+          });
+          nextSeasonNum++;
+        } else if (node.format === 'OVA' && !hasOva) {
+          hasOva = true;
+          seasonsList.push({
+            seasonNumber: 99, // convention for OVA
+            title: 'OVAs',
+            anilistId: node.id,
+            idMal: node.idMal || null,
+            episodesCount: node.episodes || null,
+            format: 'OVA',
+            isCurrent: node.id === anilistId,
+          });
+        } else if (node.format === 'SPECIAL' && !hasSpecial) {
+          hasSpecial = true;
+          seasonsList.push({
+            seasonNumber: 98, // convention for Specials
+            title: 'Specials',
+            anilistId: node.id,
+            idMal: node.idMal || null,
+            episodesCount: node.episodes || null,
+            format: 'SPECIAL',
+            isCurrent: node.id === anilistId,
+          });
+        }
+      }
+    }
+
     return {
       idMal: media.idMal || null,
       episodesCount: media.episodes || null,
-      title,
+      title: mainTitle,
+      description: media.description || null,
+      format: media.format || null,
+      seasons: seasonsList,
     };
   } catch (err: any) {
-    console.error(`[AniList Info Fetch Error]:`, err?.message || err);
-    return { idMal: null, episodesCount: null, title: 'Anime Series' };
+    console.error(`[AniList Media Fetch Error]:`, err?.message || err);
+    return {
+      idMal: null,
+      episodesCount: null,
+      title: 'Anime Series',
+      description: null,
+      format: null,
+      seasons: [{ seasonNumber: 1, title: 'Season 1', anilistId, idMal: null, episodesCount: 12, format: 'TV', isCurrent: true }],
+    };
   }
 }
 
 /**
- * Fetch episodes for a MAL ID from Jikan API with pagination, rate limiting & error handling
+ * Fetch episodes for a MAL ID from Jikan API
  */
 async function fetchEpisodesFromJikan(malId: number, seasonNum: number): Promise<AnimeEpisode[]> {
-  // Check memory cache
   const cached = jikanEpisodeCache.get(malId);
   if (cached && Date.now() - cached.timestamp < JIKAN_CACHE_TTL) {
     return cached.episodes;
   }
 
-  // Check if a request is already pending to avoid rate limit spikes
   if (pendingJikanRequests.has(malId)) {
     return pendingJikanRequests.get(malId)!;
   }
@@ -101,23 +219,21 @@ async function fetchEpisodesFromJikan(malId: number, seasonNum: number): Promise
       let page = 1;
       let hasNextPage = true;
 
-      while (hasNextPage && page <= 10) { // Limit to 10 pages max (1000 episodes)
+      while (hasNextPage && page <= 10) {
         const url = `https://api.jikan.moe/v4/anime/${malId}/episodes?page=${page}`;
         const response = await fetch(url);
 
         if (response.status === 429) {
-          console.warn(`[Jikan 429 Rate Limit] Backing off for MAL ID ${malId}, page ${page}`);
-          // Short delay on 429
+          console.warn(`[Jikan 429] Backing off for MAL ID ${malId}, page ${page}`);
           await new Promise((resolve) => setTimeout(resolve, 1200));
           if (page === 1 && allJikanItems.length === 0) {
             throw new Error('Jikan Rate Limit Exceeded (HTTP 429)');
           } else {
-            break; // Keep items fetched so far
+            break;
           }
         }
 
         if (!response.ok) {
-          console.warn(`[Jikan API Error] HTTP ${response.status} for MAL ID ${malId}`);
           if (page === 1) {
             throw new Error(`Jikan returned HTTP ${response.status}`);
           }
@@ -132,7 +248,6 @@ async function fetchEpisodesFromJikan(malId: number, seasonNum: number): Promise
         page++;
 
         if (hasNextPage) {
-          // Respect Jikan 3 requests/sec rate limit
           await new Promise((resolve) => setTimeout(resolve, 400));
         }
       }
@@ -143,25 +258,33 @@ async function fetchEpisodesFromJikan(malId: number, seasonNum: number): Promise
 
       const normalized: AnimeEpisode[] = allJikanItems.map((item: any) => {
         const epNum = item.mal_id || item.episode || 1;
+        
+        // Clean synopsis/description
+        let desc = item.synopsis || item.description || null;
+        if (desc) {
+          desc = desc.replace(/\\n/g, ' ').trim();
+        }
+
         return {
           episodeNumber: epNum,
           seasonNumber: seasonNum,
           episodeInSeason: epNum,
-          title: item.title || null,
+          title: item.title || item.title_romanji || null,
+          description: desc,
           titleJapanese: item.title_japanese || null,
           titleRomanji: item.title_romanji || null,
-          airedAt: item.aired || null,
+          airedAt: item.aired ? (typeof item.aired === 'string' ? item.aired : item.aired.from || null) : null,
+          runtime: item.duration || '24 min',
           isFiller: Boolean(item.filler),
           isRecap: Boolean(item.recap),
           source: 'jikan',
         };
       });
 
-      // Save to cache
       jikanEpisodeCache.set(malId, { timestamp: Date.now(), episodes: normalized });
       return normalized;
     } catch (error: any) {
-      console.warn(`[Jikan Fetch Fallback for MAL ID ${malId}]:`, error?.message || error);
+      console.warn(`[Jikan Fetch Error for MAL ID ${malId}]:`, error?.message || error);
       throw error;
     } finally {
       pendingJikanRequests.delete(malId);
@@ -173,10 +296,10 @@ async function fetchEpisodesFromJikan(malId: number, seasonNum: number): Promise
 }
 
 /**
- * Generate fallback episode list when Jikan is unavailable or idMal is null
+ * Generate fallback episode list
  */
 function generateFallbackEpisodes(count: number, seasonNum: number): AnimeEpisode[] {
-  const safeCount = Math.max(1, Math.min(count || 12, 100)); // Reasonable bounds
+  const safeCount = Math.max(1, Math.min(count || 12, 100));
   const episodes: AnimeEpisode[] = [];
 
   for (let i = 1; i <= safeCount; i++) {
@@ -184,10 +307,12 @@ function generateFallbackEpisodes(count: number, seasonNum: number): AnimeEpisod
       episodeNumber: i,
       seasonNumber: seasonNum,
       episodeInSeason: i,
-      title: null, // Title Unavailable
+      title: null,
+      description: null,
       titleJapanese: null,
       titleRomanji: null,
       airedAt: null,
+      runtime: '24 min',
       isFiller: false,
       isRecap: false,
       source: 'fallback',
@@ -198,50 +323,51 @@ function generateFallbackEpisodes(count: number, seasonNum: number): AnimeEpisod
 }
 
 /**
- * Fetch and normalize episodes for an AniList anime
+ * Fetch and normalize episodes for an anime and season
  */
-export async function getEpisodesForAnime(anilistId: number): Promise<{
+export async function getEpisodesForAnimeAndSeason(
+  anilistId: number,
+  targetSeasonNumber: number = 1
+): Promise<{
   episodes: AnimeEpisode[];
   idMal: number | null;
   seasonNumber: number;
+  seasons: SeasonInfo[];
   verified: boolean;
 }> {
-  // 1. Retrieve AniList Info
-  const { idMal, episodesCount } = await fetchAniListMediaInfo(anilistId);
+  const mediaInfo = await fetchAniListMediaWithRelations(anilistId);
+  const seasons = mediaInfo.seasons;
 
-  // 2. Check Season Mapping
-  let seasonNumber = 1;
-  let verified = false;
-
-  try {
-    const mapping = await AnimeSeasonMapping.findOne({ anilistId });
-    if (mapping) {
-      seasonNumber = mapping.seasonNumber || 1;
-      verified = mapping.verified;
-    }
-  } catch (err) {
-    console.warn('[Season Mapping Read Warning]:', err);
-  }
+  // Find target season or default to current
+  const activeSeason = seasons.find((s) => s.seasonNumber === targetSeasonNumber) || seasons[0];
+  const targetAnilistId = activeSeason ? activeSeason.anilistId : anilistId;
+  const targetMalId = activeSeason?.idMal || mediaInfo.idMal;
+  const expectedCount = activeSeason?.episodesCount || mediaInfo.episodesCount || 12;
 
   let episodes: AnimeEpisode[] = [];
 
-  // 3. Try fetching from Jikan if idMal exists
-  if (idMal) {
+  if (targetMalId) {
     try {
-      episodes = await fetchEpisodesFromJikan(idMal, seasonNumber);
-    } catch (jikanError) {
-      console.log(`[Jikan Unavailable] Falling back to generic episodes for AniList ID ${anilistId}`);
-      episodes = generateFallbackEpisodes(episodesCount || 12, seasonNumber);
+      episodes = await fetchEpisodesFromJikan(targetMalId, activeSeason.seasonNumber);
+    } catch (err) {
+      console.log(`[Jikan Fallback] Generating fallback for AniList ID ${targetAnilistId}`);
+      episodes = generateFallbackEpisodes(expectedCount, activeSeason.seasonNumber);
     }
   } else {
-    console.log(`[No MAL ID] Using fallback episode generator for AniList ID ${anilistId}`);
-    episodes = generateFallbackEpisodes(episodesCount || 12, seasonNumber);
+    episodes = generateFallbackEpisodes(expectedCount, activeSeason.seasonNumber);
   }
 
-  // 4. Attach discussion statistics from DB
+  // Attach discussion statistics from DB
   try {
-    const discussions = await EpisodeDiscussion.find({ anilistId });
-    const discussionMap = new Map<number, { commentCount: number; participantCount: number; lastActivityAt: Date }>();
+    const discussions = await EpisodeDiscussion.find({
+      anilistId,
+      seasonNumber: activeSeason.seasonNumber,
+    });
+
+    const discussionMap = new Map<
+      number,
+      { commentCount: number; participantCount: number; lastActivityAt: Date }
+    >();
 
     for (const d of discussions) {
       discussionMap.set(d.episodeNumber, {
@@ -266,8 +392,16 @@ export async function getEpisodesForAnime(anilistId: number): Promise<{
 
   return {
     episodes,
-    idMal,
-    seasonNumber,
-    verified,
+    idMal: targetMalId,
+    seasonNumber: activeSeason.seasonNumber,
+    seasons,
+    verified: true,
   };
+}
+
+/**
+ * Backward compatible export
+ */
+export async function getEpisodesForAnime(anilistId: number) {
+  return getEpisodesForAnimeAndSeason(anilistId, 1);
 }
