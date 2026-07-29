@@ -5,91 +5,91 @@
 
 // Strongly typed interfaces as requested
 export interface Title {
-  english?: string;
-  romaji?: string;
-  native?: string;
-  userPreferred?: string;
+  english?: string | null;
+  romaji?: string | null;
+  native?: string | null;
+  userPreferred?: string | null;
 }
 
 export interface CoverImage {
-  extraLarge?: string;
-  large?: string;
-  medium?: string;
-  color?: string;
+  extraLarge?: string | null;
+  large?: string | null;
+  medium?: string | null;
+  color?: string | null;
 }
 
 export interface AniListStudioNode {
   id: number;
   name: string;
-  isAnimationStudio?: boolean;
+  isAnimationStudio?: boolean | null;
 }
 
 export interface AniListStudio {
-  nodes?: AniListStudioNode[];
+  nodes?: AniListStudioNode[] | null;
 }
 
 export interface AniListCharacterNode {
   id: number;
   name: {
-    full?: string;
-    native?: string;
+    full?: string | null;
+    native?: string | null;
   };
   image?: {
-    large?: string;
-    medium?: string;
+    large?: string | null;
+    medium?: string | null;
   };
 }
 
 export interface AniListVoiceActor {
   id: number;
   name: {
-    full?: string;
+    full?: string | null;
   };
   image?: {
-    large?: string;
+    large?: string | null;
   };
 }
 
 export interface AniListCharacterEdge {
-  role?: string;
+  role?: string | null;
   node: AniListCharacterNode;
-  voiceActors?: AniListVoiceActor[];
+  voiceActors?: AniListVoiceActor[] | null;
 }
 
 export interface AniListCharacters {
-  edges?: AniListCharacterEdge[];
+  edges?: AniListCharacterEdge[] | null;
 }
 
 export interface AniListRecommendationNode {
-  mediaRecommendation?: AniListMedia;
+  mediaRecommendation?: AniListMedia | null;
 }
 
 export interface AniListRecommendations {
-  nodes?: AniListRecommendationNode[];
+  nodes?: AniListRecommendationNode[] | null;
 }
 
 export interface AniListExternalLink {
   id: number;
   url: string;
   site: string;
-  type?: string;
-  icon?: string;
-  color?: string;
+  type?: string | null;
+  icon?: string | null;
+  color?: string | null;
 }
 
 export interface AniListStreamingEpisode {
-  title?: string;
-  thumbnail?: string;
-  url?: string;
-  site?: string;
+  title?: string | null;
+  thumbnail?: string | null;
+  url?: string | null;
+  site?: string | null;
 }
 
 export interface AniListTag {
   id: number;
   name: string;
-  category?: string;
-  rank?: number;
-  description?: string;
+  category?: string | null;
+  rank?: number | null;
+  description?: string | null;
 }
 
 export interface AniListAiringEpisode {
@@ -100,51 +100,51 @@ export interface AniListAiringEpisode {
 
 export interface AniListReviewNode {
   id: number;
-  summary?: string;
-  rating?: number;
+  summary?: string | null;
+  rating?: number | null;
   user?: {
-    name?: string;
+    name?: string | null;
     avatar?: {
-      medium?: string;
-    };
-  };
+      medium?: string | null;
+    } | null;
+  } | null;
 }
 
 export interface Anime {
   id: number;
-  title: Title;
-  type: 'ANIME' | 'MANGA';
-  format?: string;
-  status?: string;
-  description?: string;
-  startDate?: { year?: number; month?: number; day?: number };
-  endDate?: { year?: number; month?: number; day?: number };
-  season?: string;
-  seasonYear?: number;
-  episodes?: number;
-  duration?: number;
-  chapters?: number;
-  volumes?: number;
-  countryOfOrigin?: string;
-  coverImage?: CoverImage;
-  bannerImage?: string;
-  genres?: string[];
-  synonyms?: string[];
-  averageScore?: number;
-  meanScore?: number;
-  popularity?: number;
-  trending?: number;
-  favourites?: number;
-  tags?: AniListTag[];
-  studios?: AniListStudio;
-  characters?: AniListCharacters;
-  recommendations?: AniListRecommendations;
-  externalLinks?: AniListExternalLink[];
-  streamingEpisodes?: AniListStreamingEpisode[];
-  nextAiringEpisode?: AniListAiringEpisode;
+  title?: Title | null;
+  type?: 'ANIME' | 'MANGA' | null;
+  format?: string | null;
+  status?: string | null;
+  description?: string | null;
+  startDate?: { year?: number | null; month?: number | null; day?: number | null } | null;
+  endDate?: { year?: number | null; month?: number | null; day?: number | null } | null;
+  season?: string | null;
+  seasonYear?: number | null;
+  episodes?: number | null;
+  duration?: number | null;
+  chapters?: number | null;
+  volumes?: number | null;
+  countryOfOrigin?: string | null;
+  coverImage?: CoverImage | null;
+  bannerImage?: string | null;
+  genres?: string[] | null;
+  synonyms?: string[] | null;
+  averageScore?: number | null;
+  meanScore?: number | null;
+  popularity?: number | null;
+  trending?: number | null;
+  favourites?: number | null;
+  tags?: AniListTag[] | null;
+  studios?: AniListStudio | null;
+  characters?: AniListCharacters | null;
+  recommendations?: AniListRecommendations | null;
+  externalLinks?: AniListExternalLink[] | null;
+  streamingEpisodes?: AniListStreamingEpisode[] | null;
+  nextAiringEpisode?: AniListAiringEpisode | null;
   reviews?: {
-    nodes?: AniListReviewNode[];
-  };
+    nodes?: AniListReviewNode[] | null;
+  } | null;
 }
 
 // Aliases for backward compatibility
@@ -639,28 +639,107 @@ export async function searchAnime(
  */
 export async function getAnimeById(id: number | string, signal?: AbortSignal): Promise<Anime> {
   const numericId = Number(id);
-  if (!id || isNaN(numericId) || numericId <= 0 || !Number.isInteger(numericId) || String(id) === 'undefined' || String(id) === 'null') {
+  if (!id || isNaN(numericId) || numericId <= 0 || String(id) === 'undefined' || String(id) === 'null') {
     throw new Error(`Invalid anime ID provided: "${id}". ID must be a positive integer.`);
   }
 
+  // Check in-memory cache
+  const cacheKey = `${CACHE_PREFIX}anime_${numericId}`;
+  const cached = memoryCache.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < 30 * 60 * 1000) {
+    return cached.data;
+  }
+
   const query = `
-    query MediaById($id: Int!) {
-      Media(id: $id, type: ANIME) {
-        ${FULL_MEDIA_FRAGMENT}
+query MediaById($id: Int!) {
+  Media(id: $id, type: ANIME) {
+    id
+    title {
+      english
+      romaji
+      native
+    }
+    coverImage {
+      extraLarge
+      large
+    }
+    bannerImage
+    description(asHtml: false)
+    averageScore
+    episodes
+    status
+    genres
+    season
+    seasonYear
+    studios {
+      nodes {
+        id
+        name
       }
     }
-  `;
+  }
+}
+  `.trim();
 
-  const res = await fetchAniListGraphQL<{ Media: Anime }>(
-    query,
-    { id: Number(id) },
-    signal
-  );
+  const response = await fetch('https://graphql.anilist.co', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({
+      query,
+      variables: {
+        id: Number(id),
+      },
+    }),
+    signal,
+  });
 
-  if (!res || !res.Media) {
+  const responseText = await response.text();
+
+  let result: any;
+
+  try {
+    result = JSON.parse(responseText);
+  } catch {
+    console.error('AniList returned non-JSON:', responseText);
+    throw new Error(`AniList returned HTTP ${response.status}`);
+  }
+
+  if (!response.ok || result.errors) {
+    console.error(
+      'AniList API Error Details:',
+      JSON.stringify(
+        {
+          status: response.status,
+          requestedId: id,
+          errors: result.errors,
+          response: result,
+        },
+        null,
+        2
+      )
+    );
+
+    if (response.status === 429) {
+      throw new Error('AniList is receiving too many requests. Please wait a moment and try again.');
+    }
+
+    throw new Error(
+      result.errors?.[0]?.message ||
+      `AniList service returned HTTP error ${response.status}`
+    );
+  }
+
+  if (!result.data || !result.data.Media) {
     throw new Error(`Anime title with ID ${id} was not found on AniList.`);
   }
-  return res.Media;
+
+  const animeData = result.data.Media;
+  memoryCache.set(cacheKey, { timestamp: Date.now(), data: animeData });
+
+  return animeData;
 }
 
 /**
@@ -823,25 +902,5 @@ export async function getMangaById(id: number | string, signal?: AbortSignal): P
  * Generic getMediaById (handles either ANIME or MANGA)
  */
 export async function getMediaById(id: number | string, signal?: AbortSignal): Promise<Anime> {
-  const numericId = Number(id);
-  if (!id || isNaN(numericId) || numericId <= 0 || !Number.isInteger(numericId) || String(id) === 'undefined' || String(id) === 'null') {
-    throw new Error(`Invalid media ID provided: "${id}". ID must be a positive integer.`);
-  }
-
-  const query = `
-    query MediaById($id: Int!) {
-      Media(id: $id) {
-        ${FULL_MEDIA_FRAGMENT}
-      }
-    }
-  `;
-  const res = await fetchAniListGraphQL<{ Media: Anime }>(
-    query,
-    { id: Number(id) },
-    signal
-  );
-  if (!res || !res.Media) {
-    throw new Error(`Media title with ID ${id} was not found on AniList.`);
-  }
-  return res.Media;
+  return getAnimeById(id, signal);
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   AniListMedia,
-  getMediaById,
+  getAnimeById,
   cleanDescription,
   getFallbackCover,
   getFallbackBanner,
@@ -61,7 +61,7 @@ export const AnimeDetailView: React.FC<AnimeDetailViewProps> = ({ mediaId, onSel
       setMedia(null);
 
       try {
-        const data = await getMediaById(numId, controller.signal);
+        const data = await getAnimeById(numId, controller.signal);
         if (isMounted) {
           setMedia(data);
           setError(null);
@@ -100,7 +100,7 @@ export const AnimeDetailView: React.FC<AnimeDetailViewProps> = ({ mediaId, onSel
     setError(null);
     setMedia(null);
 
-    getMediaById(numId)
+    getAnimeById(numId)
       .then((data) => {
         setMedia(data);
         setError(null);
