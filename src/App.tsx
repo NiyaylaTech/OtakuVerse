@@ -45,7 +45,7 @@ export default function App() {
   // Determine view to render
   const renderView = () => {
     // Check if route matches /anime/:id or /manga/:id
-    const animeMatch = currentPath.match(/^\/(anime|manga)\/(\d+)/);
+    const animeMatch = currentPath.match(/^\/(anime|manga)\/([^/]+)/);
     if (animeMatch) {
       const mediaId = animeMatch[2];
       return (

@@ -1,16 +1,17 @@
 /**
- * AniList GraphQL API Service
- * Endpoint: https://graphql.anilist.co
+ * AniList GraphQL API Service for OtakuVerse
+ * Official Endpoint: https://graphql.anilist.co
  */
 
-export interface AniListTitle {
-  romaji?: string;
+// Strongly typed interfaces as requested
+export interface Title {
   english?: string;
+  romaji?: string;
   native?: string;
   userPreferred?: string;
 }
 
-export interface AniListCoverImage {
+export interface CoverImage {
   extraLarge?: string;
   large?: string;
   medium?: string;
@@ -20,7 +21,7 @@ export interface AniListCoverImage {
 export interface AniListStudioNode {
   id: number;
   name: string;
-  isAnimationStudio: boolean;
+  isAnimationStudio?: boolean;
 }
 
 export interface AniListStudio {
@@ -109,9 +110,9 @@ export interface AniListReviewNode {
   };
 }
 
-export interface AniListMedia {
+export interface Anime {
   id: number;
-  title: AniListTitle;
+  title: Title;
   type: 'ANIME' | 'MANGA';
   format?: string;
   status?: string;
@@ -125,7 +126,7 @@ export interface AniListMedia {
   chapters?: number;
   volumes?: number;
   countryOfOrigin?: string;
-  coverImage?: AniListCoverImage;
+  coverImage?: CoverImage;
   bannerImage?: string;
   genres?: string[];
   synonyms?: string[];
@@ -146,6 +147,20 @@ export interface AniListMedia {
   };
 }
 
+// Aliases for backward compatibility
+export type AniListMedia = Anime;
+export type AniListTitle = Title;
+export type AniListCoverImage = CoverImage;
+
+export interface AniListApiResponse<T = any> {
+  data?: T;
+  errors?: Array<{
+    message: string;
+    locations?: Array<{ line: number; column: number }>;
+    path?: Array<string | number>;
+  }>;
+}
+
 export interface AniListPageInfo {
   total: number;
   currentPage: number;
@@ -155,7 +170,7 @@ export interface AniListPageInfo {
 }
 
 export interface AniListFetchResult {
-  media: AniListMedia[];
+  media: Anime[];
   pageInfo: AniListPageInfo;
 }
 
@@ -191,7 +206,7 @@ export function cleanDescription(html?: string): string {
 }
 
 /**
- * Return fallback SVG cover image data URL when cover is missing
+ * Default OtakuVerse placeholder image when cover image is missing
  */
 export function getFallbackCover(title?: string): string {
   const safeTitle = (title || 'OtakuVerse').substring(0, 24);
@@ -208,12 +223,32 @@ export function getFallbackCover(title?: string): string {
 }
 
 /**
- * GraphQL Client helper with caching
+ * Default OtakuVerse placeholder banner image
  */
-async function fetchAniListGraphQL<T>(query: string, variables: Record<string, any> = {}): Promise<T> {
+export function getFallbackBanner(title?: string): string {
+  const safeTitle = (title || 'OtakuVerse').substring(0, 32);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+    <rect width="1200" height="400" fill="#0E1410"/>
+    <rect x="20" y="20" width="1160" height="360" rx="12" fill="none" stroke="#23382C" stroke-width="4"/>
+    <circle cx="600" cy="200" r="110" fill="#25663E" opacity="0.3"/>
+    <text x="600" y="190" font-family="'Cinzel', serif" font-size="42" font-weight="extrabold" fill="#C5A059" text-anchor="middle">OTAKUVERSE ARCHIVE</text>
+    <text x="600" y="235" font-family="sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF" text-anchor="middle">${safeTitle}</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
+
+/**
+ * Reusable GraphQL Client helper using fetch API
+ * Logs complete GraphQL errors to console and throws descriptive errors
+ */
+async function fetchAniListGraphQL<T>(
+  query: string,
+  variables: Record<string, any> = {},
+  signal?: AbortSignal
+): Promise<T> {
   const cacheKey = `${CACHE_PREFIX}${JSON.stringify({ query, variables })}`;
   
-  // Check memory cache
+  // Check in-memory cache
   const mem = memoryCache.get(cacheKey);
   if (mem && Date.now() - mem.timestamp < CACHE_TTL_MS) {
     return mem.data as T;
@@ -233,28 +268,75 @@ async function fetchAniListGraphQL<T>(query: string, variables: Record<string, a
     // Ignore localStorage errors
   }
 
-  // Fetch live API
-  const response = await fetch(ANILIST_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: JSON.stringify({ query, variables }),
-  });
+  let response: Response;
+  try {
+    response = await fetch(ANILIST_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ query, variables }),
+      signal,
+    });
+  } catch (fetchError: any) {
+    if (fetchError.name === 'AbortError' || signal?.aborted) {
+      throw fetchError;
+    }
+    console.error('AniList Network Error:', fetchError);
+    console.error('[AniList API Error Details]:', {
+      httpStatus: 0,
+      graphQLErrors: null,
+      requestedAnimeId: variables?.id ?? null,
+      responseBody: fetchError.message || 'Fetch failed',
+    });
+    throw new Error('Unable to connect to AniList servers. Please check your internet connection.');
+  }
 
   if (!response.ok) {
-    throw new Error(`AniList API returned HTTP error ${response.status}: ${response.statusText}`);
+    let responseText = '';
+    try {
+      responseText = await response.text();
+    } catch (e) {
+      responseText = response.statusText;
+    }
+
+    console.error('[AniList API Error Details]:', {
+      httpStatus: response.status,
+      graphQLErrors: null,
+      requestedAnimeId: variables?.id ?? null,
+      responseBody: responseText,
+    });
+
+    if (response.status === 429) {
+      throw new Error('AniList is receiving too many requests. Please wait a moment and try again.');
+    }
+
+    throw new Error(`AniList service returned HTTP error status ${response.status} (${response.statusText}).`);
   }
 
-  const json = await response.json();
+  const json: AniListApiResponse<T> = await response.json();
+
   if (json.errors && json.errors.length > 0) {
-    throw new Error(`AniList GraphQL Error: ${json.errors[0].message}`);
+    // Print complete GraphQL error details to browser console as required
+    console.error('[AniList GraphQL Error Details]:', {
+      httpStatus: response.status,
+      graphQLErrors: json.errors,
+      requestedAnimeId: variables?.id ?? null,
+      responseBody: json,
+    });
+
+    const errorMessages = json.errors.map((e) => e.message).join(' | ');
+    throw new Error(`AniList GraphQL Error: ${errorMessages}`);
   }
 
-  const result = json.data as T;
+  if (!json.data) {
+    throw new Error('AniList API returned an empty response.');
+  }
 
-  // Save to cache
+  const result = json.data;
+
+  // Save successful response to cache
   const cacheEntry = { timestamp: Date.now(), data: result };
   memoryCache.set(cacheKey, cacheEntry);
   try {
@@ -266,7 +348,26 @@ async function fetchAniListGraphQL<T>(query: string, variables: Record<string, a
   return result;
 }
 
-// Media Fields Query Fragment
+/**
+ * Clear cache for a specific media ID or all cache entries
+ */
+export function clearAniListCache(id?: number | string) {
+  if (!id) {
+    memoryCache.clear();
+    return;
+  }
+  const numericId = Number(id);
+  for (const key of memoryCache.keys()) {
+    if (key.includes(`"id":${numericId}`)) {
+      memoryCache.delete(key);
+      try {
+        localStorage.removeItem(key);
+      } catch (e) {}
+    }
+  }
+}
+
+// Media Fields Fragment for Card Listing
 const MEDIA_CARD_FRAGMENT = `
   id
   title {
@@ -387,8 +488,10 @@ const FULL_MEDIA_FRAGMENT = `
 
 /**
  * 1. getTrendingAnime
+ * Retrieves current trending anime using the specified GraphQL query.
+ * Returns array of anime (result.data.Page.media) with pageInfo attached.
  */
-export async function getTrendingAnime(page = 1, perPage = 12): Promise<AniListFetchResult> {
+export async function getTrendingAnime(page = 1, perPage = 12): Promise<Anime[] & { media: Anime[]; pageInfo: AniListPageInfo }> {
   const query = `
     query ($page: Int, $perPage: Int) {
       Page(page: $page, perPage: $perPage) {
@@ -399,20 +502,68 @@ export async function getTrendingAnime(page = 1, perPage = 12): Promise<AniListF
           hasNextPage
           perPage
         }
-        media(type: ANIME, sort: [TRENDING_DESC, POPULARITY_DESC], isAdult: false) {
-          ${MEDIA_CARD_FRAGMENT}
+        media(
+          type: ANIME
+          sort: TRENDING_DESC
+          isAdult: false
+        ) {
+          id
+
+          title {
+            english
+            romaji
+            native
+          }
+
+          coverImage {
+            extraLarge
+            large
+          }
+
+          bannerImage
+
+          description(asHtml: false)
+
+          averageScore
+
+          episodes
+
+          status
+
+          genres
+
+          season
+
+          seasonYear
         }
       }
     }
   `;
-  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: AniListMedia[] } }>(query, { page, perPage });
-  return { media: res.Page.media, pageInfo: res.Page.pageInfo };
+
+  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: Anime[] } }>(query, { page, perPage });
+  const mediaList = res.Page.media;
+
+  // Ensure fallback cover and banner handling for items without images
+  mediaList.forEach((item) => {
+    if (!item.coverImage?.large && !item.coverImage?.extraLarge) {
+      item.coverImage = {
+        extraLarge: getFallbackCover(item.title?.english || item.title?.romaji),
+        large: getFallbackCover(item.title?.english || item.title?.romaji),
+      };
+    }
+  });
+
+  // Attach pageInfo and media properties to the array so both array methods and object destructuring work seamlessly
+  return Object.assign(mediaList, {
+    media: mediaList,
+    pageInfo: res.Page.pageInfo,
+  });
 }
 
 /**
  * 2. getPopularAnime
  */
-export async function getPopularAnime(page = 1, perPage = 12): Promise<AniListFetchResult> {
+export async function getPopularAnime(page = 1, perPage = 12): Promise<Anime[] & { media: Anime[]; pageInfo: AniListPageInfo }> {
   const query = `
     query ($page: Int, $perPage: Int) {
       Page(page: $page, perPage: $perPage) {
@@ -429,8 +580,9 @@ export async function getPopularAnime(page = 1, perPage = 12): Promise<AniListFe
       }
     }
   `;
-  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: AniListMedia[] } }>(query, { page, perPage });
-  return { media: res.Page.media, pageInfo: res.Page.pageInfo };
+  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: Anime[] } }>(query, { page, perPage });
+  const mediaList = res.Page.media;
+  return Object.assign(mediaList, { media: mediaList, pageInfo: res.Page.pageInfo });
 }
 
 /**
@@ -441,7 +593,7 @@ export async function searchAnime(
   page = 1,
   perPage = 12,
   filters: { genre?: string; format?: string; status?: string; sort?: string } = {}
-): Promise<AniListFetchResult> {
+): Promise<Anime[] & { media: Anime[]; pageInfo: AniListPageInfo }> {
   const sortOption = filters.sort ? [filters.sort] : (searchTerm ? ['SEARCH_MATCH'] : ['POPULARITY_DESC']);
   const query = `
     query ($page: Int, $perPage: Int, $search: String, $genre: String, $format: MediaFormat, $status: MediaStatus, $sort: [MediaSort]) {
@@ -477,25 +629,36 @@ export async function searchAnime(
     sort: sortOption,
   };
 
-  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: AniListMedia[] } }>(query, variables);
-  return { media: res.Page.media, pageInfo: res.Page.pageInfo };
+  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: Anime[] } }>(query, variables);
+  const mediaList = res.Page.media;
+  return Object.assign(mediaList, { media: mediaList, pageInfo: res.Page.pageInfo });
 }
 
 /**
  * 4. getAnimeById
  */
-export async function getAnimeById(id: number | string): Promise<AniListMedia> {
-  const numericId = typeof id === 'string' ? parseInt(id, 10) : id;
+export async function getAnimeById(id: number | string, signal?: AbortSignal): Promise<Anime> {
+  const numericId = Number(id);
+  if (!id || isNaN(numericId) || numericId <= 0 || !Number.isInteger(numericId) || String(id) === 'undefined' || String(id) === 'null') {
+    throw new Error(`Invalid anime ID provided: "${id}". ID must be a positive integer.`);
+  }
+
   const query = `
-    query ($id: Int) {
+    query MediaById($id: Int!) {
       Media(id: $id, type: ANIME) {
         ${FULL_MEDIA_FRAGMENT}
       }
     }
   `;
-  const res = await fetchAniListGraphQL<{ Media: AniListMedia }>(query, { id: numericId });
+
+  const res = await fetchAniListGraphQL<{ Media: Anime }>(
+    query,
+    { id: Number(id) },
+    signal
+  );
+
   if (!res || !res.Media) {
-    throw new Error(`Anime with ID ${id} was not found on AniList.`);
+    throw new Error(`Anime title with ID ${id} was not found on AniList.`);
   }
   return res.Media;
 }
@@ -508,8 +671,7 @@ export async function getSeasonalAnime(
   year?: number,
   page = 1,
   perPage = 12
-): Promise<AniListFetchResult> {
-  // Determine current season & year if omitted
+): Promise<Anime[] & { media: Anime[]; pageInfo: AniListPageInfo }> {
   const now = new Date();
   const currentYear = year || now.getFullYear();
   let currentSeason = season;
@@ -537,28 +699,29 @@ export async function getSeasonalAnime(
       }
     }
   `;
-  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: AniListMedia[] } }>(
+  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: Anime[] } }>(
     query,
     { season: currentSeason.toUpperCase(), seasonYear: currentYear, page, perPage }
   );
-  return { media: res.Page.media, pageInfo: res.Page.pageInfo };
+  const mediaList = res.Page.media;
+  return Object.assign(mediaList, { media: mediaList, pageInfo: res.Page.pageInfo });
 }
 
 /**
  * 6. getAnimeRecommendations
  */
-export async function getAnimeRecommendations(id: number | string): Promise<AniListMedia[]> {
+export async function getAnimeRecommendations(id: number | string): Promise<Anime[]> {
   const anime = await getAnimeById(id);
   const recs = anime.recommendations?.nodes || [];
   return recs
     .map((r) => r.mediaRecommendation)
-    .filter((m): m is AniListMedia => Boolean(m && m.id));
+    .filter((m): m is Anime => Boolean(m && m.id));
 }
 
 /**
  * 7. getPopularManga
  */
-export async function getPopularManga(page = 1, perPage = 12): Promise<AniListFetchResult> {
+export async function getPopularManga(page = 1, perPage = 12): Promise<Anime[] & { media: Anime[]; pageInfo: AniListPageInfo }> {
   const query = `
     query ($page: Int, $perPage: Int) {
       Page(page: $page, perPage: $perPage) {
@@ -575,8 +738,9 @@ export async function getPopularManga(page = 1, perPage = 12): Promise<AniListFe
       }
     }
   `;
-  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: AniListMedia[] } }>(query, { page, perPage });
-  return { media: res.Page.media, pageInfo: res.Page.pageInfo };
+  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: Anime[] } }>(query, { page, perPage });
+  const mediaList = res.Page.media;
+  return Object.assign(mediaList, { media: mediaList, pageInfo: res.Page.pageInfo });
 }
 
 /**
@@ -587,7 +751,7 @@ export async function searchManga(
   page = 1,
   perPage = 12,
   filters: { genre?: string; format?: string; status?: string; sort?: string } = {}
-): Promise<AniListFetchResult> {
+): Promise<Anime[] & { media: Anime[]; pageInfo: AniListPageInfo }> {
   const sortOption = filters.sort ? [filters.sort] : (searchTerm ? ['SEARCH_MATCH'] : ['POPULARITY_DESC']);
   const query = `
     query ($page: Int, $perPage: Int, $search: String, $genre: String, $format: MediaFormat, $status: MediaStatus, $sort: [MediaSort]) {
@@ -623,25 +787,34 @@ export async function searchManga(
     sort: sortOption,
   };
 
-  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: AniListMedia[] } }>(query, variables);
-  return { media: res.Page.media, pageInfo: res.Page.pageInfo };
+  const res = await fetchAniListGraphQL<{ Page: { pageInfo: AniListPageInfo; media: Anime[] } }>(query, variables);
+  const mediaList = res.Page.media;
+  return Object.assign(mediaList, { media: mediaList, pageInfo: res.Page.pageInfo });
 }
 
 /**
  * 9. getMangaById
  */
-export async function getMangaById(id: number | string): Promise<AniListMedia> {
-  const numericId = typeof id === 'string' ? parseInt(id, 10) : id;
+export async function getMangaById(id: number | string, signal?: AbortSignal): Promise<Anime> {
+  const numericId = Number(id);
+  if (!id || isNaN(numericId) || numericId <= 0 || !Number.isInteger(numericId) || String(id) === 'undefined' || String(id) === 'null') {
+    throw new Error(`Invalid manga ID provided: "${id}". ID must be a positive integer.`);
+  }
+
   const query = `
-    query ($id: Int) {
+    query MediaById($id: Int!) {
       Media(id: $id, type: MANGA) {
         ${FULL_MEDIA_FRAGMENT}
       }
     }
   `;
-  const res = await fetchAniListGraphQL<{ Media: AniListMedia }>(query, { id: numericId });
+  const res = await fetchAniListGraphQL<{ Media: Anime }>(
+    query,
+    { id: Number(id) },
+    signal
+  );
   if (!res || !res.Media) {
-    throw new Error(`Manga with ID ${id} was not found on AniList.`);
+    throw new Error(`Manga title with ID ${id} was not found on AniList.`);
   }
   return res.Media;
 }
@@ -649,18 +822,26 @@ export async function getMangaById(id: number | string): Promise<AniListMedia> {
 /**
  * Generic getMediaById (handles either ANIME or MANGA)
  */
-export async function getMediaById(id: number | string): Promise<AniListMedia> {
-  const numericId = typeof id === 'string' ? parseInt(id, 10) : id;
+export async function getMediaById(id: number | string, signal?: AbortSignal): Promise<Anime> {
+  const numericId = Number(id);
+  if (!id || isNaN(numericId) || numericId <= 0 || !Number.isInteger(numericId) || String(id) === 'undefined' || String(id) === 'null') {
+    throw new Error(`Invalid media ID provided: "${id}". ID must be a positive integer.`);
+  }
+
   const query = `
-    query ($id: Int) {
+    query MediaById($id: Int!) {
       Media(id: $id) {
         ${FULL_MEDIA_FRAGMENT}
       }
     }
   `;
-  const res = await fetchAniListGraphQL<{ Media: AniListMedia }>(query, { id: numericId });
+  const res = await fetchAniListGraphQL<{ Media: Anime }>(
+    query,
+    { id: Number(id) },
+    signal
+  );
   if (!res || !res.Media) {
-    throw new Error(`Media with ID ${id} was not found on AniList.`);
+    throw new Error(`Media title with ID ${id} was not found on AniList.`);
   }
   return res.Media;
 }

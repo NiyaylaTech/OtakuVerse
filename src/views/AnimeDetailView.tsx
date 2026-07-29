@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
   AniListMedia,
-  getAnimeById,
   getMediaById,
   cleanDescription,
   getFallbackCover,
+  getFallbackBanner,
+  clearAniListCache,
 } from '../services/anilist';
 import { AnimeCard } from '../components/AnimeCard';
 import { LoadingSkeleton } from '../components/LoadingSkeleton';
@@ -33,47 +34,120 @@ export const AnimeDetailView: React.FC<AnimeDetailViewProps> = ({ mediaId, onSel
   const [userReviews, setUserReviews] = useState<any[]>([]);
   const [userDiscussions, setUserDiscussions] = useState<any[]>([]);
 
-  const fetchDetail = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await getMediaById(mediaId);
-      setMedia(data);
-    } catch (err: any) {
-      console.error(`Failed to load media ID ${mediaId}:`, err);
-      setError(err.message || 'Failed to fetch detailed information from AniList.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const numId = Number(mediaId);
+
+    // Validate ID before sending request
+    if (
+      !mediaId ||
+      isNaN(numId) ||
+      numId <= 0 ||
+      !Number.isInteger(numId) ||
+      String(mediaId) === 'undefined' ||
+      String(mediaId) === 'null'
+    ) {
+      setError(`Invalid Anime ID: "${mediaId}". Please select a valid title.`);
+      setLoading(false);
+      setMedia(null);
+      return;
+    }
+
+    const controller = new AbortController();
+    let isMounted = true;
+
+    const fetchDetail = async () => {
+      setLoading(true);
+      setError(null);
+      setMedia(null);
+
+      try {
+        const data = await getMediaById(numId, controller.signal);
+        if (isMounted) {
+          setMedia(data);
+          setError(null);
+          setLoading(false);
+        }
+      } catch (err: any) {
+        if (controller.signal.aborted) {
+          return;
+        }
+        if (isMounted) {
+          console.error(`Failed to load media ID ${numId}:`, err);
+          setError(err.message || 'Failed to fetch detailed information from AniList.');
+          setMedia(null);
+          setLoading(false);
+        }
+      }
+    };
+
     fetchDetail();
+
     // Scroll back to top on navigation
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, [mediaId]);
+
+  const handleRetry = () => {
+    const numId = Number(mediaId);
+    if (isNaN(numId) || numId <= 0) return;
+
+    clearAniListCache(numId);
+    setLoading(true);
+    setError(null);
+    setMedia(null);
+
+    getMediaById(numId)
+      .then((data) => {
+        setMedia(data);
+        setError(null);
+      })
+      .catch((err) => {
+        console.error(`Retry failed for media ID ${numId}:`, err);
+        setError(err.message || 'Failed to fetch detailed information from AniList.');
+        setMedia(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   if (loading) {
     return <LoadingSkeleton type="detail" />;
   }
 
-  if (error || !media) {
+  if (error) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12">
-        <ErrorMessage message={error || 'Title not found on AniList.'} onRetry={fetchDetail} />
+        <ErrorMessage message={error} onRetry={handleRetry} />
       </div>
     );
   }
 
-  const titleEnglish = media.title.english || media.title.userPreferred || media.title.romaji;
-  const titleRomaji = media.title.romaji;
-  const titleNative = media.title.native;
+  if (!media) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-12">
+        <ErrorMessage message={`Anime title with ID ${mediaId} was not found on AniList.`} onRetry={handleRetry} />
+      </div>
+    );
+  }
+
+  const titleEnglish = media.title?.english || media.title?.userPreferred || media.title?.romaji || 'Untitled Title';
+  const titleRomaji = media.title?.romaji || '';
+  const titleNative = media.title?.native || '';
   const coverUrl = media.coverImage?.extraLarge || media.coverImage?.large || getFallbackCover(titleEnglish);
-  const bannerUrl = media.bannerImage || coverUrl;
-  const score = media.averageScore ? (media.averageScore / 10).toFixed(1) : 'N/A';
-  const popularity = media.popularity ? media.popularity.toLocaleString() : 'N/A';
-  const studios = media.studios?.nodes?.map((s) => s.name).join(', ') || 'N/A';
-  const seasonYear = media.season && media.seasonYear ? `${media.season} ${media.seasonYear}` : media.startDate?.year || 'N/A';
+  const bannerUrl = media.bannerImage || coverUrl || getFallbackBanner(titleEnglish);
+  const score = typeof media.averageScore === 'number' && media.averageScore > 0 ? (media.averageScore / 10).toFixed(1) : 'N/A';
+  const popularity = typeof media.popularity === 'number' && media.popularity > 0 ? media.popularity.toLocaleString() : 'N/A';
+  const studios = media.studios?.nodes && media.studios.nodes.length > 0
+    ? media.studios.nodes.map((s) => s.name).filter(Boolean).join(', ')
+    : 'Unknown Studio';
+  const seasonStr = media.season || '';
+  const yearStr = media.seasonYear || media.startDate?.year || '';
+  const seasonYear = [seasonStr, yearStr].filter(Boolean).join(' ') || 'Unknown Season';
   const isAnime = media.type === 'ANIME';
 
   // Streaming & external links
