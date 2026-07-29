@@ -13,6 +13,7 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import { AddToListModal } from '../components/AddToListModal';
 import { WriteReviewModal } from '../components/WriteReviewModal';
 import { StartDiscussionModal } from '../components/StartDiscussionModal';
+import { AnimeEpisodesSection } from '../components/AnimeEpisodesSection';
 
 interface AnimeDetailViewProps {
   mediaId: string | number;
@@ -340,6 +341,14 @@ export const AnimeDetailView: React.FC<AnimeDetailViewProps> = ({ mediaId, onSel
               {cleanDescription(media.description)}
             </p>
           </div>
+
+          {/* Episodes & Discussions Section */}
+          {isAnime && (
+            <AnimeEpisodesSection
+              anilistId={media.id}
+              onNavigate={onNavigate}
+            />
+          )}
 
           {/* Characters & Voice Actors */}
           {media.characters?.edges && media.characters.edges.length > 0 && (

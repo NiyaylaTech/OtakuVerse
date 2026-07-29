@@ -18,6 +18,7 @@ import { ContactView } from './views/ContactView';
 import { ProgramsView } from './views/ProgramsView';
 import { SignInView } from './views/SignInView';
 import { SignUpView } from './views/SignUpView';
+import { EpisodeDiscussionView } from './views/EpisodeDiscussionView';
 
 export default function App() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -62,6 +63,23 @@ export default function App() {
           <div className="w-12 h-12 border-4 border-[#389B5F] border-t-transparent rounded-full animate-spin"></div>
           <p className="text-xs font-mono text-[#A3C2AE]">Authenticating OtakuVerse Session...</p>
         </div>
+      );
+    }
+
+    // Check if route matches /anime/:anilistId/season/:seasonNumber/episode/:episodeNumber/discussion
+    const epDiscussionMatch = currentPath.match(/^\/anime\/([^/]+)\/season\/([^/]+)\/episode\/([^/]+)\/discussion/);
+    if (epDiscussionMatch) {
+      const anilistId = Number(epDiscussionMatch[1]);
+      const seasonNumber = Number(epDiscussionMatch[2]) || 1;
+      const episodeNumber = Number(epDiscussionMatch[3]);
+
+      return (
+        <EpisodeDiscussionView
+          anilistId={anilistId}
+          seasonNumber={seasonNumber}
+          episodeNumber={episodeNumber}
+          onNavigate={navigateTo}
+        />
       );
     }
 

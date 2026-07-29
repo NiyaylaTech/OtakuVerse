@@ -12,9 +12,13 @@ export async function connectDatabase(): Promise<void> {
 
   try {
     console.log('Connecting to MongoDB database...');
+    
+    // Connect to process.env.MONGODB_URI with otakuverse dbName fallback
     await mongoose.connect(uri, {
+      dbName: 'otakuverse',
       serverSelectionTimeoutMS: 10000,
     });
+
     console.log('Successfully connected to MongoDB database!');
     console.log("MongoDB database:", mongoose.connection.name);
     console.log("MongoDB host:", mongoose.connection.host);

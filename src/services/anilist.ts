@@ -112,6 +112,7 @@ export interface AniListReviewNode {
 
 export interface Anime {
   id: number;
+  idMal?: number | null;
   title?: Title | null;
   type?: 'ANIME' | 'MANGA' | null;
   format?: string | null;
@@ -370,6 +371,7 @@ export function clearAniListCache(id?: number | string) {
 // Media Fields Fragment for Card Listing
 const MEDIA_CARD_FRAGMENT = `
   id
+  idMal
   title {
     romaji
     english

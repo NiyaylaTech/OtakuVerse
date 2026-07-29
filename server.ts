@@ -4,6 +4,8 @@ import cors from 'cors';
 import { connectDatabase } from './src/config/database';
 import healthRouter from './src/routes/health';
 import authRouter from './src/routes/auth';
+import discussionsRouter from './src/routes/discussions';
+import episodeDiscussionsRouter from './src/routes/episodeDiscussions';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -63,6 +65,12 @@ app.use('/api', healthRouter);
 
 // Register Auth Routes
 app.use('/api/auth', authRouter);
+
+// Register Discussion Routes
+app.use('/api/discussions', discussionsRouter);
+
+// Register Episode Discussion Routes
+app.use('/api', episodeDiscussionsRouter);
 
 // JSON 404 handler for all unmatched API / server routes
 app.use((_req, res) => {
