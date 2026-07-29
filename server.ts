@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { connectDatabase } from './src/config/database';
 import healthRouter from './src/routes/health';
+import authRouter from './src/routes/auth';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -59,6 +60,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Register Health Route
 app.use('/api', healthRouter);
+
+// Register Auth Routes
+app.use('/api/auth', authRouter);
 
 // JSON 404 handler for all unmatched API / server routes
 app.use((_req, res) => {

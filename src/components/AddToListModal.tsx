@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { AniListMedia } from '../services/anilist';
+import { useAuth } from '../context/AuthContext';
 
 interface AddToListModalProps {
   media: AniListMedia;
   isOpen: boolean;
   onClose: () => void;
   onSave: (listEntry: any) => void;
+  onNavigate?: (path: string) => void;
 }
 
-export const AddToListModal: React.FC<AddToListModalProps> = ({ media, isOpen, onClose, onSave }) => {
+export const AddToListModal: React.FC<AddToListModalProps> = ({ media, isOpen, onClose, onSave, onNavigate }) => {
+  const { user, isAuthenticated } = useAuth();
   const isAnime = media.type === 'ANIME';
   const defaultStatus = isAnime ? 'Watching' : 'Reading';
   
@@ -25,6 +28,8 @@ export const AddToListModal: React.FC<AddToListModalProps> = ({ media, isOpen, o
     const entry = {
       id: media.id,
       mediaId: media.id,
+      userId: user?.id,
+      username: user?.username,
       title: media.title.english || media.title.userPreferred || media.title.romaji,
       cover: media.coverImage?.large || media.coverImage?.extraLarge,
       type: media.type,
@@ -52,12 +57,41 @@ export const AddToListModal: React.FC<AddToListModalProps> = ({ media, isOpen, o
           <h3 className="font-serif font-bold text-lg text-white flex items-center gap-2">
             <span>📚</span> Add to My Anime List
           </h3>
-          <button onClick={onClose} className="text-[#A3C2AE] hover:text-white font-bold text-sm">
+          <button onClick={onClose} className="text-[#A3C2AE] hover:text-white font-bold text-sm cursor-pointer">
             ✕
           </button>
         </div>
 
-        {savedSuccess ? (
+        {!isAuthenticated ? (
+          <div className="p-6 bg-[#060807] border border-[#23382C] rounded-xl text-center space-y-4">
+            <div className="text-4xl">🔒</div>
+            <div className="space-y-1">
+              <h4 className="font-serif font-bold text-white text-base">Sign In Required</h4>
+              <p className="text-xs text-[#A3C2AE]">
+                You must be signed in to add titles to your personal watchlist and track progress.
+              </p>
+            </div>
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 py-2.5 bg-[#141C17] hover:bg-[#23382C] text-[#A3C2AE] font-bold rounded-lg border border-[#23382C] transition-colors cursor-pointer text-xs"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  if (onNavigate) onNavigate('/sign-in');
+                }}
+                className="flex-1 py-2.5 bg-[#25663E] hover:bg-[#389B5F] text-white font-bold rounded-lg border border-[#389B5F] shadow-md transition-colors cursor-pointer text-xs"
+              >
+                Sign In ➔
+              </button>
+            </div>
+          </div>
+        ) : savedSuccess ? (
           <div className="p-6 bg-[#25663E]/40 border border-[#389B5F] rounded-xl text-center space-y-2">
             <div className="text-3xl">🎉</div>
             <h4 className="font-serif font-bold text-white text-base">Saved to Your OtakuVerse List!</h4>

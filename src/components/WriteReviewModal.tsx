@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { AniListMedia } from '../services/anilist';
+import { useAuth } from '../context/AuthContext';
 
 interface WriteReviewModalProps {
   media: AniListMedia;
   isOpen: boolean;
   onClose: () => void;
   onSaveReview: (review: any) => void;
+  onNavigate?: (path: string) => void;
 }
 
-export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({ media, isOpen, onClose, onSaveReview }) => {
+export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({ media, isOpen, onClose, onSaveReview, onNavigate }) => {
+  const { user, isAuthenticated } = useAuth();
   const [rating, setRating] = useState(9.5);
   const [headline, setHeadline] = useState('');
   const [content, setContent] = useState('');
@@ -25,8 +28,8 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({ media, isOpe
       mediaId: media.id,
       mediaTitle: media.title.english || media.title.userPreferred || media.title.romaji,
       mediaCover: media.coverImage?.large,
-      author: 'Grand_Otaku_Critic',
-      avatar: 'https://picsum.photos/seed/otaku_user_avatar/100/100',
+      author: user?.displayName || user?.username || 'OtakuVerse Member',
+      avatar: user?.avatarUrl || `https://api.dicebear.com/7.x/bottts/svg?seed=${user?.username}`,
       rating,
       headline,
       content,
@@ -50,12 +53,41 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({ media, isOpe
           <h3 className="font-serif font-bold text-lg text-white flex items-center gap-2">
             <span>⭐</span> Write Critic Review for {media.title.english || media.title.romaji}
           </h3>
-          <button onClick={onClose} className="text-[#A3C2AE] hover:text-white font-bold text-sm">
+          <button onClick={onClose} className="text-[#A3C2AE] hover:text-white font-bold text-sm cursor-pointer">
             ✕
           </button>
         </div>
 
-        {savedSuccess ? (
+        {!isAuthenticated ? (
+          <div className="p-6 bg-[#060807] border border-[#23382C] rounded-xl text-center space-y-4">
+            <div className="text-4xl">🔒</div>
+            <div className="space-y-1">
+              <h4 className="font-serif font-bold text-white text-base">Sign In Required</h4>
+              <p className="text-xs text-[#A3C2AE]">
+                You must be signed in to publish critic reviews and share your scores with the community.
+              </p>
+            </div>
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 py-2.5 bg-[#141C17] hover:bg-[#23382C] text-[#A3C2AE] font-bold rounded-lg border border-[#23382C] transition-colors cursor-pointer text-xs"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  if (onNavigate) onNavigate('/sign-in');
+                }}
+                className="flex-1 py-2.5 bg-[#25663E] hover:bg-[#389B5F] text-white font-bold rounded-lg border border-[#389B5F] shadow-md transition-colors cursor-pointer text-xs"
+              >
+                Sign In ➔
+              </button>
+            </div>
+          </div>
+        ) : savedSuccess ? (
           <div className="p-6 bg-[#25663E]/40 border border-[#389B5F] rounded-xl text-center space-y-2">
             <div className="text-3xl">📜</div>
             <h4 className="font-serif font-bold text-white text-base">Review Published to OtakuVerse!</h4>

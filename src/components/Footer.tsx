@@ -78,8 +78,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </a>
             </li>
             <li>
-              <a href="/profile" onClick={(e) => handleLinkClick('/profile', e)} className="hover:text-white transition-colors">
-                👤 Critic Profile & XP
+              <a href="/programs" onClick={(e) => handleLinkClick('/programs', e)} className="hover:text-white transition-colors">
+                🎌 Community Hub
+              </a>
+            </li>
+            <li>
+              <a href="/about" onClick={(e) => handleLinkClick('/about', e)} className="hover:text-white transition-colors">
+                ℹ️ About OtakuVerse
+              </a>
+            </li>
+            <li>
+              <a href="/contact" onClick={(e) => handleLinkClick('/contact', e)} className="hover:text-white transition-colors">
+                📬 Contact & Support
               </a>
             </li>
           </ul>

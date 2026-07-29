@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useAuth } from '../context/AuthContext';
 
 interface HeaderProps {
   currentPath: string;
@@ -8,7 +9,9 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenSearch }) => {
+  const { user, isAuthenticated, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   // Keyboard shortcut Cmd+K / Ctrl+K for quick search
   useEffect(() => {
@@ -25,10 +28,12 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
   const navItems = [
     { label: '🏠 Home', path: '/' },
     { label: '🧭 Discovery', path: '/discovery' },
+    { label: '🎌 Hub', path: '/programs' },
     { label: '🏆 Rankings', path: '/rankings' },
     { label: '📚 My Lists', path: '/lists' },
     { label: '⭐ Reviews', path: '/reviews' },
     { label: '💬 Discussions', path: '/discussions' },
+    { label: 'ℹ️ About', path: '/about' },
     { label: '👤 Profile', path: '/profile' },
   ];
 
@@ -36,6 +41,14 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
     e.preventDefault();
     onNavigate(path);
     setMobileMenuOpen(false);
+    setUserDropdownOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setUserDropdownOpen(false);
+    setMobileMenuOpen(false);
+    onNavigate('/');
   };
 
   const isActive = (path: string) => {
@@ -121,15 +134,93 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={onOpenSearch}
-            className="flex items-center gap-2.5 px-4 py-2.5 bg-[#0E1410] hover:bg-[#141C17] border border-[#23382C] hover:border-[#389B5F] rounded-xl text-xs font-semibold text-[#A3C2AE] hover:text-white transition-all shadow-sm cursor-pointer"
+            className="flex items-center gap-2.5 px-3.5 sm:px-4 py-2.5 bg-[#0E1410] hover:bg-[#141C17] border border-[#23382C] hover:border-[#389B5F] rounded-xl text-xs font-semibold text-[#A3C2AE] hover:text-white transition-all shadow-sm cursor-pointer"
             title="Search AniList (Cmd+K)"
           >
             <span className="text-base">🔍</span>
-            <span className="hidden sm:inline font-sans">Search AniList...</span>
+            <span className="hidden sm:inline font-sans">Search...</span>
             <kbd className="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-[#25663E]/40 border border-[#389B5F]/40 text-[#C5A059] rounded-md ml-1">
               ⌘K
             </kbd>
           </motion.button>
+
+          {/* User Auth Section (Desktop & Mobile header) */}
+          {isAuthenticated && user ? (
+            <div className="relative">
+              <button
+                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                className="flex items-center gap-2.5 px-3 py-1.5 bg-[#0E1410] hover:bg-[#141C17] border border-[#389B5F]/60 rounded-xl text-xs font-bold text-white transition-all cursor-pointer shadow-md"
+              >
+                <img
+                  src={user.avatarUrl || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.username}`}
+                  alt={user.username}
+                  className="w-7 h-7 rounded-full bg-[#25663E] object-cover border border-[#C5A059]"
+                />
+                <span className="hidden sm:inline font-semibold">{user.displayName || user.username}</span>
+                <span className="text-[10px] bg-[#25663E] text-[#C5A059] px-1.5 py-0.5 rounded font-mono border border-[#389B5F]">
+                  Lv.{user.animeLevel || 1}
+                </span>
+              </button>
+
+              {/* User Dropdown */}
+              <AnimatePresence>
+                {userDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                    className="absolute right-0 mt-2 w-56 bg-[#0E1410] border-2 border-[#23382C] rounded-2xl shadow-2xl py-2 z-50 divide-y divide-[#23382C]"
+                  >
+                    <div className="px-4 py-2.5">
+                      <p className="text-xs font-bold text-white truncate">{user.displayName}</p>
+                      <p className="text-[11px] text-[#A3C2AE] truncate">@{user.username}</p>
+                    </div>
+
+                    <div className="py-1">
+                      <a
+                        href="/profile"
+                        onClick={(e) => handleLinkClick('/profile', e)}
+                        className="block px-4 py-2 text-xs text-[#A3C2AE] hover:text-white hover:bg-[#25663E]/30 transition-colors cursor-pointer"
+                      >
+                        👤 View Profile
+                      </a>
+                      <a
+                        href="/lists"
+                        onClick={(e) => handleLinkClick('/lists', e)}
+                        className="block px-4 py-2 text-xs text-[#A3C2AE] hover:text-white hover:bg-[#25663E]/30 transition-colors cursor-pointer"
+                      >
+                        📚 My Anime List
+                      </a>
+                    </div>
+
+                    <div className="py-1">
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 text-xs font-bold text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 transition-colors cursor-pointer"
+                      >
+                        🚪 Log Out
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ) : (
+            <div className="hidden sm:flex items-center gap-2">
+              <button
+                onClick={(e) => handleLinkClick('/sign-in', e)}
+                className="px-3.5 py-2 text-xs font-bold text-[#A3C2AE] hover:text-white border border-[#23382C] hover:border-[#389B5F] rounded-xl transition-all cursor-pointer bg-[#0E1410]"
+              >
+                Sign In
+              </button>
+              <button
+                onClick={(e) => handleLinkClick('/sign-up', e)}
+                className="px-3.5 py-2 text-xs font-bold text-white bg-gradient-to-r from-[#25663E] to-[#389B5F] hover:from-[#2e7d4d] hover:to-[#41b06c] rounded-xl shadow-md transition-all cursor-pointer border border-[#389B5F]/50"
+              >
+                Create Account
+              </button>
+            </div>
+          )}
 
           {/* Mobile Menu Toggle */}
           <motion.button
@@ -145,7 +236,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
         </div>
       </div>
 
-      {/* Mobile Drawer with smooth height & opacity slide transition */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -156,6 +247,46 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
             className="lg:hidden overflow-hidden bg-[#0E1410]/98 border-b-2 border-[#23382C] shadow-2xl"
           >
             <div className="px-6 py-6 space-y-2.5">
+              {/* User badge in mobile menu if logged in */}
+              {isAuthenticated && user && (
+                <div className="p-3 mb-3 bg-[#060807] border border-[#23382C] rounded-xl flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={user.avatarUrl || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.username}`}
+                      alt={user.username}
+                      className="w-9 h-9 rounded-full bg-[#25663E] border border-[#C5A059]"
+                    />
+                    <div>
+                      <p className="text-xs font-bold text-white">{user.displayName}</p>
+                      <p className="text-[10px] text-[#A3C2AE]">@{user.username}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="px-2.5 py-1 text-xs font-bold text-rose-400 bg-rose-950/40 border border-rose-800/40 rounded-lg"
+                  >
+                    Log Out
+                  </button>
+                </div>
+              )}
+
+              {!isAuthenticated && (
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <button
+                    onClick={(e) => handleLinkClick('/sign-in', e)}
+                    className="py-2.5 text-center text-xs font-bold text-[#A3C2AE] bg-[#060807] border border-[#23382C] rounded-xl"
+                  >
+                    Sign In
+                  </button>
+                  <button
+                    onClick={(e) => handleLinkClick('/sign-up', e)}
+                    className="py-2.5 text-center text-xs font-bold text-white bg-[#25663E] border border-[#389B5F] rounded-xl"
+                  >
+                    Create Account
+                  </button>
+                </div>
+              )}
+
               {navItems.map((item, index) => {
                 const active = isActive(item.path);
                 return (

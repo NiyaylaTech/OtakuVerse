@@ -3,6 +3,7 @@ import { AniListMedia } from './services/anilist';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { SearchModal } from './components/SearchModal';
+import { useAuth } from './context/AuthContext';
 
 import { HomeView } from './views/HomeView';
 import { DiscoveryView } from './views/DiscoveryView';
@@ -12,10 +13,17 @@ import { DiscussionsView } from './views/DiscussionsView';
 import { ListsView } from './views/ListsView';
 import { RankingsView } from './views/RankingsView';
 import { ProfileView } from './views/ProfileView';
+import { AboutView } from './views/AboutView';
+import { ContactView } from './views/ContactView';
+import { ProgramsView } from './views/ProgramsView';
+import { SignInView } from './views/SignInView';
+import { SignUpView } from './views/SignUpView';
 
 export default function App() {
+  const { isAuthenticated, isLoading } = useAuth();
   const [currentPath, setCurrentPath] = useState<string>(window.location.pathname || '/');
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [redirectPath, setRedirectPath] = useState<string>('/profile');
 
   // Sync route state with window.location.pathname and popstate
   useEffect(() => {
@@ -26,8 +34,11 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const navigateTo = (path: string) => {
+  const navigateTo = (path: string, options?: { preserveRedirect?: boolean }) => {
     window.history.pushState({}, '', path);
+    if (!options?.preserveRedirect && path !== '/sign-in' && path !== '/sign-up') {
+      setRedirectPath(path);
+    }
     setCurrentPath(path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -44,6 +55,16 @@ export default function App() {
 
   // Determine view to render
   const renderView = () => {
+    // Show smooth loading state during initial session restoration
+    if (isLoading) {
+      return (
+        <div className="min-h-[60vh] flex flex-col items-center justify-center space-y-4">
+          <div className="w-12 h-12 border-4 border-[#389B5F] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-xs font-mono text-[#A3C2AE]">Authenticating OtakuVerse Session...</p>
+        </div>
+      );
+    }
+
     // Check if route matches /anime/:id or /manga/:id
     const animeMatch = currentPath.match(/^\/(anime|manga)\/([^/]+)/);
     if (animeMatch) {
@@ -57,7 +78,15 @@ export default function App() {
       );
     }
 
-    switch (currentPath) {
+    // Normalize legacy .html paths if accessed directly
+    const cleanPath = currentPath.replace(/\.html$/, '');
+
+    switch (cleanPath) {
+      case '/sign-in':
+      case '/account':
+        return <SignInView onNavigate={navigateTo} redirectPath={redirectPath} />;
+      case '/sign-up':
+        return <SignUpView onNavigate={navigateTo} redirectPath={redirectPath} />;
       case '/discovery':
         return <DiscoveryView onSelectMedia={handleSelectMedia} />;
       case '/rankings':
@@ -68,9 +97,20 @@ export default function App() {
         return <ReviewsView onSelectMedia={handleSelectMedia} />;
       case '/discussions':
         return <DiscussionsView onSelectMedia={handleSelectMedia} />;
+      case '/programs':
+      case '/community':
+        return <ProgramsView onNavigate={navigateTo} />;
+      case '/about':
+        return <AboutView onNavigate={navigateTo} />;
+      case '/contact':
+        return <ContactView onNavigate={navigateTo} />;
       case '/profile':
+        if (!isAuthenticated) {
+          return <SignInView onNavigate={navigateTo} redirectPath="/profile" />;
+        }
         return <ProfileView onNavigate={navigateTo} />;
       case '/':
+      case '/index':
       default:
         return <HomeView onSelectMedia={handleSelectMedia} onNavigate={navigateTo} />;
     }
