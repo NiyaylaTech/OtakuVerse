@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
 import { connectDatabase } from './src/config/database';
 import healthRouter from './src/routes/health';
 
@@ -11,7 +10,16 @@ dotenv.config();
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 const HOST = '0.0.0.0';
-const CLIENT_URL = process.env.CLIENT_URL;
+
+// Sanitize CLIENT_URL to ensure it is purely an origin (without path or trailing slashes)
+const rawClientUrl = process.env.CLIENT_URL || 'https://anime-site-vnk3.onrender.com';
+let clientOrigin = rawClientUrl;
+try {
+  const parsed = new URL(rawClientUrl);
+  clientOrigin = parsed.origin;
+} catch (e) {
+  clientOrigin = rawClientUrl.split('/')[0] + '//' + (rawClientUrl.split('/')[2] || rawClientUrl).split('/')[0];
+}
 
 // Configure CORS for CLIENT_URL
 const corsOptions: cors.CorsOptions = {
@@ -19,7 +27,12 @@ const corsOptions: cors.CorsOptions = {
     // Allow requests with no origin (e.g. mobile apps, curl, or same-origin requests)
     if (!origin) return callback(null, true);
 
-    if (!CLIENT_URL || CLIENT_URL === '*' || origin === CLIENT_URL) {
+    if (
+      !process.env.CLIENT_URL ||
+      process.env.CLIENT_URL === '*' ||
+      origin === clientOrigin ||
+      origin === 'https://anime-site-vnk3.onrender.com'
+    ) {
       return callback(null, true);
     }
 
@@ -47,14 +60,12 @@ app.use(express.urlencoded({ extended: true }));
 // Register Health Route
 app.use('/api', healthRouter);
 
-// Serve production static assets if dist exists
-const distPath = path.join(process.cwd(), 'dist');
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(distPath));
-  app.get('*', (_req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
+// JSON 404 handler for all unmatched API / server routes
+app.use((_req, res) => {
+  res.status(404).json({
+    error: 'API route not found',
   });
-}
+});
 
 /**
  * Start Server only after MongoDB successfully connects
@@ -67,9 +78,9 @@ async function startServer() {
     // Step 2: Listen on 0.0.0.0:PORT
     app.listen(PORT, HOST, () => {
       console.log('============================================');
-      console.log(`🚀 OtakuVerse Server running on http://${HOST}:${PORT}`);
+      console.log(`🚀 OtakuVerse API Server running on http://${HOST}:${PORT}`);
       console.log(`🏥 Health check: http://${HOST}:${PORT}/api/health`);
-      console.log(`🔗 Configured CLIENT_URL: ${CLIENT_URL || 'Not specified (permissive)'}`);
+      console.log(`🔗 Allowed CORS origin: ${clientOrigin}`);
       console.log('============================================');
     });
   } catch (error: any) {
